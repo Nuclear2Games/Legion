@@ -1,0 +1,4 @@
+C:\Users\Anderson\Desktop\ManyFest\DotNet\ManyFest\bin\ManyFest.dll
+C:\Users\Anderson\Desktop\ManyFest\DotNet\ManyFest\bin\ManyFest.pdb
+C:\Users\Anderson\Desktop\ManyFest\DotNet\ManyFest\obj\Debug\ManyFest.dll
+C:\Users\Anderson\Desktop\ManyFest\DotNet\ManyFest\obj\Debug\ManyFest.pdb

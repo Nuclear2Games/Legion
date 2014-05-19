@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="fields_spacing">16dip</dimen>
+    <dimen name="fields_spacing_fixed">16dip</dimen>
+    <dimen name="fields_spacing_labels">5dip</dimen>
+
+</resources>
