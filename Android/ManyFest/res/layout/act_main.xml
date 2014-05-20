@@ -1,22 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pgrMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pgrMain"
+    <android.support.v4.view.PagerTabStrip
+        android:id="@+id/pager_title_strip"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#f3f3f3"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:tag="b"
+        android:textColor="@color/gray_half" />
 
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_title_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="#f3f3f3"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:tag="b"
-            android:textColor="@color/blue_light" />
-    </android.support.v4.view.ViewPager>
-
-</FrameLayout>
+</android.support.v4.view.ViewPager>

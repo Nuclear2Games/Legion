@@ -7,10 +7,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 
-public class ActMain extends ActionBarActivity implements ActionBar.TabListener {
+import com.xpto.manyfest.data.Caller;
+import com.xpto.manyfest.utils.MFActivity;
+
+public class ActMain extends MFActivity implements ActionBar.TabListener {
+	public ActMain() {
+		super(true, MFActivity.TRANSITION_FADE);
+	}
+
 	private ViewPager pgrMain;
 	private PagerAdapter adpMain;
 
@@ -19,14 +24,12 @@ public class ActMain extends ActionBarActivity implements ActionBar.TabListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_main);
 
-		// Set up the action bar.
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
 		pgrMain = (ViewPager) findViewById(R.id.pgrMain);
 		adpMain = new PagerAdapter(getSupportFragmentManager());
 		pgrMain.setAdapter(adpMain);
 		adpMain.notifyDataSetChanged();
+		
+		Caller.getNearPlaces(this, null, null, null, -23, -46);
 	}
 
 	@Override

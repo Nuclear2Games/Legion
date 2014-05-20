@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +30,10 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationRequest;
 import com.xpto.manyfest.R;
+import com.xpto.manyfest.data.DB;
 
 public class MFActivity extends ActionBarActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener,
 		LocationListener, com.google.android.gms.location.LocationListener {
-	// Hermes interface
-
 	// Global data
 	private Global global;
 
@@ -49,8 +48,8 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 	// Location variables - GPlay services
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private boolean keepTracking = false;
-	private Callback locationCallback;
-	private Callback noLocationCallback;
+	private MFCallback locationCallback;
+	private MFCallback noLocationCallback;
 
 	// Location variables - GPlay services
 	private boolean lcRequested = false;
@@ -95,7 +94,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		if (!actionBarVisible)
 			getSupportActionBar().hide();
 		else {
-			setTitleColor(Color.WHITE);
+			setActionBarTitle(getString(R.string.app_name));
 			getSupportActionBar().setIcon(R.drawable.logo_simple);
 			getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bg));
 			getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -178,6 +177,10 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		super.onPause();
 
 		isActivityVisible = false;
+	}
+
+	public void setActionBarTitle(String _title) {
+		getSupportActionBar().setTitle(Html.fromHtml("<font color=\"" + getString(R.string.title_color) + "\">" + _title + "</font>"));
 	}
 
 	// Control use of loading overlay
@@ -297,7 +300,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		}
 	};
 
-	public void getLocation(Callback callback, Callback noCallback, boolean stayTracking) {
+	public void getLocation(MFCallback callback, MFCallback noCallback, boolean stayTracking) {
 		// Set track type
 		this.keepTracking = stayTracking;
 
@@ -305,7 +308,8 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		this.getLocation(callback, noCallback);
 	}
 
-	public void getLocation(Callback callback, Callback noCallback) {
+	@SuppressWarnings("deprecation")
+	public void getLocation(MFCallback callback, MFCallback noCallback) {
 		// Hold callback
 		this.locationCallback = callback;
 		this.noLocationCallback = noCallback;

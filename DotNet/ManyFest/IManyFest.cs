@@ -22,20 +22,22 @@ namespace ManyFest
         Result Login(string login, string password);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "NewUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(UriTemplate = "UpdateUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result UpdateUser(long id, string name, string description);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "NewUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(UriTemplate = "UpdatePassword", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result UpdatePassword(long id, string passwordOld, string passwordNew);
 
         #endregion
 
         #region Place
         [OperationContract]
+        [WebInvoke(UriTemplate = "NewPlace", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result NewPlace(long user, double latitude, double longitude, long type, string name, string description);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "UpdatePlace", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result UpdatePlace(long user, long place, double latitude, double longitude, string name, string description);
         #endregion
 
@@ -44,6 +46,7 @@ namespace ManyFest
         #region Subjects
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "NewSubject", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result NewSubject(long user, long place, string content);
 
         #endregion
@@ -51,6 +54,7 @@ namespace ManyFest
         #region Comments
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "NewComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result NewComment(long user, long place, long subject, string content);
 
         #endregion
@@ -58,6 +62,7 @@ namespace ManyFest
         #region Answers
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "NewAnswer", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result NewAnswer(long user, long place, long subject, long comment, string content);
 
         #endregion
@@ -65,20 +70,25 @@ namespace ManyFest
         #region Gets...
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result GetUser(long user);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetNearPlaces", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result GetNearPlaces(double latitude, double longitude);
 
         // TODO: routes
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetSubjects", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result GetSubjects(long place);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result GetComments(long subject);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetAnswers", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         Result GetAnswers(long comment);
 
         #endregion

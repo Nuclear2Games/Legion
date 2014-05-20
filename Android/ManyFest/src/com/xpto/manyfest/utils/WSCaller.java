@@ -29,6 +29,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -43,6 +44,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.xpto.manyfest.R;
+import com.xpto.manyfest.data.Cache;
+import com.xpto.manyfest.data.DB;
 
 public class WSCaller {
 	// Cache types
@@ -73,20 +76,20 @@ public class WSCaller {
 	}
 
 	// Try again (ws calls) pool control
-	private static ArrayList<Callback> tryAgainPool;
-	private static ArrayList<Callback> tryAgainFail;
+	private static ArrayList<MFCallback> tryAgainPool;
+	private static ArrayList<MFCallback> tryAgainFail;
 
 	// Add callback to be used when try again is called
-	private static void addToTryAgainPool(Callback callback, Callback failCallback) {
+	private static void addToTryAgainPool(MFCallback callback, MFCallback failCallback) {
 		if (tryAgainPool == null) {
-			tryAgainPool = new ArrayList<Callback>();
-			tryAgainFail = new ArrayList<Callback>();
+			tryAgainPool = new ArrayList<MFCallback>();
+			tryAgainFail = new ArrayList<MFCallback>();
 		}
 		tryAgainPool.add(callback);
 		tryAgainFail.add(failCallback);
 	}
 
-	private static Callback getFromTryAgainPool() {
+	private static MFCallback getFromTryAgainPool() {
 		if (tryAgainPool == null || tryAgainPool.size() == 0)
 			return null;
 		tryAgainFail.remove(0);
@@ -104,7 +107,7 @@ public class WSCaller {
 		}
 	}
 
-	public static void asyncCall(final Activity activity, final Callback callback, final Callback retryCallback, final Callback failCallback,
+	public static void asyncCall(final Activity activity, final MFCallback callback, final MFCallback retryCallback, final MFCallback failCallback,
 			final String server, final String fn, final Object parameters, final long cache_type, final int retryTimes, final boolean showRetryDialog) {
 		if (parameters != null && !(parameters instanceof JSONObject) && !(parameters instanceof JSONArray)) {
 			callback.finished(null);
@@ -170,12 +173,9 @@ public class WSCaller {
 
 					// Prepare connection
 					HttpParams httpParams = new BasicHttpParams();
-					HttpConnectionParams.setConnectionTimeout(httpParams, 45000);
-					HttpConnectionParams.setSoTimeout(httpParams, 45000);
+					HttpConnectionParams.setConnectionTimeout(httpParams, 60000);
+					HttpConnectionParams.setSoTimeout(httpParams, 60000);
 					HttpClient httpclient = new DefaultHttpClient(httpParams);
-
-					// to hold specific ssl certificates // httpclient =
-					// toSslClient(httpclient);
 
 					// Add parameters
 					HttpPost httppost = new HttpPost(urlServer);
@@ -186,7 +186,6 @@ public class WSCaller {
 					httppost.setHeader("Accept", "application/json");
 					httppost.setHeader("Content-type", "application/json");
 
-					// Download content
 					HttpResponse response = httpclient.execute(httppost);
 					final String responseBody = EntityUtils.toString(response.getEntity());
 
@@ -291,7 +290,7 @@ public class WSCaller {
 
 														// Start pending/waiting
 														// calls
-														Callback poolCallbak;
+														MFCallback poolCallbak;
 														while ((poolCallbak = getFromTryAgainPool()) != null)
 															poolCallbak.finished(true);
 														break;
@@ -336,7 +335,7 @@ public class WSCaller {
 									}
 								});
 						} else {
-							addToTryAgainPool(new Callback() {
+							addToTryAgainPool(new MFCallback() {
 								@Override
 								public void finished(Object _value) {
 									if ((Boolean) _value) {
