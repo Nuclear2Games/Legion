@@ -12,6 +12,7 @@
 bin/
 gen/
 obj/
+.metadata/
 
 # Gradle files
 .gradle/
