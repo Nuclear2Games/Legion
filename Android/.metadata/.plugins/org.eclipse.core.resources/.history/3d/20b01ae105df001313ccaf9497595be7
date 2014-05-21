@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <item type="integer" name="transition_move_duration">500</item>
-    <item type="integer" name="transition_fade_duration">250</item>
-
-</resources>
