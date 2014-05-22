@@ -7,16 +7,16 @@
         android:id="@+id/action_help"
         android:icon="@drawable/ic_action_help"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_notifications"
         android:icon="@drawable/ic_action_sort_by_size"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_action_person"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
 
 </menu>

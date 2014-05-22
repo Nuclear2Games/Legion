@@ -32,7 +32,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.xpto.legion.R;
 import com.xpto.legion.data.DB;
 
-public class MFActivity extends ActionBarActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener,
+public class LActivity extends ActionBarActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener,
 		LocationListener, com.google.android.gms.location.LocationListener {
 	// Global data
 	private Global global;
@@ -48,8 +48,8 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 	// Location variables - GPlay services
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private boolean keepTracking = false;
-	private MFCallback locationCallback;
-	private MFCallback noLocationCallback;
+	private LCallback locationCallback;
+	private LCallback noLocationCallback;
 
 	// Location variables - GPlay services
 	private boolean lcRequested = false;
@@ -76,7 +76,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		return isActivityVisible;
 	}
 
-	public MFActivity(boolean useActionBar, int startTransition) {
+	public LActivity(boolean useActionBar, int startTransition) {
 		super();
 
 		this.actionBarVisible = useActionBar;
@@ -108,7 +108,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-		new MFAsyncTask(this) {
+		new LAsyncTask(this) {
 			@Override
 			protected void doInBackground() {
 				try {
@@ -269,11 +269,11 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		cancelLocationUpdates();
 	}
 
-	private MFDialog.DialogResult noLocationDialog = new MFDialog.DialogResult() {
+	private LDialog.DialogResult noLocationDialog = new LDialog.DialogResult() {
 		@Override
 		public void result(int result, String info) {
 			switch (result) {
-			case MFDialog.BUTTON2:
+			case LDialog.BUTTON2:
 				Intent iLocation = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				startActivity(iLocation);
 				return;
@@ -288,11 +288,11 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 
 	private static boolean noGMSDialogNotification = false;
 
-	private MFDialog.DialogResult noGMSDialog = new MFDialog.DialogResult() {
+	private LDialog.DialogResult noGMSDialog = new LDialog.DialogResult() {
 		@Override
 		public void result(int result, String info) {
 			switch (result) {
-			case MFDialog.BUTTON2:
+			case LDialog.BUTTON2:
 				Intent iGMS = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms"));
 				startActivity(iGMS);
 				return;
@@ -300,7 +300,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		}
 	};
 
-	public void getLocation(MFCallback callback, MFCallback noCallback, boolean stayTracking) {
+	public void getLocation(LCallback callback, LCallback noCallback, boolean stayTracking) {
 		// Set track type
 		this.keepTracking = stayTracking;
 
@@ -309,7 +309,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 	}
 
 	@SuppressWarnings("deprecation")
-	public void getLocation(MFCallback callback, MFCallback noCallback) {
+	public void getLocation(LCallback callback, LCallback noCallback) {
 		// Hold callback
 		this.locationCallback = callback;
 		this.noLocationCallback = noCallback;
@@ -317,7 +317,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 		String provs = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 		if (provs == null || provs.length() == 0) {
 			// No access to location
-			MFDialog.openDialog(this, R.string.f_no_location, R.string.f_may_enable_location, R.string.f_no, true, R.string.f_yes, false, noLocationDialog);
+			LDialog.openDialog(this, R.string.f_no_location, R.string.f_may_enable_location, R.string.f_no, true, R.string.f_yes, false, noLocationDialog);
 			return;
 		}
 
@@ -331,7 +331,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 			if (!noGMSDialogNotification) {
 				noGMSDialogNotification = true;
 
-				MFDialog.openDialog(this, R.string.f_to_update, R.string.f_no_gms, R.string.f_no, true, R.string.f_yes, false, noGMSDialog);
+				LDialog.openDialog(this, R.string.f_to_update, R.string.f_no_gms, R.string.f_no, true, R.string.f_yes, false, noGMSDialog);
 			}
 
 			// Ask location to location manager
@@ -477,7 +477,7 @@ public class MFActivity extends ActionBarActivity implements GooglePlayServicesC
 	public void onBackPressed() {
 		if (getDialogs().size() > 0) {
 			try {
-				((MFDialog) getDialogs().get(0)).back();
+				((LDialog) getDialogs().get(0)).back();
 				return;
 			} catch (Exception e) {
 			}

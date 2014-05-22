@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 
-import com.xpto.legion.utils.MFCallback;
+import com.xpto.legion.utils.LCallback;
 import com.xpto.legion.utils.WSCaller;
 
 public class Caller {
@@ -13,7 +13,7 @@ public class Caller {
 	private static final int RETRY_NO = 0;
 	private static final int RETRY_YES = 5;
 
-	public static void newUser(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, String login, String password) {
+	public static void newUser(Activity activity, LCallback success, LCallback retry, LCallback fail, String login, String password) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -27,7 +27,7 @@ public class Caller {
 		}
 	}
 
-	public static void login(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, String login, String password) {
+	public static void login(Activity activity, LCallback success, LCallback retry, LCallback fail, String login, String password) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -41,7 +41,7 @@ public class Caller {
 		}
 	}
 
-	public static void updateUser(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long id, String name, String description) {
+	public static void updateUser(Activity activity, LCallback success, LCallback retry, LCallback fail, long id, String name, String description) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -56,7 +56,7 @@ public class Caller {
 		}
 	}
 
-	public static void updatePassword(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long id, String passwordOld, String passwordNew) {
+	public static void updatePassword(Activity activity, LCallback success, LCallback retry, LCallback fail, long id, String passwordOld, String passwordNew) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -71,7 +71,7 @@ public class Caller {
 		}
 	}
 
-	public static void newPlace(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, double latitude, double longitude,
+	public static void newPlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, double latitude, double longitude,
 			long type, String name, String description) {
 		try {
 			JSONObject params = new JSONObject();
@@ -90,7 +90,7 @@ public class Caller {
 		}
 	}
 
-	public static void updatePlace(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, long place, double latitude,
+	public static void updatePlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long place, double latitude,
 			double longitude, String name, String description) {
 		try {
 			JSONObject params = new JSONObject();
@@ -109,7 +109,7 @@ public class Caller {
 		}
 	}
 
-	public static void newSubject(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, long place, String content) {
+	public static void newSubject(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long place, String content) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -124,7 +124,7 @@ public class Caller {
 		}
 	}
 
-	public static void newComment(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, long subject, String content) {
+	public static void newComment(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long subject, String content) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -139,7 +139,7 @@ public class Caller {
 		}
 	}
 
-	public static void newAnswer(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, long comment, String content) {
+	public static void newAnswer(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long comment, String content) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -154,7 +154,7 @@ public class Caller {
 		}
 	}
 
-	public static void newLike(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user, long customId, long customTypeId,
+	public static void newLike(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long customId, long customTypeId,
 			boolean isLike) {
 		try {
 			JSONObject params = new JSONObject();
@@ -171,7 +171,7 @@ public class Caller {
 		}
 	}
 
-	public static void getUser(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user) {
+	public static void getUser(Activity activity, LCallback success, LCallback retry, LCallback fail, long user) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -184,7 +184,7 @@ public class Caller {
 		}
 	}
 
-	public static void getNotifications(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user) {
+	public static void getNotifications(Activity activity, LCallback success, LCallback retry, LCallback fail, long user) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -197,7 +197,7 @@ public class Caller {
 		}
 	}
 
-	public static void readNotifications(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long user) {
+	public static void readNotifications(Activity activity, LCallback success, LCallback retry, LCallback fail, long user) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -210,7 +210,7 @@ public class Caller {
 		}
 	}
 
-	public static void getNearPlaces(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, double longitude, double latitude) {
+	public static void getNearPlaces(Activity activity, LCallback success, LCallback retry, LCallback fail, double longitude, double latitude) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -224,7 +224,7 @@ public class Caller {
 		}
 	}
 
-	public static void getSubjects(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long place) {
+	public static void getSubjects(Activity activity, LCallback success, LCallback retry, LCallback fail, long place) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -237,7 +237,7 @@ public class Caller {
 		}
 	}
 
-	public static void getComments(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long subject) {
+	public static void getComments(Activity activity, LCallback success, LCallback retry, LCallback fail, long subject) {
 		try {
 			JSONObject params = new JSONObject();
 
@@ -250,7 +250,7 @@ public class Caller {
 		}
 	}
 
-	public static void getAnswers(Activity activity, MFCallback success, MFCallback retry, MFCallback fail, long comment) {
+	public static void getAnswers(Activity activity, LCallback success, LCallback retry, LCallback fail, long comment) {
 		try {
 			JSONObject params = new JSONObject();
 

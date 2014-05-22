@@ -1,4 +1,4 @@
-<com.xpto.legion.utils.MFDialog xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xpto.legion.utils.LDialog xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -122,4 +122,4 @@
             android:textSize="@dimen/lbl_font_size_default" />
     </LinearLayout>
 
-</com.xpto.legion.utils.MFDialog>
+</com.xpto.legion.utils.LDialog>

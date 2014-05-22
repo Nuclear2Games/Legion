@@ -75,20 +75,20 @@ public class WSCaller {
 	}
 
 	// Try again (ws calls) pool control
-	private static ArrayList<MFCallback> tryAgainPool;
-	private static ArrayList<MFCallback> tryAgainFail;
+	private static ArrayList<LCallback> tryAgainPool;
+	private static ArrayList<LCallback> tryAgainFail;
 
 	// Add callback to be used when try again is called
-	private static void addToTryAgainPool(MFCallback callback, MFCallback failCallback) {
+	private static void addToTryAgainPool(LCallback callback, LCallback failCallback) {
 		if (tryAgainPool == null) {
-			tryAgainPool = new ArrayList<MFCallback>();
-			tryAgainFail = new ArrayList<MFCallback>();
+			tryAgainPool = new ArrayList<LCallback>();
+			tryAgainFail = new ArrayList<LCallback>();
 		}
 		tryAgainPool.add(callback);
 		tryAgainFail.add(failCallback);
 	}
 
-	private static MFCallback getFromTryAgainPool() {
+	private static LCallback getFromTryAgainPool() {
 		if (tryAgainPool == null || tryAgainPool.size() == 0)
 			return null;
 		tryAgainFail.remove(0);
@@ -106,14 +106,14 @@ public class WSCaller {
 		}
 	}
 
-	public static void asyncCall(final Activity activity, final MFCallback callback, final MFCallback retryCallback, final MFCallback failCallback,
+	public static void asyncCall(final Activity activity, final LCallback callback, final LCallback retryCallback, final LCallback failCallback,
 			final String server, final String fn, final Object parameters, final long cache_type, final int retryTimes, final boolean showRetryDialog) {
 		if (parameters != null && !(parameters instanceof JSONObject) && !(parameters instanceof JSONArray)) {
 			callback.finished(null);
 			return;
 		}
 
-		if (isShowingOfflineDialog() && ((MFActivity) activity).getDialogs().size() == 0)
+		if (isShowingOfflineDialog() && ((LActivity) activity).getDialogs().size() == 0)
 			isShowingOfflineDialog(false);
 
 		new Thread() {
@@ -247,7 +247,7 @@ public class WSCaller {
 					}
 
 					// Test if connection dialog may be showed
-					if (showRetryDialog && !isShowingOfflineDialog() && ((MFActivity) activity).isActivityVisible()) {
+					if (showRetryDialog && !isShowingOfflineDialog() && ((LActivity) activity).isActivityVisible()) {
 						isShowingOfflineDialog(true); // Block dialog
 
 						// Call ui thread to open dialog
@@ -255,15 +255,15 @@ public class WSCaller {
 							@Override
 							public void run() {
 								try {
-									MFDialog.openDialog((MFActivity) activity, R.string.f_no_connection, R.string.f_to_try_again, R.string.f_no, true,
-											R.string.f_yes, false, new MFDialog.DialogResult() {
+									LDialog.openDialog((LActivity) activity, R.string.f_no_connection, R.string.f_to_try_again, R.string.f_no, true,
+											R.string.f_yes, false, new LDialog.DialogResult() {
 												@Override
 												public void result(int result, String info) {
 													// Free dialog
 													isShowingOfflineDialog(false);
 
 													switch (result) {
-													case MFDialog.BUTTON1:
+													case LDialog.BUTTON1:
 														lastNo = System.currentTimeMillis();
 														activity.runOnUiThread(new Runnable() {
 															@Override
@@ -275,7 +275,7 @@ public class WSCaller {
 														});
 														break;
 
-													case MFDialog.BUTTON2:
+													case LDialog.BUTTON2:
 														if (retryCallback != null) {
 															// say to activity,
 															// it that will try
@@ -294,7 +294,7 @@ public class WSCaller {
 
 														// Start pending/waiting
 														// calls
-														MFCallback poolCallbak;
+														LCallback poolCallbak;
 														while ((poolCallbak = getFromTryAgainPool()) != null)
 															poolCallbak.finished(true);
 														break;
@@ -330,7 +330,7 @@ public class WSCaller {
 						});
 					} else {
 						// Add event to be called on try again or fail
-						if (!showRetryDialog || System.currentTimeMillis() - lastNo < WS_CACHE_1MIN || !((MFActivity) activity).isActivityVisible()) {
+						if (!showRetryDialog || System.currentTimeMillis() - lastNo < WS_CACHE_1MIN || !((LActivity) activity).isActivityVisible()) {
 							if (failCallback != null)
 								activity.runOnUiThread(new Runnable() {
 									@Override
@@ -339,7 +339,7 @@ public class WSCaller {
 									}
 								});
 						} else {
-							addToTryAgainPool(new MFCallback() {
+							addToTryAgainPool(new LCallback() {
 								@Override
 								public void finished(Object _value) {
 									if ((Boolean) _value) {

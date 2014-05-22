@@ -3,7 +3,7 @@ package com.xpto.legion.utils;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
-public abstract class MFFragment extends Fragment {
+public abstract class LFragment extends Fragment {
 	private Global global;
 
 	public Global getGlobal() {
@@ -11,8 +11,8 @@ public abstract class MFFragment extends Fragment {
 	}
 
 	public void setGlobal(Activity activity) {
-		if (activity != null && activity instanceof MFActivity)
-			this.global = ((MFActivity) activity).getGlobal();
+		if (activity != null && activity instanceof LActivity)
+			this.global = ((LActivity) activity).getGlobal();
 	}
 
 	@Override

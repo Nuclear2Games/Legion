@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xpto.legion.utils.MFFragment;
+import com.xpto.legion.utils.LFragment;
 
-public class FrgEvents extends MFFragment {
+public class FrgEvents extends LFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.frg_list, null);

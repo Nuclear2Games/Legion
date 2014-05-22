@@ -6,6 +6,7 @@
     
     <string name="f_yes">Sim</string>
     <string name="f_no">Não</string>
+    <string name="f_ok">Ok</string>
     <string name="f_loading">Carregando...</string>
     
     <string name="f_no_connection">Sem conexão</string>
@@ -18,8 +19,10 @@
     <string name="f_no_gms">O aplicativo de mapas está desatualizado</string>
 
     <!-- Main -->
-    <string name="f_map">Mapa</string>
-    <string name="f_events">Eventos</string>
+    <string name="f_main_map">Mapa</string>
+    <string name="f_main_events">Eventos</string>
+    
+    <string name="f_main_events_fail">Não foi possível atualizar lista de eventos</string>
 
     <!-- NewUser -->
     <string name="f_newuser_user">Usuário</string>

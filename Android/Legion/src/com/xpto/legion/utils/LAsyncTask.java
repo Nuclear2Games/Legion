@@ -2,7 +2,7 @@ package com.xpto.legion.utils;
 
 import android.app.Activity;
 
-public abstract class MFAsyncTask extends Thread {
+public abstract class LAsyncTask extends Thread {
 	private Activity activityOwner;
 	private boolean started;
 	private boolean ended;
@@ -15,7 +15,7 @@ public abstract class MFAsyncTask extends Thread {
 		return ended;
 	}
 
-	public MFAsyncTask(Activity caller) {
+	public LAsyncTask(Activity caller) {
 		activityOwner = caller;
 		started = false;
 

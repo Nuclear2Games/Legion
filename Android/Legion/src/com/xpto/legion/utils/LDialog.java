@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MFDialog extends FrameLayout {
+public class LDialog extends FrameLayout {
 	public static final int DISMISS = 0;
 	public static final int BUTTON1 = 1;
 	public static final int BUTTON2 = 2;
@@ -27,7 +27,7 @@ public class MFDialog extends FrameLayout {
 	private static final int selectedColor = 0xffe0e0e0;
 	private static final int secondaryColor = 0xffa0a0a0;
 
-	private MFActivity wActivity;
+	private LActivity wActivity;
 
 	private View viwBackgroud;
 	private View layDialog;
@@ -47,15 +47,15 @@ public class MFDialog extends FrameLayout {
 
 	private DialogResult dialogResult;
 
-	public MFDialog(Context context) {
+	public LDialog(Context context) {
 		super(context);
 	}
 
-	public MFDialog(Context context, AttributeSet attrs) {
+	public LDialog(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public MFDialog(Context context, AttributeSet attrs, int defStyleAttr) {
+	public LDialog(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 	}
 
@@ -77,187 +77,187 @@ public class MFDialog extends FrameLayout {
 		}
 	};
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary) {
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary) {
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, null, false, null, false, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, null, false, null, false, _dialogResult, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult, boolean askForInfo) {
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult, boolean askForInfo) {
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, null, false, null, false, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary) {
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary) {
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, null, false, null, false, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, DialogResult _dialogResult) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, null, false, null, false, _dialogResult, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, DialogResult _dialogResult,
 			boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary,
 			DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, null, false, null, false, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary) {
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary) {
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
 			DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
 			DialogResult _dialogResult) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, _dialogResult, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
 			DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary, _dialogResult,
 				askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
 			DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary, DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary, DialogResult _dialogResult) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, _dialogResult, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, strButton2, isButton2Secondary, null, false, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
 			int resButton3, boolean isButton3Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary,
 				wa.getString(resButton3), isButton3Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
 			String strButton3, boolean isButton3Secondary) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, strButton3, isButton3Secondary, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
 			int resButton3, boolean isButton3Secondary, DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary,
 				wa.getString(resButton3), isButton3Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
 			String strButton3, boolean isButton3Secondary, DialogResult _dialogResult) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, strButton3, isButton3Secondary, _dialogResult, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, int resTitle, int resButton1, boolean isButton1Secondary, int resButton2, boolean isButton2Secondary,
 			int resButton3, boolean isButton3Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2), isButton2Secondary,
 				wa.getString(resButton3), isButton3Secondary, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
+	public static void openDialog(LActivity wa, String strTitle, String strButton1, boolean isButton1Secondary, String strButton2, boolean isButton2Secondary,
 			String strButton3, boolean isButton3Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, strTitle, null, strButton1, isButton1Secondary, strButton2, isButton2Secondary, strButton3, isButton3Secondary, _dialogResult,
 				askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary, int resButton3, boolean isButton3Secondary) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary, wa.getString(resButton3), isButton3Secondary);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary, String strButton3, boolean isButton3Secondary) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, strButton2, isButton2Secondary, strButton3, isButton3Secondary, null, false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary, int resButton3, boolean isButton3Secondary, DialogResult _dialogResult) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary, wa.getString(resButton3), isButton3Secondary, _dialogResult);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary, String strButton3, boolean isButton3Secondary, DialogResult _dialogResult) {
 		openDialog(wa, strTitle, strSubTitle, strButton1, isButton1Secondary, strButton2, isButton2Secondary, strButton3, isButton3Secondary, _dialogResult,
 				false);
 	}
 
-	public static void openDialog(MFActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
+	public static void openDialog(LActivity wa, int resTitle, int resSubTitle, int resButton1, boolean isButton1Secondary, int resButton2,
 			boolean isButton2Secondary, int resButton3, boolean isButton3Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		openDialog(wa, wa.getString(resTitle), wa.getString(resSubTitle), wa.getString(resButton1), isButton1Secondary, wa.getString(resButton2),
 				isButton2Secondary, wa.getString(resButton3), isButton3Secondary, _dialogResult, askForInfo);
 	}
 
-	public static void openDialog(MFActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
+	public static void openDialog(LActivity wa, String strTitle, String strSubTitle, String strButton1, boolean isButton1Secondary, String strButton2,
 			boolean isButton2Secondary, String strButton3, boolean isButton3Secondary, DialogResult _dialogResult, boolean askForInfo) {
 		if (wa == null)
 			return;
 
-		final MFDialog thisDialog = (MFDialog) LayoutInflater.from(wa).inflate(R.layout.dialog, null);
+		final LDialog thisDialog = (LDialog) LayoutInflater.from(wa).inflate(R.layout.dialog, null);
 
 		Util.loadFonts(thisDialog);
 		Util.hideKeyboard(thisDialog);
@@ -402,8 +402,8 @@ public class MFDialog extends FrameLayout {
 					new Handler().post(new Runnable() {
 						@Override
 						public void run() {
-							((ViewGroup) MFDialog.this.getParent()).removeView(MFDialog.this);
-							wActivity.getDialogs().remove(MFDialog.this);
+							((ViewGroup) LDialog.this.getParent()).removeView(LDialog.this);
+							wActivity.getDialogs().remove(LDialog.this);
 						}
 					});
 				}
