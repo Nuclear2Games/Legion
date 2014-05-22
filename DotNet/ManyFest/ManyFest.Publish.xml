@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<publishData>
-  <publishProfile publishUrl="C:\inetpub\ManyFest" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="ManyFest.svc" publishTime="05/19/2014 13:53:13" />
-    <file relUrl="bin/ManyFest.dll" publishTime="05/20/2014 11:51:21" />
-    <file relUrl="Web.config" publishTime="05/20/2014 11:51:22" />
-    <file relUrl="bin/ManyFest.pdb" publishTime="05/20/2014 11:51:21" />
-  </publishProfile>
-</publishData>

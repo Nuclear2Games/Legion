@@ -14,6 +14,37 @@ BEGIN
 END
 GO
 
+ALTER PROC get_notifications (
+	@userId BIGINT
+) AS
+BEGIN
+	SELECT
+		id,
+		customId,
+		customTypeId,
+		what,
+		date,
+		seen
+	FROM
+		notifications
+	WHERE
+			id = @userId
+	ORDER BY
+		date DESC
+END
+GO
+
+ALTER PROC read_notifications (
+	@userId BIGINT
+) AS
+BEGIN
+	UPDATE notifications SET
+		seen = 1
+	WHERE
+			userId = @userId
+END
+GO
+
 ALTER PROC get_near_places (
 	@latitude float,
 	@longitude float

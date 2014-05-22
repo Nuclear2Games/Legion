@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Legion</string>
+    <string name="title_color">#808080</string>
+    
+    <string name="f_yes">Sim</string>
+    <string name="f_no">Não</string>
+    <string name="f_loading">Carregando...</string>
+    
+    <string name="f_no_connection">Sem conexão</string>
+    <string name="f_to_try_again">Tentar novamente</string>
+    
+    <string name="f_no_location">Localização desabilitada</string>
+    <string name="f_may_enable_location">Habilitar localização</string>
+    
+    <string name="f_to_update">Atualizar</string>
+    <string name="f_no_gms">O aplicativo de mapas está desatualizado</string>
+
+    <!-- Main -->
+    <string name="f_map">Mapa</string>
+    <string name="f_events">Eventos</string>
+
+    <!-- NewUser -->
+    <string name="f_newuser_user">Usuário</string>
+    <string name="f_newuser_pass1">Senha</string>
+    <string name="f_newuser_pass2">Confirmação</string>
+    <string name="f_newuser_register">Registrar</string>
+    
+</resources>

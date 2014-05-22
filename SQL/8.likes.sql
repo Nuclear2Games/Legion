@@ -5,7 +5,7 @@ ALTER PROC new_like (
 	@isLike BIT
 ) AS
 BEGIN
-	DECLARE @id AS BIGINT
+	DECLARE @targetUserId AS BIGINT
 	DECLARE @already AS BIGINT
 	DECLARE @lk AS INT
 	DECLARE @dl AS INT
@@ -21,7 +21,7 @@ BEGIN
 	
 	IF @already IS NULL
 	BEGIN
-		IF @isLike
+		IF @isLike = 1
 		BEGIN
 			SET @lk = 1
 			SET @dl = 0
@@ -35,80 +35,80 @@ BEGIN
 		IF @customTypeId = 1 -- Places
 		BEGIN
 			SELECT
-				@id = id
+				@targetUserId = userId
 			FROM
 				places
 			WHERE
 					id = @customId
 
-			IF @id IS NOT NULL
+			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE places SET
 					likes = likes + @lk,
 					dislikes = dislikes + @dl
 				WHERE
-						id = @id
+						id = @customId
 			END
 		END
 
 		IF @customTypeId = 2 -- Subjects
 		BEGIN
 			SELECT
-				@id = id
+				@targetUserId = userId
 			FROM
 				subjects
 			WHERE
 					id = @customId
 
-			IF @id IS NOT NULL
+			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE subjects SET
 					likes = likes + @lk,
 					dislikes = dislikes + @dl
 				WHERE
-						id = @id
+						id = @customId
 			END
 		END
 
 		IF @customTypeId = 3 -- Comments
 		BEGIN
 			SELECT
-				@id = id
+				@targetUserId = userId
 			FROM
 				comments
 			WHERE
 					id = @customId
 
-			IF @id IS NOT NULL
+			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE comments SET
 					likes = likes + @lk,
 					dislikes = dislikes + @dl
 				WHERE
-						id = @id
+						id = @customId
 			END
 		END
 
 		IF @customTypeId = 4 -- Answers
 		BEGIN
 			SELECT
-				@id = id
+				@targetUserId = userId
 			FROM
 				answers
 			WHERE
 					id = @customId
 
-			IF @id IS NOT NULL
+			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE answers SET
 					likes = likes + @lk,
 					dislikes = dislikes + @dl
 				WHERE
-						id = @id
+						id = @customId
 			END
 		END
 		
-		IF @id IS NOT NULL
+		IF @targetUserId IS NOT NULL
 		BEGIN
 			INSERT INTO likes (
 				userId,
@@ -120,6 +120,22 @@ BEGIN
 				@customId,
 				@customTypeId,
 				GETDATE()
+			)
+			
+			INSERT INTO notifications (
+				userId,
+				customId,
+				customTypeId,
+				what,
+				date,
+				seen
+			) VALUES (
+				@targetUserId,
+				@customId,
+				@customTypeId,
+				CASE WHEN @isLike = 1 THEN 1 ELSE 2 END,
+				GETDATE(),
+				0
 			)
 			
 			UPDATE users SET

@@ -1,0 +1,71 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="50dip"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/txtLogin"
+            android:layout_width="200dip"
+            android:layout_height="@dimen/txt_height"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/txt_edit"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="@string/f_newuser_user"
+            android:inputType="textNoSuggestions"
+            android:maxLength="32"
+            android:singleLine="true"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <EditText
+            android:id="@+id/txtPass1"
+            android:layout_width="200dip"
+            android:layout_height="@dimen/txt_height"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt_edit"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="@string/f_newuser_pass1"
+            android:inputType="textPassword"
+            android:maxLength="32"
+            android:password="true"
+            android:singleLine="true"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <EditText
+            android:id="@+id/txtPass2"
+            android:layout_width="200dip"
+            android:layout_height="@dimen/txt_height"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt_edit"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="@string/f_newuser_pass2"
+            android:inputType="textPassword"
+            android:maxLength="32"
+            android:password="true"
+            android:singleLine="true"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="200dip"
+            android:layout_height="40dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn"
+            android:gravity="center"
+            android:text="@string/f_newuser_register"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/txt_font_size_default" />
+    </LinearLayout>
+
+</FrameLayout>

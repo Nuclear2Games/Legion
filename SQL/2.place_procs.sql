@@ -37,7 +37,7 @@ BEGIN
 			@name,
 			@description,
 			@date,
-			CAST(ROUND(SQRT(@points)) AS BIGINT),
+			CAST(SQRT(@points) AS BIGINT),
 			0
 		)
 		
@@ -61,6 +61,5 @@ BEGIN
 		description = @description
 	WHERE
 			id = @id
-		AND userId = @userId
 END
 GO
