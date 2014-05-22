@@ -70,4 +70,3 @@ BEGIN
 		AND password = @password
 END
 GO
-

@@ -1,6 +1,5 @@
 ALTER PROC new_comment (
 	@userId BIGINT,
-	@placeId BIGINT,
 	@subjectId BIGINT,
 	@content VARCHAR(MAX)
 ) AS
@@ -17,19 +16,11 @@ BEGIN
 	SELECT
 		@id = id
 	FROM
-		places
-	WHERE
-			id = @placeId
-
-	DECLARE @id2 AS BIGINT
-	SELECT
-		@id2 = id
-	FROM
 		subjects
 	WHERE
 			id = @subjectId
 
-	IF @points IS NOT NULL AND @id IS NOT NULL AND @id2 IS NOT NULL
+	IF @points IS NOT NULL AND @id IS NOT NULL
 	BEGIN
 		INSERT INTO comments (
 			subjectId,
@@ -45,7 +36,7 @@ BEGIN
 			@userId,
 			GETDATE(),
 			@content,
-			@points,
+			CAST(ROUND(SQRT(@points)) AS BIGINT),
 			0,
 			0,
 			0

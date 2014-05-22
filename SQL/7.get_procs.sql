@@ -40,9 +40,10 @@ BEGIN
 	WHERE
 			p.latitude BETWEEN (@latitude - 0.8) AND (@latitude + 0.8)
 		AND p.longitude BETWEEN (@longitude - 0.8) AND (@longitude + 0.8)
+		AND p.date > DATEADD(DAY, -1, GETDATE())
 	ORDER BY
 		p.date,
-		(p.points + p.subjects) DESC
+		(p.points + p.subjects + p.likes - p.dislikes * 3) DESC
 END
 GO
 
@@ -84,7 +85,7 @@ BEGIN
 	WHERE
 			placeId = @placeId
 	ORDER BY
-		(s.points + s.comments) DESC
+		(s.points + s.comments + s.likes - s.dislikes * 3 - SQRT(DATEDIFF(MI, s.date, GETDATE()))) DESC
 END
 GO
 
@@ -110,7 +111,7 @@ BEGIN
 	WHERE
 			subjectId = @subjectId
 	ORDER BY
-		(c.points + c.answers) DESC
+		(c.points + c.answers + c.likes - c.dislikes * 3 - SQRT(DATEDIFF(MI, c.date, GETDATE()))) DESC
 END
 GO
 

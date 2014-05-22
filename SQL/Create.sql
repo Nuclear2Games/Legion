@@ -13,13 +13,24 @@ CREATE INDEX user_login ON users(login);
 CREATE TABLE likes (
 	id BIGINT IDENTITY,
 	userId BIGINT,
-	points BIGINT,
 	customId BIGINT,
-	customType VARCHAR(255),
+	customTypeId TINYINT,
 	date datetime,
 
 	PRIMARY KEY (id)
 );
+CREATE INDEX checkins_user ON likes(userId);
+CREATE INDEX checkins_custom ON likes(customId);
+
+CREATE TABLE checkins (
+	userId BIGINT,
+	placeId BIGINT,
+	date datetime,
+
+	PRIMARY KEY (userId, placeId)
+);
+CREATE INDEX checkins_user ON checkins(userId);
+CREATE INDEX checkins_place ON checkins(placeId);
 
 CREATE TABLE places (
 	id BIGINT IDENTITY,
@@ -28,9 +39,10 @@ CREATE TABLE places (
 	longitude FLOAT,
 	type BIGINT,
 	name VARCHAR(255),
-	description varchar(MAX),
+	description VARCHAR(MAX),
 	date DATETIME,
 	points BIGINT,
+	checkins BIGINT,
 	subjects BIGINT,
 	likes BIGINT,
 	dislikes BIGINT,
@@ -67,6 +79,7 @@ CREATE TABLE subjects (
 	PRIMARY KEY (id)
 );
 CREATE INDEX subjects_place ON subjects(placeId);
+CREATE INDEX subjects_user ON subjects(userId);
 
 CREATE TABLE comments (
 	id BIGINT IDENTITY,
@@ -82,6 +95,7 @@ CREATE TABLE comments (
 	PRIMARY KEY (id)
 );
 CREATE INDEX comment_subject ON comments(subjectId);
+CREATE INDEX comment_user ON comments(userId);
 
 CREATE TABLE comment_answers (
 	id BIGINT IDENTITY,
@@ -95,3 +109,4 @@ CREATE TABLE comment_answers (
 	PRIMARY KEY (id)
 );
 CREATE INDEX comment_answer_comment ON comment_answers(commentId);
+CREATE INDEX comment_answer_user ON comment_answers(userId);

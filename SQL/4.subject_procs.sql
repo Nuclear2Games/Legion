@@ -37,7 +37,7 @@ BEGIN
 			@userId,
 			GETDATE(),
 			@content,
-			@points,
+			CAST(ROUND(SQRT(@points)) AS BIGINT),
 			0,
 			0,
 			0

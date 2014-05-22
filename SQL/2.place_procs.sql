@@ -1,8 +1,8 @@
 ALTER PROC new_place (
 	@userId BIGINT,
-	@latitude float,
-	@longitude float,
-	@type int,
+	@latitude FLOAT,
+	@longitude FLOAT,
+	@type INT,
 	@name VARCHAR(255),
 	@description varchar(MAX),
 	@date DATETIME
@@ -37,7 +37,7 @@ BEGIN
 			@name,
 			@description,
 			@date,
-			@points,
+			CAST(ROUND(SQRT(@points)) AS BIGINT),
 			0
 		)
 		
@@ -48,9 +48,8 @@ GO
 
 ALTER PROC update_place (
 	@id BIGINT,
-	@userId BIGINT,
-	@latitude float,
-	@longitude float,
+	@latitude FLOAT,
+	@longitude FLOAT,
 	@name VARCHAR(255),
 	@description varchar(MAX)
 ) AS
@@ -65,4 +64,3 @@ BEGIN
 		AND userId = @userId
 END
 GO
-
