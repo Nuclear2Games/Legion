@@ -10,6 +10,7 @@ import com.xpto.legion.utils.WSCaller;
 public class Caller {
 	private static final String URL_WS = "http://54.242.85.210/legion/legion.svc/";
 	// private static final String URL_WS = "http://192.168.0.31/legion.svc/";
+	// private static final String URL_WS = "http://192.168.1.3/legion.svc/";
 	private static final int RETRY_NO = 0;
 	private static final int RETRY_YES = 5;
 

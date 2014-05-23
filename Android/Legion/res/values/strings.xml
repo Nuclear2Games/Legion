@@ -24,10 +24,38 @@
     
     <string name="f_main_events_fail">Não foi possível atualizar lista de eventos</string>
 
+    <!-- NoUser -->
+    <string name="f_nouser_title">Para prosseguir</string>
+    <string name="f_nouser_subtitle">Crie um usuário ou entre com um usuário existente</string>
+    <string name="f_nouser_newuser">Novo usuário</string>
+    <string name="f_nouser_login">Usuário existente</string>
+    
     <!-- NewUser -->
+    <string name="f_newuser_title">Novo usuário</string>
+    <string name="f_newuser_subtitle">Preencha os campos</string>
     <string name="f_newuser_user">Usuário</string>
     <string name="f_newuser_pass1">Senha</string>
     <string name="f_newuser_pass2">Confirmação</string>
     <string name="f_newuser_register">Registrar</string>
+    
+    <string name="f_newuser_fill_login_title">Nome do usuário</string>
+    <string name="f_newuser_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto apenas por números.</string>
+    <string name="f_newuser_fill_pass_title">Senha do usuário</string>
+    <string name="f_newuser_fill_pass_subtitle">A senha de usuário precisa ter entre 4 e 32 caracteres.</string>
+    <string name="f_newuser_fill_pass2_title">Senha do usuário</string>
+    <string name="f_newuser_fill_pass2_subtitle">As senhas não conferem.</string>
+    <string name="f_newuser_fail">Não foi possível efetuar o cadastro.</string>
+    
+    <!-- Login -->
+    <string name="f_login_title">Entrar</string>
+    <string name="f_login_user">Usuário</string>
+    <string name="f_login_pass">Senha</string>
+    <string name="f_login_enter">Entrar</string>
+    
+    <string name="f_login_fill_login_title">Nome do usuário</string>
+    <string name="f_login_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto apenas por números.</string>
+    <string name="f_login_fill_pass_title">Senha do usuário</string>
+    <string name="f_login_fill_pass_subtitle">A senha de usuário precisa ter entre 4 e 32 caracteres.</string>
+    <string name="f_login_fail">Não foi possível entrar.</string>
     
 </resources>

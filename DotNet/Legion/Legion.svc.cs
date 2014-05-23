@@ -49,7 +49,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -88,7 +88,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_INVALID_USER_OR_PASSWORD;
@@ -199,7 +199,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -277,7 +277,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -318,7 +318,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -359,7 +359,7 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = reader.GetInt64(0);
+                        r.Content = Convert.ToInt64(reader.GetValue(0));
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;

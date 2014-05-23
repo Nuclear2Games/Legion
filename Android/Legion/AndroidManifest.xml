@@ -55,13 +55,12 @@
         <!-- Debug -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCSA0gn1I2TNNYMpqY94qESzym0ZaMbBlo" />
+            android:value="AIzaSyCIrv-d7RCYHN2QgvwTFiffP61R265hhpg" />
         <!-- Production -->
         <!--
-             meta-data
+            meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAJ8o_HwJHVEgZdDZsB9KiMbQ-W-jZRFiI" /
-        -->
+            android:value="AIzaSyCig0M9rZkFam2s6AZmJOdxLZn9uxWEQ4o" /        -->
     </application>
 
 </manifest>

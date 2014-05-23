@@ -86,7 +86,8 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			break;
 
 		case R.id.action_profile:
-			// TODO
+			FrgNoUser frgNoUser = new FrgNoUser();
+			setFragment(frgNoUser);
 			break;
 		}
 
@@ -248,9 +249,6 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			FragmentTransaction ft = fragmentManager.beginTransaction();
 			ft.replace(R.id.layContent, _fragment);
 			ft.commit();
-
-			Animation cameIn = AnimationUtils.loadAnimation(ActMain.this, R.anim.transition_dialog_in);
-			_fragment.getView().startAnimation(cameIn);
 		}
 
 		fragment = _fragment;

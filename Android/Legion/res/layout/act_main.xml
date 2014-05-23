@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="top|left"
         android:background="@color/black_shadow"
-        android:clickable="false"
+        android:clickable="true"
         android:visibility="gone" />
 
     <FrameLayout

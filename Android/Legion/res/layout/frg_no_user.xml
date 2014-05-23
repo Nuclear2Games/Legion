@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/lay_dialog"
+        android:orientation="vertical"
+        android:padding="30dip" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/f_nouser_title"
+            android:textSize="@dimen/lbl_font_size_big" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="false"
+            android:text="@string/f_nouser_subtitle"
+            android:textSize="@dimen/lbl_font_size_small" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="180dip"
+            android:layout_height="40dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn"
+            android:gravity="center"
+            android:text="@string/f_nouser_newuser"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="180dip"
+            android:layout_height="40dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn"
+            android:gravity="center"
+            android:text="@string/f_nouser_login"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/txt_font_size_default" />
+    </LinearLayout>
+
+</FrameLayout>
