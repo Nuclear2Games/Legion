@@ -69,9 +69,11 @@ BEGIN
 				p.userId = u.id
 		)
 	WHERE
-			p.latitude BETWEEN (@latitude - 0.8) AND (@latitude + 0.8)
-		AND p.longitude BETWEEN (@longitude - 0.8) AND (@longitude + 0.8)
-		AND p.date > DATEADD(DAY, -1, GETDATE())
+			p.latitude > @latitude - 0.8
+		AND p.latitude < @latitude + 0.8
+		AND p.longitude > @longitude - 0.8
+		AND p.longitude < @longitude + 0.8
+		AND (p.date IS NULL OR p.date > DATEADD(DAY, -1, GETDATE()))
 	ORDER BY
 		p.date,
 		(p.points + p.subjects + p.likes - p.dislikes * 3) DESC

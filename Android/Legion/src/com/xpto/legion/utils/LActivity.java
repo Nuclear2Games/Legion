@@ -21,7 +21,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -208,20 +207,19 @@ public class LActivity extends ActionBarActivity implements GooglePlayServicesCl
 
 		if (animate) {
 			Animation moveUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition_down_in);
+			moveUp.setDuration(200);
 			viwLoading.findViewById(R.id.layLoading).startAnimation(moveUp);
 			viwLoading.setVisibility(View.VISIBLE);
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void endLoading() {
 		if (viwLoading != null) {
 			boolean animate = (viwLoading.getVisibility() != View.GONE);
 
-			((ImageView) viwLoading.findViewById(R.id.imgLoading)).setBackgroundDrawable(null);
-
 			if (animate) {
 				Animation moveDown = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.transition_up_out);
+				moveDown.setDuration(200);
 				moveDown.setAnimationListener(new AnimationListener() {
 					@Override
 					public void onAnimationStart(Animation animation) {

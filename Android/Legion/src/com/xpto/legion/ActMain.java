@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -16,10 +16,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 
 import com.xpto.legion.data.Caller;
 import com.xpto.legion.utils.LActivity;
+import com.xpto.legion.utils.LAsyncTask;
 import com.xpto.legion.utils.LCallback;
 import com.xpto.legion.utils.LDialog;
 import com.xpto.legion.utils.LFragment;
@@ -29,11 +29,28 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	private boolean searchPlaces;
 
 	// Fragments
-	private Fragment fragment;
+	private LFragment fragment;
 	private View viwCover;
 	// Fixed children
 	private FrgMap frgMap;
 	private FrgEvents frgEvents;
+
+	// Notification "service"
+	private long executeAfter = 30000;
+	private long lastExecution;
+	private Handler handler;
+	private Runnable timedExecution = new Runnable() {
+		@Override
+		public void run() {
+			if (getGlobal().getLogged() != null && getGlobal().getLogged().getId() > 0)
+				Caller.getNotifications(ActMain.this, notificationsSuccess, null, null, getGlobal().getLogged().getId());
+
+			if (handler != null && System.currentTimeMillis() - lastExecution >= executeAfter) {
+				handler.postDelayed(timedExecution, executeAfter);
+				lastExecution = System.currentTimeMillis();
+			}
+		}
+	};
 
 	public ActMain() {
 		super(true, LActivity.TRANSITION_FADE);
@@ -60,6 +77,18 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		super.onResume();
 
 		searchPlaces = false;
+
+		if (handler == null) {
+			handler = new Handler();
+			handler.postDelayed(timedExecution, 1000);
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		handler = null;
 	}
 
 	@Override
@@ -82,12 +111,21 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			break;
 
 		case R.id.action_notifications:
-			// TODO
+			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
+				FrgNoUser frgNoUser = new FrgNoUser();
+				setFragment(frgNoUser);
+			} else {
+				// TODO
+			}
 			break;
 
 		case R.id.action_profile:
-			FrgNoUser frgNoUser = new FrgNoUser();
-			setFragment(frgNoUser);
+			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
+				FrgNoUser frgNoUser = new FrgNoUser();
+				setFragment(frgNoUser);
+			} else {
+				// TODO
+			}
 			break;
 		}
 
@@ -162,7 +200,11 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	};
 
+	private long lastGetNearPlaces;
+
 	private void getNearPlaces() {
+		lastGetNearPlaces = System.currentTimeMillis();
+
 		Caller.getNearPlaces(ActMain.this, placesSuccess, null, placesFail, getGlobal().getLatitude(), getGlobal().getLongitude());
 	}
 
@@ -171,7 +213,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		public void finished(Object _value) {
 			try {
 				if (_value == null || !(_value instanceof JSONObject))
-					throw new Exception();
+					return;
 
 				JSONObject json = (JSONObject) _value;
 
@@ -180,6 +222,9 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 				if (!getGlobal().addPlaces(json.getJSONArray("Content")))
 					throw new Exception();
+
+				frgMap.updatePlaces();
+				frgEvents.updatePlaces();
 			} catch (Exception e) {
 				placesFail.finished(_value);
 			}
@@ -196,11 +241,46 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	private LDialog.DialogResult placeFailResult = new LDialog.DialogResult() {
 		@Override
 		public void result(int result, String info) {
-			getNearPlaces();
+			new LAsyncTask(ActMain.this) {
+				@Override
+				protected void doInBackground() {
+					try {
+						long wait = 20000 - (System.currentTimeMillis() - lastGetNearPlaces);
+						if (wait < 2000)
+							wait = 2000;
+						sleep(wait);
+					} catch (Exception e) {
+					}
+				}
+
+				@Override
+				protected void onPostExecute() {
+					getNearPlaces();
+				}
+			}.start();
 		}
 	};
 
-	public void setFragment(final Fragment _fragment) {
+	private LCallback notificationsSuccess = new LCallback() {
+		@Override
+		public void finished(Object _value) {
+			try {
+				if (_value == null || !(_value instanceof JSONObject))
+					return;
+
+				JSONObject json = (JSONObject) _value;
+
+				if (json.getInt("Code") != 1)
+					throw new Exception();
+
+				if (!getGlobal().addNotifications(json.getJSONArray("Content")))
+					throw new Exception();
+			} catch (Exception e) {
+			}
+		}
+	};
+
+	public void setFragment(final LFragment _fragment) {
 		if (fragment != null) {
 			Animation cameOut = AnimationUtils.loadAnimation(this, R.anim.transition_dialog_out);
 			cameOut.setAnimationListener(new AnimationListener() {
@@ -243,7 +323,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	}
 
-	private void addFragment(Fragment _fragment) {
+	private void addFragment(LFragment _fragment) {
 		if (_fragment != null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -260,14 +340,11 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 
 		@Override
-		public Fragment getItem(int position) {
-			Fragment frg;
+		public LFragment getItem(int position) {
+			LFragment frg;
 
 			switch (position) {
 			default:
-				frg = new Fragment();
-				break;
-
 			case 0:
 				if (frgMap == null)
 					frgMap = new FrgMap();

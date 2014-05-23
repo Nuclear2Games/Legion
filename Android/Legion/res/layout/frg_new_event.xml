@@ -14,61 +14,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/f_newuser_title"
+            android:text="@string/f_newevent_title"
             android:textSize="@dimen/lbl_font_size_big" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
             android:gravity="center"
             android:singleLine="false"
-            android:text="@string/f_newuser_subtitle"
+            android:text="@string/f_newevent_type"
             android:textSize="@dimen/lbl_font_size_small" />
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rdbType"
+                android:layout_width="90dip"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/f_newevent_event" />
+
+            <RadioButton
+                android:id="@+id/rdbType2"
+                android:layout_width="90dip"
+                android:layout_height="wrap_content"
+                android:text="@string/f_newevent_link" />
+        </RadioGroup>
+
         <EditText
-            android:id="@+id/txtLogin"
-            android:layout_width="200dip"
+            android:id="@+id/txtName"
+            android:layout_width="250dip"
             android:layout_height="@dimen/txt_height"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="@string/f_newuser_user"
-            android:inputType="textNoSuggestions"
+            android:hint="@string/f_newevent_name"
+            android:inputType="textCapSentences"
             android:maxLength="32"
             android:singleLine="true"
             android:textSize="@dimen/txt_font_size_default" />
 
         <EditText
-            android:id="@+id/txtPass1"
-            android:layout_width="200dip"
-            android:layout_height="@dimen/txt_height"
+            android:id="@+id/txtDescription"
+            android:layout_width="250dip"
+            android:layout_height="70dip"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/txt"
             android:ellipsize="end"
-            android:gravity="center"
-            android:hint="@string/f_newuser_pass1"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:password="true"
-            android:singleLine="true"
+            android:gravity="left|top"
+            android:hint="@string/f_newevent_description"
+            android:inputType="textCapSentences"
+            android:padding="3dip"
+            android:singleLine="false"
             android:textSize="@dimen/txt_font_size_default" />
 
         <EditText
-            android:id="@+id/txtPass2"
-            android:layout_width="200dip"
+            android:id="@+id/txtDate"
+            android:layout_width="250dip"
             android:layout_height="@dimen/txt_height"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="@string/f_newuser_pass2"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:password="true"
+            android:hint="@string/f_newevent_when"
+            android:inputType="none"
             android:singleLine="true"
             android:textSize="@dimen/txt_font_size_default" />
 
@@ -80,7 +98,7 @@
             android:layout_marginTop="20dip"
             android:background="@drawable/btn"
             android:gravity="center"
-            android:text="@string/f_newuser_register"
+            android:text="@string/f_newevent_register"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/txt_font_size_default" />
     </LinearLayout>

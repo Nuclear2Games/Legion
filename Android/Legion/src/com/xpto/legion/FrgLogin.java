@@ -1,5 +1,7 @@
 package com.xpto.legion;
 
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xpto.legion.data.Caller;
+import com.xpto.legion.models.User;
 import com.xpto.legion.utils.LActivity;
 import com.xpto.legion.utils.LCallback;
 import com.xpto.legion.utils.LDialog;
@@ -82,6 +85,7 @@ public class FrgLogin extends LFragment {
 				return;
 			}
 
+			loginRetry.finished(null);
 			Caller.login(getActivity(), loginSuccess, loginRetry, loginFail, login, pass);
 		}
 	};
@@ -91,8 +95,30 @@ public class FrgLogin extends LFragment {
 		public void finished(Object _value) {
 			txtLogin.setEnabled(true);
 			txtPass.setEnabled(true);
-			
-			canBack();
+			btnLogin.setEnabled(true);
+
+			if (getActivity() != null)
+				((LActivity) getActivity()).endLoading();
+
+			try {
+				if (_value == null || !(_value instanceof JSONObject))
+					return;
+
+				JSONObject json = (JSONObject) _value;
+				if (json.getLong("Code") == 1) {
+					// Log in
+					User logged = new User();
+					logged.setId(json.getLong("Content"));
+					logged.setLogin(txtLogin.getText().toString());
+					getGlobal().setLogged(logged);
+
+					canBack();
+				} else if (json.getLong("Code") == 4)
+					LDialog.openDialog((LActivity) getActivity(), R.string.f_login_fail, R.string.f_login_fill_login_user_or_pass, R.string.f_ok, false);
+				else
+					throw new Exception();
+			} catch (Exception e) {
+			}
 		}
 	};
 
@@ -101,13 +127,17 @@ public class FrgLogin extends LFragment {
 		public void finished(Object _value) {
 			txtLogin.setEnabled(false);
 			txtPass.setEnabled(false);
+			btnLogin.setEnabled(false);
+
+			if (getActivity() != null)
+				((LActivity) getActivity()).startLoading(R.string.f_loading);
 		}
 	};
 
 	private LCallback loginFail = new LCallback() {
 		@Override
 		public void finished(Object _value) {
-			LDialog.openDialog((LActivity) getActivity(), R.string.f_no_connection, R.string.f_newuser_fail, R.string.f_ok, false);
+			LDialog.openDialog((LActivity) getActivity(), R.string.f_no_connection, R.string.f_login_fail, R.string.f_ok, false);
 		}
 	};
 }

@@ -5,7 +5,7 @@ ALTER PROC new_place (
 	@type INT,
 	@name VARCHAR(255),
 	@description varchar(MAX),
-	@date DATETIME
+	@date DATETIME = NULL
 ) AS
 BEGIN
 	-- Get point of creator user
@@ -51,14 +51,16 @@ ALTER PROC update_place (
 	@latitude FLOAT,
 	@longitude FLOAT,
 	@name VARCHAR(255),
-	@description varchar(MAX)
+	@description varchar(MAX),
+	@date DATETIME = NULL
 ) AS
 BEGIN
 	UPDATE places SET
 		latitude = @latitude,
 		longitude = @longitude,
 		name = @name,
-		description = @description
+		description = @description,
+		date = @date
 	WHERE
 			id = @id
 END

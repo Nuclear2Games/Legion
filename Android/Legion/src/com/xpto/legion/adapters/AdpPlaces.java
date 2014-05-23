@@ -1,15 +1,28 @@
 package com.xpto.legion.adapters;
 
-import android.content.Context;
+import java.util.ArrayList;
+
 import android.view.View;
 import android.widget.TextView;
 
 import com.xpto.legion.R;
 import com.xpto.legion.models.Place;
+import com.xpto.legion.utils.LActivity;
 
 public class AdpPlaces extends AdpDefault<Place> {
-	public AdpPlaces(Context context) {
-		super(context);
+	private LActivity activity;
+
+	public AdpPlaces(LActivity lActivity) {
+		super(lActivity);
+		activity = lActivity;
+	}
+
+	@Override
+	protected ArrayList<Place> createItems() {
+		if (activity == null || activity.getGlobal() == null || activity.getGlobal().getNearPlaces() == null)
+			return new ArrayList<Place>();
+		else
+			return activity.getGlobal().getNearPlaces();
 	}
 
 	@Override
@@ -21,9 +34,9 @@ public class AdpPlaces extends AdpDefault<Place> {
 			view = _convertView;
 
 		Place place = getItem(_position);
-		
-		TextView txtTitle = (TextView) view.findViewById(R.id.txtTitle);
-		txtTitle.setText(place.getName());
+
+		TextView txtName = (TextView) view.findViewById(R.id.txtName);
+		txtName.setText(place.getName());
 
 		TextView txtDescription = (TextView) view.findViewById(R.id.txtDescription);
 		txtDescription.setText(place.getDescription());

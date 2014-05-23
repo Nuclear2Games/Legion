@@ -1,5 +1,7 @@
 package com.xpto.legion;
 
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xpto.legion.data.Caller;
+import com.xpto.legion.models.User;
 import com.xpto.legion.utils.LActivity;
 import com.xpto.legion.utils.LCallback;
 import com.xpto.legion.utils.LDialog;
@@ -66,7 +69,7 @@ public class FrgNewUser extends LFragment {
 			String login = txtLogin.getText().toString();
 			boolean hasSpecial = false;
 
-			String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-";
+			String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-";
 			for (int i = 0; i < login.length(); i++)
 				if (chars.indexOf(login.charAt(i)) == -1) {
 					hasSpecial = true;
@@ -90,6 +93,7 @@ public class FrgNewUser extends LFragment {
 				return;
 			}
 
+			newUserRetry.finished(null);
 			Caller.newUser(getActivity(), newUserSuccess, newUserRetry, newUserFail, login, pass);
 		}
 	};
@@ -100,8 +104,29 @@ public class FrgNewUser extends LFragment {
 			txtLogin.setEnabled(true);
 			txtPass1.setEnabled(true);
 			txtPass2.setEnabled(true);
+			btnRegister.setEnabled(true);
 
-			canBack();
+			try {
+				if (_value == null || !(_value instanceof JSONObject))
+					return;
+
+				JSONObject json = (JSONObject) _value;
+				if (json.getLong("Code") == 1) {
+
+					// Log in
+					User logged = new User();
+					logged.setId(json.getLong("Content"));
+					logged.setLogin(txtLogin.getText().toString());
+					getGlobal().setLogged(logged);
+
+					canBack();
+				} else if (json.getLong("Code") == 5)
+					LDialog.openDialog((LActivity) getActivity(), R.string.f_newuser_fill_login_title, R.string.f_newuser_fill_login_exists, R.string.f_ok,
+							false);
+				else
+					throw new Exception();
+			} catch (Exception e) {
+			}
 		}
 	};
 
@@ -111,6 +136,7 @@ public class FrgNewUser extends LFragment {
 			txtLogin.setEnabled(false);
 			txtPass1.setEnabled(false);
 			txtPass2.setEnabled(false);
+			btnRegister.setEnabled(false);
 		}
 	};
 

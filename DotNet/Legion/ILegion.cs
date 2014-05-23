@@ -34,11 +34,11 @@ namespace Legion
         #region Place
         [OperationContract]
         [WebInvoke(UriTemplate = "/NewPlace", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        ResultId NewPlace(long user, double latitude, double longitude, long type, string name, string description);
+        ResultId NewPlace(long user, double latitude, double longitude, long type, string name, string description, string date);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/UpdatePlace", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        Result UpdatePlace(long user, long place, double latitude, double longitude, string name, string description);
+        Result UpdatePlace(long user, long place, double latitude, double longitude, string name, string description, string date);
         #endregion
 
         // TODO: routes
@@ -91,7 +91,7 @@ namespace Legion
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/GetNearPlaces", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        ResultPlaces GetNearPlaces(string latitude, string longitude);
+        ResultPlaces GetNearPlaces(double latitude, double longitude);
 
         // TODO: routes
 

@@ -14,8 +14,6 @@ public abstract class AdpDefault<T extends Default> extends BaseAdapter {
 	private ArrayList<T> items;
 
 	protected ArrayList<T> getItems() {
-		if (items == null)
-			items = new ArrayList<T>();
 		return items;
 	}
 
@@ -25,13 +23,17 @@ public abstract class AdpDefault<T extends Default> extends BaseAdapter {
 		return inflater;
 	}
 
+	protected ArrayList<T> createItems() {
+		return new ArrayList<T>();
+	}
+
 	public AdpDefault(Context context) {
-		items = new ArrayList<T>();
+		clear();
 		inflater = LayoutInflater.from(context);
 	}
 
 	public void clear() {
-		items.clear();
+		items = createItems();
 	}
 
 	public void addItem(T[] _items) {

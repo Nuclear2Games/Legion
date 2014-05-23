@@ -52,7 +52,7 @@
             android:layout_marginBottom="@dimen/fields_spacing"
             android:layout_marginLeft="@dimen/fields_spacing"
             android:layout_marginRight="@dimen/fields_spacing"
-            android:background="@drawable/txt_edit"
+            android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="left|center_vertical"
             android:imeOptions="actionDone"

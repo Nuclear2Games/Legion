@@ -23,6 +23,9 @@ namespace Legion
         private const int ID_INVALID_USER_OR_PASSWORD = 4;
         private const string DESCRIPTION_INVALID_USER_OR_PASSWORD = "Invalid user or password";
 
+        private const int ID_EXISTING_USER = 5;
+        private const string DESCRIPTION_EXISTING_USER = "Existing user";
+
         #region Users
         public ResultId NewUser(string login, string password)
         {
@@ -49,7 +52,14 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
+                    {
                         r.Content = Convert.ToInt64(reader.GetValue(0));
+                        if (r.Content == -1)
+                        {
+                            r.Code = ID_EXISTING_USER;
+                            r.Message = DESCRIPTION_EXISTING_USER;
+                        }
+                    }
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -170,7 +180,7 @@ namespace Legion
         #endregion
 
         #region Places
-        public ResultId NewPlace(long user, double latitude, double longitude, long type, string name, string description)
+        public ResultId NewPlace(long user, double latitude, double longitude, long type, string name, string description, string date)
         {
             ResultId r = new ResultId();
 
@@ -194,6 +204,7 @@ namespace Legion
                 command.Parameters["@type"].Value = type;
                 command.Parameters["@name"].Value = name;
                 command.Parameters["@description"].Value = description;
+                command.Parameters["@date"].Value = date;
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -213,7 +224,7 @@ namespace Legion
             return r;
         }
 
-        public Result UpdatePlace(long user, long place, double latitude, double longitude, string name, string description)
+        public Result UpdatePlace(long user, long place, double latitude, double longitude, string name, string description, string date)
         {
             Result r = new Result();
 
@@ -237,6 +248,7 @@ namespace Legion
                 command.Parameters["@longitude"].Value = longitude;
                 command.Parameters["@name"].Value = name;
                 command.Parameters["@description"].Value = description;
+                command.Parameters["@date"].Value = date;
 
                 if (command.ExecuteNonQuery() == 0)
                 {
@@ -547,25 +559,12 @@ namespace Legion
             return r;
         }
 
-        public ResultPlaces GetNearPlaces(string latitude, string longitude)
+        public ResultPlaces GetNearPlaces(double latitude, double longitude)
         {
             ResultPlaces r = new ResultPlaces();
 
-            double lat;
-            double lon;
-            try
-            {
-                lat = Double.Parse(latitude);
-                lon = Double.Parse(longitude);
-            }
-            catch
-            {
-                lat = 0;
-                lon = 0;
-            }
-
             // Validate if login is valid
-            if (lat == 0 || lon == 0)
+            if (latitude == 0 || longitude == 0)
             {
                 r.Code = ID_INVALID_CONTENT;
                 r.Message = DESCRIPTION_INVALID_CONTENT;
@@ -594,16 +593,26 @@ namespace Legion
                             p.Id = reader.GetInt64(0);
                             p.Latitude = reader.GetDouble(1);
                             p.Longitude = reader.GetDouble(2);
-                            p.Type = reader.GetInt64(3);
-                            p.Name = reader.GetString(4);
-                            p.Description = reader.GetString(5);
-                            p.Date = reader.GetDateTime(6);
-                            p.Points = reader.GetInt64(7);
-                            p.Subjects = reader.GetInt64(8);
-                            p.Likes = reader.GetInt64(9);
-                            p.Dislikes = reader.GetInt64(10);
-                            p.UserId = reader.GetInt64(11);
-                            p.UserName = reader.GetString(12);
+                            if (!reader.IsDBNull(3))
+                                p.Type = reader.GetInt64(3);
+                            if (!reader.IsDBNull(4))
+                                p.Name = reader.GetString(4);
+                            if (!reader.IsDBNull(5))
+                                p.Description = reader.GetString(5);
+                            if (!reader.IsDBNull(6))
+                                p.Date = reader.GetDateTime(6);
+                            if (!reader.IsDBNull(7))
+                                p.Points = reader.GetInt64(7);
+                            if (!reader.IsDBNull(8))
+                                p.Subjects = reader.GetInt64(8);
+                            if (!reader.IsDBNull(9))
+                                p.Likes = reader.GetInt64(9);
+                            if (!reader.IsDBNull(10))
+                                p.Dislikes = reader.GetInt64(10);
+                            if (!reader.IsDBNull(11))
+                                p.UserId = reader.GetInt64(11);
+                            if (!reader.IsDBNull(12))
+                                p.UserName = reader.GetString(12);
 
                             places.Add(p);
                         }

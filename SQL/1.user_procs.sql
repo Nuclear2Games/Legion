@@ -25,6 +25,10 @@ BEGIN
 		
 		SELECT @@IDENTITY AS 'id'
 	END
+	ELSE
+	BEGIN
+		SELECT -1 AS 'id'
+	END
 END
 GO
 

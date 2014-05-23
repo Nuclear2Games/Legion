@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners android:radius="5dip" />
+    <item android:drawable="@drawable/btn_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/btn_pressed" android:state_focused="true"/>
+    <item android:drawable="@drawable/btn_deafult"/>
 
-    <gradient
-        android:angle="270"
-        android:centerX="0.5"
-        android:centerY="0.5"
-        android:endColor="#ccc"
-        android:startColor="#fff" />
-
-    <stroke
-        android:width="1dip"
-        android:color="#8aaa" />
-
-</shape>
+</selector>

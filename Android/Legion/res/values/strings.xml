@@ -18,6 +18,9 @@
     <string name="f_to_update">Atualizar</string>
     <string name="f_no_gms">O aplicativo de mapas está desatualizado</string>
 
+    <string name="f_like">Gostei</string>
+    <string name="f_unlike">Não gostei</string>
+    
     <!-- Main -->
     <string name="f_main_map">Mapa</string>
     <string name="f_main_events">Eventos</string>
@@ -40,6 +43,7 @@
     
     <string name="f_newuser_fill_login_title">Nome do usuário</string>
     <string name="f_newuser_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto apenas por números.</string>
+    <string name="f_newuser_fill_login_exists">Já sendo existe.\n\nO nome precisa ser único.</string>
     <string name="f_newuser_fill_pass_title">Senha do usuário</string>
     <string name="f_newuser_fill_pass_subtitle">A senha de usuário precisa ter entre 4 e 32 caracteres.</string>
     <string name="f_newuser_fill_pass2_title">Senha do usuário</string>
@@ -53,9 +57,25 @@
     <string name="f_login_enter">Entrar</string>
     
     <string name="f_login_fill_login_title">Nome do usuário</string>
-    <string name="f_login_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto apenas por números.</string>
+    <string name="f_login_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto por texto simples, números, "." ou "-".</string>
+    <string name="f_login_fill_login_user_or_pass">Usuário e/ou senha inválido(s).</string>
     <string name="f_login_fill_pass_title">Senha do usuário</string>
     <string name="f_login_fill_pass_subtitle">A senha de usuário precisa ter entre 4 e 32 caracteres.</string>
     <string name="f_login_fail">Não foi possível entrar.</string>
+    
+    <!-- NewEvent -->
+    <string name="f_newevent_title">Novo local</string>
+    <string name="f_newevent_type">Tipo</string>
+    <string name="f_newevent_event">Evento</string>
+    <string name="f_newevent_link">Link</string>
+    <string name="f_newevent_name">Nome</string>
+    <string name="f_newevent_description">Descrição</string>
+    <string name="f_newevent_when">Data</string>
+    <string name="f_newevent_register">Registrar</string>
+
+    <string name="f_newevent_fill_name_title">Nome do local</string>
+    <string name="f_newevent_fill_name_subtitle">O nome do local precisa ter entre 2 e 32 caracteres.</string>
+    <string name="f_newevent_fill_description_title">Descrição do local</string>
+    <string name="f_newevent_fill_description_subtitle">A descrição do local precisa ter ao menos 4 caracteres.</string>
     
 </resources>

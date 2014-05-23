@@ -78,26 +78,26 @@ public class Notification extends Default {
 			if (_json == null)
 				return false;
 
-			if (hasValue(_json, "id"))
-				setId(_json.getLong("id"));
+			if (hasValue(_json, "Id"))
+				setId(_json.getLong("Id"));
 
-			if (hasValue(_json, "userId"))
-				setUserId(_json.getLong("userId"));
+			if (hasValue(_json, "UserId"))
+				setUserId(_json.getLong("UserId"));
 
-			if (hasValue(_json, "customId"))
-				setCustomId(_json.getLong("customId"));
+			if (hasValue(_json, "CustomId"))
+				setCustomId(_json.getLong("CustomId"));
 
-			if (hasValue(_json, "customTypeId"))
-				setCustomTypeId((byte) _json.getInt("customTypeId"));
+			if (hasValue(_json, "CustomTypeId"))
+				setCustomTypeId((byte) _json.getInt("CustomTypeId"));
 
-			if (hasValue(_json, "what"))
-				setWhat(_json.getLong("what"));
+			if (hasValue(_json, "What"))
+				setWhat(_json.getLong("What"));
 
-			if (hasValue(_json, "date"))
-				setWhen(Util.parseJSONDate(_json.getString("date")));
+			if (hasValue(_json, "Date"))
+				setWhen(Util.parseJSONDate(_json.getString("Date")));
 
-			if (hasValue(_json, "seen"))
-				setSeen(_json.getBoolean("seen"));
+			if (hasValue(_json, "Seen"))
+				setSeen(_json.getBoolean("Seen"));
 
 			return true;
 		} catch (Exception e) {

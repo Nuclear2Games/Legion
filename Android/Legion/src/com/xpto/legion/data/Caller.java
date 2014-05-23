@@ -8,9 +8,9 @@ import com.xpto.legion.utils.LCallback;
 import com.xpto.legion.utils.WSCaller;
 
 public class Caller {
-	private static final String URL_WS = "http://54.242.85.210/legion/legion.svc/";
+	private static final String URL_WS = "http://www.xptogames.com.br/Legion/Legion.svc/";
 	// private static final String URL_WS = "http://192.168.0.31/legion.svc/";
-	// private static final String URL_WS = "http://192.168.1.3/legion.svc/";
+	// private static final String URL_WS = "http://10.20.0.59/legion.svc/";
 	private static final int RETRY_NO = 0;
 	private static final int RETRY_YES = 5;
 
@@ -178,7 +178,7 @@ public class Caller {
 
 			params.put("user", user);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetUser", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetUser", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -191,7 +191,7 @@ public class Caller {
 
 			params.put("user", user);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetNotifications", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetNotifications", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -211,14 +211,14 @@ public class Caller {
 		}
 	}
 
-	public static void getNearPlaces(Activity activity, LCallback success, LCallback retry, LCallback fail, double longitude, double latitude) {
+	public static void getNearPlaces(Activity activity, LCallback success, LCallback retry, LCallback fail, double latitude, double longitude) {
 		try {
 			JSONObject params = new JSONObject();
 
 			params.put("latitude", latitude);
 			params.put("longitude", longitude);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetNearPlaces", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetNearPlaces", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -231,7 +231,7 @@ public class Caller {
 
 			params.put("place", place);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetSubjects", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetSubjects", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -244,7 +244,7 @@ public class Caller {
 
 			params.put("subject", subject);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetComments", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetComments", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -257,7 +257,7 @@ public class Caller {
 
 			params.put("comment", comment);
 
-			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetAnswers", params, WSCaller.WS_CACHE_NO, RETRY_YES, false);
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetAnswers", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);

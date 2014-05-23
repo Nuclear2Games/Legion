@@ -142,44 +142,44 @@ public class Place extends Default {
 			if (_json == null)
 				return false;
 
-			if (hasValue(_json, "id"))
-				setId(_json.getLong("id"));
+			if (hasValue(_json, "Id"))
+				setId(_json.getLong("Id"));
 
-			if (hasValue(_json, "userId"))
-				setUserId(_json.getLong("userId"));
+			if (hasValue(_json, "UserId"))
+				setUserId(_json.getLong("UserId"));
 
-			if (hasValue(_json, "userName"))
-				setUserName(_json.getString("userName"));
+			if (hasValue(_json, "UserName"))
+				setUserName(_json.getString("UserName"));
 
-			if (hasValue(_json, "latitude"))
-				setLatitude(_json.getDouble("latitude"));
+			if (hasValue(_json, "Latitude"))
+				setLatitude(_json.getDouble("Latitude"));
 
-			if (hasValue(_json, "longitude"))
-				setLongitude(_json.getDouble("longitude"));
+			if (hasValue(_json, "Longitude"))
+				setLongitude(_json.getDouble("Longitude"));
 
-			if (hasValue(_json, "type"))
-				setType(_json.getLong("type"));
+			if (hasValue(_json, "Type"))
+				setType(_json.getLong("Type"));
 
-			if (hasValue(_json, "name"))
-				setName(_json.getString("name"));
+			if (hasValue(_json, "Name"))
+				setName(_json.getString("Name"));
 
-			if (hasValue(_json, "description"))
-				setDescription(_json.getString("description"));
+			if (hasValue(_json, "Description"))
+				setDescription(_json.getString("Description"));
 
-			if (hasValue(_json, "date"))
-				setWhen(Util.parseJSONDate(_json.getString("date")));
+			if (hasValue(_json, "Date"))
+				setWhen(Util.parseJSONDate(_json.getString("Date")));
 
-			if (hasValue(_json, "points"))
-				setPoints(_json.getLong("points"));
+			if (hasValue(_json, "Points"))
+				setPoints(_json.getLong("Points"));
 
-			if (hasValue(_json, "subjects"))
-				setSubjects(_json.getLong("subjects"));
+			if (hasValue(_json, "Subjects"))
+				setSubjects(_json.getLong("Subjects"));
 
-			if (hasValue(_json, "likes"))
-				setLikes(_json.getLong("likes"));
+			if (hasValue(_json, "Likes"))
+				setLikes(_json.getLong("Likes"));
 
-			if (hasValue(_json, "dislikes"))
-				setDislikes(_json.getLong("dislikes"));
+			if (hasValue(_json, "Dislikes"))
+				setDislikes(_json.getLong("Dislikes"));
 
 			return true;
 		} catch (Exception e) {

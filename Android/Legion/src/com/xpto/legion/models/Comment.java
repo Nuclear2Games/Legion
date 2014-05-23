@@ -111,35 +111,35 @@ public class Comment extends Default {
 			if (_json == null)
 				return false;
 
-			if (hasValue(_json, "id"))
-				setId(_json.getLong("id"));
+			if (hasValue(_json, "Id"))
+				setId(_json.getLong("Id"));
 
-			if (hasValue(_json, "subjectId"))
-				setSubjectId(_json.getLong("subjectId"));
+			if (hasValue(_json, "SubjectId"))
+				setSubjectId(_json.getLong("SubjectId"));
 
-			if (hasValue(_json, "userId"))
-				setUserId(_json.getLong("userId"));
+			if (hasValue(_json, "UserId"))
+				setUserId(_json.getLong("UserId"));
 
-			if (hasValue(_json, "userName"))
-				setUserName(_json.getString("userName"));
+			if (hasValue(_json, "UserName"))
+				setUserName(_json.getString("UserName"));
 
-			if (hasValue(_json, "date"))
-				setWhen(Util.parseJSONDate(_json.getString("date")));
+			if (hasValue(_json, "Date"))
+				setWhen(Util.parseJSONDate(_json.getString("Date")));
 
-			if (hasValue(_json, "content"))
-				setContent(_json.getString("content"));
+			if (hasValue(_json, "Content"))
+				setContent(_json.getString("Content"));
 
-			if (hasValue(_json, "points"))
-				setPoints(_json.getLong("points"));
+			if (hasValue(_json, "Points"))
+				setPoints(_json.getLong("Points"));
 
-			if (hasValue(_json, "answers"))
-				setAnswers(_json.getLong("answers"));
+			if (hasValue(_json, "Answers"))
+				setAnswers(_json.getLong("Answers"));
 
-			if (hasValue(_json, "likes"))
-				setLikes(_json.getLong("likes"));
+			if (hasValue(_json, "Likes"))
+				setLikes(_json.getLong("Likes"));
 
-			if (hasValue(_json, "dislikes"))
-				setDislikes(_json.getLong("dislikes"));
+			if (hasValue(_json, "Dislikes"))
+				setDislikes(_json.getLong("Dislikes"));
 
 			return true;
 		} catch (Exception e) {

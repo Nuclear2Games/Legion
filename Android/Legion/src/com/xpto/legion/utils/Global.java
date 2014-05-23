@@ -3,18 +3,55 @@ package com.xpto.legion.utils;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-
-import com.xpto.legion.data.Cache;
-import com.xpto.legion.data.DB;
-import com.xpto.legion.models.Place;
+import org.json.JSONObject;
 
 import android.app.Application;
 
+import com.xpto.legion.data.Cache;
+import com.xpto.legion.data.DB;
+import com.xpto.legion.models.Notification;
+import com.xpto.legion.models.Place;
+import com.xpto.legion.models.User;
+
 public class Global extends Application {
+	private static final String db_user = "user";
 	private static final String db_time = "time";
 	private static final String db_accuracy = "accuracy";
 	private static final String db_latitude = "latitude";
 	private static final String db_longitude = "longitude";
+
+	private User logged;
+
+	public User getLogged() {
+		if (logged == null || logged.getId() == 0) {
+			Cache cache = DB.get(db_user);
+			if (cache != null && cache.getValue().length() > 0) {
+				try {
+					logged = new User();
+					if (!logged.loadFromJSon(new JSONObject(cache.getValue())))
+						throw new Exception();
+				} catch (Exception e) {
+					DB.del(db_user);
+				}
+			}
+		}
+
+		return logged;
+	}
+
+	public void setLogged(User _logged) {
+		if (logged == null || logged.getId() == 0)
+			logged = _logged;
+		else if (logged.getId() == _logged.getId()) {
+			logged.setLogin(_logged.getLogin());
+			logged.setName(_logged.getName());
+			logged.setDescription(_logged.getDescription());
+			logged.setPoints(_logged.getPoints());
+		} else
+			return;
+
+		DB.set(db_user, logged.toString());
+	}
 
 	private long time;
 
@@ -125,9 +162,8 @@ public class Global extends Application {
 					throw new Exception();
 			}
 
-			for (int i = 0; i < places.length; i++) {
+			for (int i = 0; i < places.length; i++)
 				addPlace(places[i]);
-			}
 
 			return true;
 		} catch (Exception e) {
@@ -155,6 +191,58 @@ public class Global extends Application {
 
 		if (index >= 0) {
 			nearPlaces.add(index, _place);
+			return true;
+		} else
+			return false;
+	}
+
+	private ArrayList<Notification> notifications;
+
+	public ArrayList<Notification> getNotifications() {
+		if (notifications == null)
+			notifications = new ArrayList<Notification>();
+		return notifications;
+	}
+
+	public boolean addNotifications(JSONArray _notifications) {
+		try {
+			Notification[] notifications = new Notification[_notifications.length()];
+			for (int i = 0; i < notifications.length; i++) {
+				notifications[i] = new Notification();
+				if (!notifications[i].loadFromJSon(_notifications.getJSONObject(i)))
+					throw new Exception();
+			}
+
+			for (int i = 0; i < notifications.length; i++) {
+				addNotification(notifications[i]);
+			}
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean addNotification(Notification _notification) {
+		if (notifications == null) {
+			notifications = new ArrayList<Notification>();
+			notifications.add(_notification);
+			return true;
+		}
+
+		int index = 0;
+		for (int i = notifications.size() - 1; i >= 0; i--) {
+			Notification notification = notifications.get(i);
+
+			if (notification.getId() == _notification.getId()) {
+				index = -1;
+				break;
+			} else if (notification.getWhen().getTime() > _notification.getWhen().getTime())
+				index = i;
+		}
+
+		if (index >= 0) {
+			notifications.add(index, _notification);
 			return true;
 		} else
 			return false;

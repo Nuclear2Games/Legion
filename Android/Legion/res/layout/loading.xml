@@ -6,28 +6,26 @@
     <FrameLayout
         android:id="@+id/layLoading"
         android:layout_width="match_parent"
-        android:layout_height="50dip"
+        android:layout_height="35dip"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="#C888"
+        android:background="#Cfff"
         android:clickable="true"
-        android:padding="10dip" >
+        android:paddingLeft="5dip" >
 
-        <ImageView
-            android:id="@+id/imgLoading"
-            android:layout_width="30dip"
-            android:layout_height="30dip"
-            android:layout_gravity="left|center_vertical"
-            android:contentDescription="@string/f_loading" />
+        <ProgressBar
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:layout_gravity="left|center_vertical" />
 
         <TextView
             android:id="@+id/txtLoading"
             android:layout_width="match_parent"
             android:layout_height="25dip"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="40dip"
+            android:layout_marginLeft="30dip"
             android:gravity="left|center_vertical"
             android:tag="b"
-            android:textColor="@color/white"
+            android:textColor="@color/gray_half"
             android:textSize="16sp" />
     </FrameLayout>
 

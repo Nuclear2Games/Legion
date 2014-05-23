@@ -47,25 +47,41 @@ public class User extends Default {
 	}
 
 	@Override
+	public String toString() {
+		JSONObject json = new JSONObject();
+
+		try {
+			json.put("id", getId());
+			json.put("login", getLogin());
+			json.put("name", getName());
+			json.put("description", getDescription());
+			json.put("points", getPoints());
+		} catch (Exception e) {
+		}
+
+		return json.toString();
+	}
+
+	@Override
 	public boolean loadFromJSon(JSONObject _json) {
 		try {
 			if (_json == null)
 				return false;
 
-			if (hasValue(_json, "id"))
-				setId(_json.getLong("id"));
+			if (hasValue(_json, "Id"))
+				setId(_json.getLong("Id"));
 
-			if (hasValue(_json, "login"))
-				setLogin(_json.getString("login"));
+			if (hasValue(_json, "Login"))
+				setLogin(_json.getString("Login"));
 
-			if (hasValue(_json, "name"))
-				setName(_json.getString("name"));
+			if (hasValue(_json, "Name"))
+				setName(_json.getString("Name"));
 
-			if (hasValue(_json, "description"))
-				setDescription(_json.getString("description"));
+			if (hasValue(_json, "Description"))
+				setDescription(_json.getString("Description"));
 
-			if (hasValue(_json, "points"))
-				setPoints(_json.getLong("points"));
+			if (hasValue(_json, "Points"))
+				setPoints(_json.getLong("Points"));
 
 			return true;
 		} catch (Exception e) {
