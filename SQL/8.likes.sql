@@ -44,8 +44,8 @@ BEGIN
 			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE places SET
-					likes = likes + @lk,
-					dislikes = dislikes + @dl
+					likes = ISNULL(likes, 0) + @lk,
+					dislikes = ISNULL(dislikes, 0) + @dl
 				WHERE
 						id = @customId
 			END
@@ -63,8 +63,8 @@ BEGIN
 			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE subjects SET
-					likes = likes + @lk,
-					dislikes = dislikes + @dl
+					likes = ISNULL(likes, 0) + @lk,
+					dislikes = ISNULL(dislikes, 0) + @dl
 				WHERE
 						id = @customId
 			END
@@ -82,27 +82,27 @@ BEGIN
 			IF @targetUserId IS NOT NULL
 			BEGIN
 				UPDATE comments SET
-					likes = likes + @lk,
-					dislikes = dislikes + @dl
+					likes = ISNULL(likes, 0) + @lk,
+					dislikes = ISNULL(dislikes, 0) + @dl
 				WHERE
 						id = @customId
 			END
 		END
 
-		IF @customTypeId = 4 -- Answers
+		IF @customTypeId = 4 -- comment_answers
 		BEGIN
 			SELECT
 				@targetUserId = userId
 			FROM
-				answers
+				comment_answers
 			WHERE
 					id = @customId
 
 			IF @targetUserId IS NOT NULL
 			BEGIN
-				UPDATE answers SET
-					likes = likes + @lk,
-					dislikes = dislikes + @dl
+				UPDATE comment_answers SET
+					likes = ISNULL(likes, 0) + @lk,
+					dislikes = ISNULL(dislikes, 0) + @dl
 				WHERE
 						id = @customId
 			END
@@ -139,7 +139,7 @@ BEGIN
 			)
 			
 			UPDATE users SET
-				points = points + @lk - @dl * 3
+				points = ISNULL(points, 0) + @lk - @dl * 3
 			WHERE
 					id = @userId
 		END

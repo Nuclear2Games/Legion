@@ -51,11 +51,11 @@ public class User extends Default {
 		JSONObject json = new JSONObject();
 
 		try {
-			json.put("id", getId());
-			json.put("login", getLogin());
-			json.put("name", getName());
-			json.put("description", getDescription());
-			json.put("points", getPoints());
+			json.put("Id", getId());
+			json.put("Login", getLogin());
+			json.put("Name", getName());
+			json.put("Description", getDescription());
+			json.put("Points", getPoints());
 		} catch (Exception e) {
 		}
 

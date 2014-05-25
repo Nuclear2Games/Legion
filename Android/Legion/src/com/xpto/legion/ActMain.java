@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -25,12 +26,31 @@ import com.xpto.legion.utils.LDialog;
 import com.xpto.legion.utils.LFragment;
 
 public class ActMain extends LActivity implements ActionBar.TabListener {
+	public static final int LEVEL_TOP = 1;
+	public static final int LEVEL_ANSWER = 2;
+	public static final int LEVEL_COMMENT = 3;
+	public static final int LEVEL_SUBJECT = 4;
+	public static final int LEVEL_EVENT = 5;
+
+	public static final int CUSTOM_TYPE_EVENT = 1;
+	public static final int CUSTOM_TYPE_SUBJECT = 2;
+	public static final int CUSTOM_TYPE_COMMENT = 3;
+	public static final int CUSTOM_TYPE_ANSWER = 4;
+
 	// List
 	private boolean searchPlaces;
 
 	// Fragments
-	private LFragment fragment;
-	private View viwCover;
+	private View viwCoverEvent;
+	private LFragment fragmentEvent;
+	private View viwCoverSubject;
+	private LFragment fragmentSubject;
+	private View viwCoverComment;
+	private LFragment fragmentComment;
+	private View viwCoverAnswer;
+	private LFragment fragmentAnswer;
+	private View viwCoverTop;
+	private LFragment fragmentTop;
 	// Fixed children
 	private FrgMap frgMap;
 	private FrgEvents frgEvents;
@@ -69,7 +89,11 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		pgrMain.setAdapter(adpMain);
 		adpMain.notifyDataSetChanged();
 
-		viwCover = findViewById(R.id.viwCover);
+		viwCoverEvent = findViewById(R.id.viwCoverEvent);
+		viwCoverSubject = findViewById(R.id.viwCoverSubject);
+		viwCoverComment = findViewById(R.id.viwCoverComment);
+		viwCoverAnswer = findViewById(R.id.viwCoverAnswer);
+		viwCoverTop = findViewById(R.id.viwCoverTop);
 	}
 
 	@Override
@@ -93,8 +117,12 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 	@Override
 	public void onBackPressed() {
-		if (fragment == null || !(fragment instanceof LFragment) || ((LFragment) fragment).canBack())
-			super.onBackPressed();
+		if (fragmentTop == null || fragmentTop.canBack())
+			if (fragmentAnswer == null || fragmentAnswer.canBack())
+				if (fragmentComment == null || fragmentComment.canBack())
+					if (fragmentSubject == null || fragmentSubject.canBack())
+						if (fragmentEvent == null || fragmentEvent.canBack())
+							super.onBackPressed();
 	}
 
 	@Override
@@ -112,19 +140,29 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 		case R.id.action_notifications:
 			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
-				FrgNoUser frgNoUser = new FrgNoUser();
-				setFragment(frgNoUser);
+				if (fragmentTop == null || !(fragmentTop instanceof FrgNoUser) && !(fragmentTop instanceof FrgLogin) && !(fragmentTop instanceof FrgNewUser)) {
+					FrgNoUser frgNoUser = new FrgNoUser();
+					setFragment(frgNoUser, ActMain.LEVEL_TOP);
+				}
 			} else {
-				// TODO
+				if (fragmentTop == null || !(fragmentTop instanceof FrgNotifications)) {
+					FrgNotifications frgNotifications = new FrgNotifications();
+					setFragment(frgNotifications, ActMain.LEVEL_TOP);
+				}
 			}
 			break;
 
 		case R.id.action_profile:
 			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
-				FrgNoUser frgNoUser = new FrgNoUser();
-				setFragment(frgNoUser);
+				if (fragmentTop == null || !(fragmentTop instanceof FrgNoUser) && !(fragmentTop instanceof FrgLogin) && !(fragmentTop instanceof FrgNewUser)) {
+					FrgNoUser frgNoUser = new FrgNoUser();
+					setFragment(frgNoUser, ActMain.LEVEL_TOP);
+				}
 			} else {
-				// TODO
+				if (fragmentTop == null || !(fragmentTop instanceof FrgProfile)) {
+					FrgProfile frgProfile = new FrgProfile();
+					setFragment(frgProfile, ActMain.LEVEL_TOP);
+				}
 			}
 			break;
 		}
@@ -280,58 +318,114 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	};
 
-	public void setFragment(final LFragment _fragment) {
-		if (fragment != null) {
-			Animation cameOut = AnimationUtils.loadAnimation(this, R.anim.transition_dialog_out);
-			cameOut.setAnimationListener(new AnimationListener() {
-				@Override
-				public void onAnimationStart(Animation animation) {
-				}
+	public void setFragment(final LFragment _fragment, final int _level) {
+		switch (_level) {
+		case LEVEL_TOP:
+			replaceFragment(viwCoverTop, fragmentTop, _fragment, R.id.layContentTop);
+			break;
 
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-				}
+		case LEVEL_ANSWER:
+			replaceFragment(viwCoverAnswer, fragmentAnswer, _fragment, R.id.layContentAnswer);
+			break;
 
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					FragmentManager fragmentManager = getSupportFragmentManager();
-					FragmentTransaction ft = fragmentManager.beginTransaction();
-					ft.detach(fragment);
-					ft.commit();
+		case LEVEL_COMMENT:
+			replaceFragment(viwCoverComment, fragmentComment, _fragment, R.id.layContentComment);
+			break;
 
-					addFragment(_fragment);
-				}
+		case LEVEL_SUBJECT:
+			replaceFragment(viwCoverSubject, fragmentSubject, _fragment, R.id.layContentSubject);
+			break;
 
-			});
-			fragment.getView().startAnimation(cameOut);
-		} else
-			addFragment(_fragment);
-
-		if (_fragment == null) {
-			if (viwCover.getVisibility() == View.VISIBLE) {
-				Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.transition_fade_out);
-				viwCover.startAnimation(fadeOut);
-				viwCover.setVisibility(View.GONE);
-			}
-		} else {
-			if (viwCover.getVisibility() != View.VISIBLE) {
-				Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.transition_fade_in);
-				viwCover.setVisibility(View.VISIBLE);
-				viwCover.startAnimation(fadeIn);
-			}
-
+		case LEVEL_EVENT:
+			replaceFragment(viwCoverEvent, fragmentEvent, _fragment, R.id.layContentEvent);
+			break;
 		}
 	}
 
-	private void addFragment(LFragment _fragment) {
-		if (_fragment != null) {
+	private void replaceFragment(View _cover, final LFragment _current, final LFragment _new, final int _idLayContent) {
+		if (_current != null) {
+			Animation cameOut = _current.getOutAnimation();
+			if (cameOut == null) {
+				FragmentManager fragmentManager = getSupportFragmentManager();
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+				ft.detach(_current);
+				ft.commit();
+
+				addFragment(_new, _idLayContent);
+			} else {
+				cameOut.setAnimationListener(new AnimationListener() {
+					@Override
+					public void onAnimationStart(Animation animation) {
+					}
+
+					@Override
+					public void onAnimationRepeat(Animation animation) {
+					}
+
+					@Override
+					public void onAnimationEnd(Animation animation) {
+						FragmentManager fragmentManager = getSupportFragmentManager();
+						FragmentTransaction ft = fragmentManager.beginTransaction();
+						ft.detach(_current);
+						ft.commit();
+
+						addFragment(_new, _idLayContent);
+					}
+				});
+				_current.getView().startAnimation(cameOut);
+			}
+		} else
+			addFragment(_new, _idLayContent);
+
+		if (_new == null) {
+			if (_cover.getVisibility() == View.VISIBLE) {
+				Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.transition_fade_out);
+				_cover.startAnimation(fadeOut);
+				_cover.setVisibility(View.GONE);
+			}
+		} else {
+			if (_cover.getVisibility() != View.VISIBLE) {
+				Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.transition_fade_in);
+				_cover.setVisibility(View.VISIBLE);
+				_cover.startAnimation(fadeIn);
+			}
+		}
+	}
+
+	private void addFragment(LFragment _new, int _idLayContent) {
+		if (_new != null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.replace(R.id.layContent, _fragment);
+			ft.replace(_idLayContent, _new);
 			ft.commit();
 		}
 
-		fragment = _fragment;
+		switch (_idLayContent) {
+		case R.id.layContentTop:
+			fragmentTop = _new;
+			break;
+
+		case R.id.layContentAnswer:
+			fragmentAnswer = _new;
+			break;
+
+		case R.id.layContentComment:
+			fragmentComment = _new;
+			break;
+
+		case R.id.layContentSubject:
+			fragmentSubject = _new;
+			break;
+
+		case R.id.layContentEvent:
+			fragmentEvent = _new;
+			break;
+		}
+
+		if (fragmentTop != null)
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		else
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 	}
 
 	public class PagerAdapter extends FragmentStatePagerAdapter {

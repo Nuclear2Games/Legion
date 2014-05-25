@@ -53,7 +53,8 @@ namespace Legion
                     // If there is result, the ID will be returned
                     if (reader.Read())
                     {
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                        if (!reader.IsDBNull(0))
+                            r.Content = Convert.ToInt64(reader.GetValue(0));
                         if (r.Content == -1)
                         {
                             r.Code = ID_EXISTING_USER;
@@ -73,9 +74,9 @@ namespace Legion
             return r;
         }
 
-        public ResultId Login(string login, string password)
+        public ResultUser Login(string login, string password)
         {
-            ResultId r = new ResultId();
+            ResultUser r = new ResultUser();
 
             // Validate if login is valid
             if (login == null || login.Length < 4 || login.Length > 255 || password == null || password.Length < 4 || password.Length > 255)
@@ -98,7 +99,22 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                    {
+                        User u = new User();
+
+                        if (!reader.IsDBNull(0))
+                            u.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            u.Login = reader.GetString(1);
+                        if (!reader.IsDBNull(2))
+                            u.Name = reader.GetString(2);
+                        if (!reader.IsDBNull(3))
+                            u.Description = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            u.Points = reader.GetInt64(4);
+
+                        r.Content = u;
+                    }
                     else
                     {
                         r.Code = ID_INVALID_USER_OR_PASSWORD;
@@ -210,7 +226,10 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                    {
+                        if (!reader.IsDBNull(0))
+                            r.Content = Convert.ToInt64(reader.GetValue(0));
+                    }
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -289,7 +308,10 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                    {
+                        if (!reader.IsDBNull(0))
+                            r.Content = Convert.ToInt64(reader.GetValue(0));
+                    }
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -330,7 +352,10 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                    {
+                        if (!reader.IsDBNull(0))
+                            r.Content = Convert.ToInt64(reader.GetValue(0));
+                    }
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -358,7 +383,7 @@ namespace Legion
             }
 
             SqlConnection con;
-            using (SqlCommand command = new SqlCommand("new_comment", con = getConnection()))
+            using (SqlCommand command = new SqlCommand("new_comment_answer", con = getConnection()))
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlCommandBuilder.DeriveParameters(command);
@@ -371,7 +396,10 @@ namespace Legion
                 {
                     // If there is result, the ID will be returned
                     if (reader.Read())
-                        r.Content = Convert.ToInt64(reader.GetValue(0));
+                    {
+                        if (!reader.IsDBNull(0))
+                            r.Content = Convert.ToInt64(reader.GetValue(0));
+                    }
                     else
                     {
                         r.Code = ID_UNKNOWN_ERROR;
@@ -446,10 +474,14 @@ namespace Legion
                         User u = new User();
 
                         u.Id = user;
-                        u.Login = reader.GetString(0);
-                        u.Name = reader.GetString(1);
-                        u.Description = reader.GetString(2);
-                        u.Points = reader.GetInt64(3);
+                        if (!reader.IsDBNull(0))
+                            u.Login = reader.GetString(0);
+                        if (!reader.IsDBNull(1))
+                            u.Name = reader.GetString(1);
+                        if (!reader.IsDBNull(2))
+                            u.Description = reader.GetString(2);
+                        if (!reader.IsDBNull(3))
+                            u.Points = reader.GetInt64(3);
 
                         r.Content = u;
                     }
@@ -495,12 +527,18 @@ namespace Legion
                         {
                             Notification n = new Notification();
 
-                            n.Id = reader.GetInt64(0);
-                            n.CustomId = reader.GetInt64(1);
-                            n.CustomTypeId = reader.GetByte(2);
-                            n.What = reader.GetInt64(3);
-                            n.Date = reader.GetDateTime(4);
-                            n.Seen = reader.GetBoolean(5);
+                            if (!reader.IsDBNull(0))
+                                n.CustomId = reader.GetInt64(0);
+                            if (!reader.IsDBNull(1))
+                                n.CustomTypeId = reader.GetByte(1);
+                            if (!reader.IsDBNull(2))
+                                n.What = reader.GetInt64(2);
+                            if (!reader.IsDBNull(3))
+                                n.Date = reader.GetDateTime(3).ToString("dd/MM/yyyy HH:mm");
+                            if (!reader.IsDBNull(4))
+                                n.Seen = reader.GetBoolean(4);
+                            if (!reader.IsDBNull(5))
+                                n.Quantity = Convert.ToInt64(reader.GetValue(5));
 
                             notifications.Add(n);
                         }
@@ -559,6 +597,76 @@ namespace Legion
             return r;
         }
 
+        public ResultPlace GetPlace(long id)
+        {
+            ResultPlace r = new ResultPlace();
+
+            // Validate if login is valid
+            if (id <= 0)
+            {
+                r.Code = ID_INVALID_CONTENT;
+                r.Message = DESCRIPTION_INVALID_CONTENT;
+                return r;
+            }
+
+            try
+            {
+                SqlConnection con;
+                using (SqlCommand command = new SqlCommand("get_place", con = getConnection()))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    SqlCommandBuilder.DeriveParameters(command);
+
+                    command.Parameters["@id"].Value = id;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Place p = new Place();
+
+                            if (!reader.IsDBNull(0))
+                                p.Id = reader.GetInt64(0);
+                            if (!reader.IsDBNull(1))
+                                p.Latitude = reader.GetDouble(1);
+                            if (!reader.IsDBNull(2))
+                                p.Longitude = reader.GetDouble(2);
+                            if (!reader.IsDBNull(3))
+                                p.Type = reader.GetInt64(3);
+                            if (!reader.IsDBNull(4))
+                                p.Name = reader.GetString(4);
+                            if (!reader.IsDBNull(5))
+                                p.Description = reader.GetString(5);
+                            if (!reader.IsDBNull(6))
+                                p.Date = reader.GetDateTime(6).ToString("dd/MM/yyyy HH:mm");
+                            if (!reader.IsDBNull(7))
+                                p.Points = reader.GetInt64(7);
+                            if (!reader.IsDBNull(8))
+                                p.Subjects = reader.GetInt64(8);
+                            if (!reader.IsDBNull(9))
+                                p.Likes = reader.GetInt64(9);
+                            if (!reader.IsDBNull(10))
+                                p.Dislikes = reader.GetInt64(10);
+                            if (!reader.IsDBNull(11))
+                                p.UserId = reader.GetInt64(11);
+                            if (!reader.IsDBNull(12))
+                                p.UserName = reader.GetString(12);
+
+                            r.Content = p;
+                        }
+                    }
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                r.Code = ID_UNKNOWN_ERROR;
+                r.Message = ex.Message;
+            }
+
+            return r;
+        }
+
         public ResultPlaces GetNearPlaces(double latitude, double longitude)
         {
             ResultPlaces r = new ResultPlaces();
@@ -590,9 +698,12 @@ namespace Legion
                         {
                             Place p = new Place();
 
-                            p.Id = reader.GetInt64(0);
-                            p.Latitude = reader.GetDouble(1);
-                            p.Longitude = reader.GetDouble(2);
+                            if (!reader.IsDBNull(0))
+                                p.Id = reader.GetInt64(0);
+                            if (!reader.IsDBNull(1))
+                                p.Latitude = reader.GetDouble(1);
+                            if (!reader.IsDBNull(2))
+                                p.Longitude = reader.GetDouble(2);
                             if (!reader.IsDBNull(3))
                                 p.Type = reader.GetInt64(3);
                             if (!reader.IsDBNull(4))
@@ -600,7 +711,7 @@ namespace Legion
                             if (!reader.IsDBNull(5))
                                 p.Description = reader.GetString(5);
                             if (!reader.IsDBNull(6))
-                                p.Date = reader.GetDateTime(6);
+                                p.Date = reader.GetDateTime(6).ToString("dd/MM/yyyy HH:mm");
                             if (!reader.IsDBNull(7))
                                 p.Points = reader.GetInt64(7);
                             if (!reader.IsDBNull(8))
@@ -636,6 +747,64 @@ namespace Legion
             return r;
         }
 
+        public ResultSubject GetSubject(long id)
+        {
+            ResultSubject r = new ResultSubject();
+
+            // Validate if login is valid
+            if (id <= 0)
+            {
+                r.Code = ID_INVALID_CONTENT;
+                r.Message = DESCRIPTION_INVALID_CONTENT;
+                return r;
+            }
+
+            SqlConnection con;
+            using (SqlCommand command = new SqlCommand("get_subject", con = getConnection()))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommandBuilder.DeriveParameters(command);
+
+                command.Parameters["@id"].Value = id;
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    List<Subject> subjects = new List<Subject>();
+
+                    if (reader.Read())
+                    {
+                        Subject s = new Subject();
+
+                        if (!reader.IsDBNull(0))
+                            s.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            s.PlaceId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            s.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            s.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            s.Points = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            s.Comments = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            s.Likes = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            s.Dislikes = reader.GetInt64(7);
+                        if (!reader.IsDBNull(8))
+                            s.UserId = reader.GetInt64(8);
+                        if (!reader.IsDBNull(9))
+                            s.UserName = reader.GetString(9);
+
+                        r.Content = s;
+                    }
+                }
+            }
+            con.Close();
+
+            return r;
+        }
+
         public ResultSubjects GetSubjects(long place)
         {
             ResultSubjects r = new ResultSubjects();
@@ -664,16 +833,26 @@ namespace Legion
                     {
                         Subject s = new Subject();
 
-                        s.Id = reader.GetInt64(0);
-                        s.PlaceId = reader.GetInt64(1);
-                        s.Date = reader.GetDateTime(2);
-                        s.Content = reader.GetString(3);
-                        s.Points = reader.GetInt64(4);
-                        s.Comments = reader.GetInt64(5);
-                        s.Likes = reader.GetInt64(6);
-                        s.Dislikes = reader.GetInt64(7);
-                        s.UserId = reader.GetInt64(8);
-                        s.UserName = reader.GetString(9);
+                        if (!reader.IsDBNull(0))
+                            s.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            s.PlaceId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            s.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            s.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            s.Points = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            s.Comments = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            s.Likes = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            s.Dislikes = reader.GetInt64(7);
+                        if (!reader.IsDBNull(8))
+                            s.UserId = reader.GetInt64(8);
+                        if (!reader.IsDBNull(9))
+                            s.UserName = reader.GetString(9);
 
                         subjects.Add(s);
                     }
@@ -684,6 +863,64 @@ namespace Legion
                         ss[i] = subjects[i];
 
                     r.Content = ss;
+                }
+            }
+            con.Close();
+
+            return r;
+        }
+
+        public ResultComment GetComment(long id)
+        {
+            ResultComment r = new ResultComment();
+
+            // Validate if login is valid
+            if (id <= 0)
+            {
+                r.Code = ID_INVALID_CONTENT;
+                r.Message = DESCRIPTION_INVALID_CONTENT;
+                return r;
+            }
+
+            SqlConnection con;
+            using (SqlCommand command = new SqlCommand("get_comment", con = getConnection()))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommandBuilder.DeriveParameters(command);
+
+                command.Parameters["@id"].Value = id;
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    List<Comment> comments = new List<Comment>();
+
+                    if (reader.Read())
+                    {
+                        Comment c = new Comment();
+
+                        if (!reader.IsDBNull(0))
+                            c.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            c.SubjectId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            c.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            c.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            c.Points = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            c.Answers = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            c.Likes = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            c.Dislikes = reader.GetInt64(7);
+                        if (!reader.IsDBNull(8))
+                            c.UserId = reader.GetInt64(8);
+                        if (!reader.IsDBNull(9))
+                            c.UserName = reader.GetString(9);
+
+                        r.Content = c;
+                    }
                 }
             }
             con.Close();
@@ -719,16 +956,26 @@ namespace Legion
                     {
                         Comment c = new Comment();
 
-                        c.Id = reader.GetInt64(0);
-                        c.SubjectId = reader.GetInt64(1);
-                        c.Date = reader.GetDateTime(2);
-                        c.Content = reader.GetString(3);
-                        c.Points = reader.GetInt64(4);
-                        c.Answers = reader.GetInt64(5);
-                        c.Likes = reader.GetInt64(6);
-                        c.Dislikes = reader.GetInt64(7);
-                        c.UserId = reader.GetInt64(8);
-                        c.UserName = reader.GetString(9);
+                        if (!reader.IsDBNull(0))
+                            c.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            c.SubjectId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            c.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            c.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            c.Points = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            c.Answers = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            c.Likes = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            c.Dislikes = reader.GetInt64(7);
+                        if (!reader.IsDBNull(8))
+                            c.UserId = reader.GetInt64(8);
+                        if (!reader.IsDBNull(9))
+                            c.UserName = reader.GetString(9);
 
                         comments.Add(c);
                     }
@@ -739,6 +986,60 @@ namespace Legion
                         cs[i] = comments[i];
 
                     r.Content = cs;
+                }
+            }
+            con.Close();
+
+            return r;
+        }
+
+        public ResultAnswer GetAnswer(long id)
+        {
+            ResultAnswer r = new ResultAnswer();
+
+            // Validate if login is valid
+            if (id <= 0)
+            {
+                r.Code = ID_INVALID_CONTENT;
+                r.Message = DESCRIPTION_INVALID_CONTENT;
+                return r;
+            }
+
+            SqlConnection con;
+            using (SqlCommand command = new SqlCommand("get_answer", con = getConnection()))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommandBuilder.DeriveParameters(command);
+
+                command.Parameters["@id"].Value = id;
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    List<Answer> answers = new List<Answer>();
+
+                    if (reader.Read())
+                    {
+                        Answer a = new Answer();
+
+                        if (!reader.IsDBNull(0))
+                            a.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            a.CommentId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            a.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            a.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            a.Likes = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            a.Dislikes = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            a.UserId = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            a.UserName = reader.GetString(7);
+
+                        r.Content = a;
+                    }
                 }
             }
             con.Close();
@@ -774,14 +1075,22 @@ namespace Legion
                     {
                         Answer a = new Answer();
 
-                        a.Id = reader.GetInt64(0);
-                        a.CommentId = reader.GetInt64(1);
-                        a.Date = reader.GetDateTime(2);
-                        a.Content = reader.GetString(3);
-                        a.Likes = reader.GetInt64(4);
-                        a.Dislikes = reader.GetInt64(5);
-                        a.UserId = reader.GetInt64(6);
-                        a.UserName = reader.GetString(7);
+                        if (!reader.IsDBNull(0))
+                            a.Id = reader.GetInt64(0);
+                        if (!reader.IsDBNull(1))
+                            a.CommentId = reader.GetInt64(1);
+                        if (!reader.IsDBNull(2))
+                            a.Date = reader.GetDateTime(2).ToString("dd/MM/yyyy HH:mm");
+                        if (!reader.IsDBNull(3))
+                            a.Content = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                            a.Likes = reader.GetInt64(4);
+                        if (!reader.IsDBNull(5))
+                            a.Dislikes = reader.GetInt64(5);
+                        if (!reader.IsDBNull(6))
+                            a.UserId = reader.GetInt64(6);
+                        if (!reader.IsDBNull(7))
+                            a.UserName = reader.GetString(7);
 
                         answers.Add(a);
                     }

@@ -66,6 +66,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:hint="@string/f_newuser_pass2"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLength="32"
             android:password="true"

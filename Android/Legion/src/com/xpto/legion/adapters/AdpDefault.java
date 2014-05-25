@@ -47,11 +47,23 @@ public abstract class AdpDefault<T extends Default> extends BaseAdapter {
 	}
 
 	public boolean addItem(T _item) {
-		for (int i = 0; i < items.size(); i++)
-			if (items.get(i).getId() == _item.getId())
-				return false;
+		return addItem(_item, -1);
+	}
 
-		items.add(_item);
+	public boolean addItem(T _item, int _index) {
+		for (int i = 0; i < items.size(); i++)
+			if (items.get(i).getClass().equals(_item.getClass()) && items.get(i).getId() == _item.getId()) {
+				if (_index >= 0 && _index != i) {
+					items.remove(i);
+					break;
+				} else
+					return false;
+			}
+
+		if (_index < 0)
+			items.add(_item);
+		else
+			items.add(_index, _item);
 		return true;
 	}
 

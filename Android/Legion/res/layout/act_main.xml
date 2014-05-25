@@ -21,7 +21,7 @@
     </android.support.v4.view.ViewPager>
 
     <View
-        android:id="@+id/viwCover"
+        android:id="@+id/viwCoverEvent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top|left"
@@ -30,7 +30,75 @@
         android:visibility="gone" />
 
     <FrameLayout
-        android:id="@+id/layContent"
+        android:id="@+id/layContentEvent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/transparent"
+        android:clickable="false" />
+    
+    <View
+        android:id="@+id/viwCoverSubject"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/black_shadow"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/layContentSubject"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/transparent"
+        android:clickable="false" />
+    
+    <View
+        android:id="@+id/viwCoverComment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/black_shadow"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/layContentComment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/transparent"
+        android:clickable="false" />
+    
+    <View
+        android:id="@+id/viwCoverAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/black_shadow"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/layContentAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/transparent"
+        android:clickable="false" />
+
+    <View
+        android:id="@+id/viwCoverTop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|left"
+        android:background="@color/black_shadow"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/layContentTop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top|left"

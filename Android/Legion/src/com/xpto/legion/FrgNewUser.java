@@ -2,10 +2,8 @@ package com.xpto.legion;
 
 import org.json.JSONObject;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -27,7 +25,7 @@ public class FrgNewUser extends LFragment {
 	private Button btnRegister;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_new_user, null);
 
 		txtLogin = (EditText) view.findViewById(R.id.txtLogin);
@@ -36,6 +34,11 @@ public class FrgNewUser extends LFragment {
 		btnRegister = (Button) view.findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(onClickRegister);
 
+		return view;
+	}
+
+	@Override
+	public Animation getInAnimation() {
 		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
 		cameIn.setAnimationListener(new AnimationListener() {
 			@Override
@@ -52,14 +55,17 @@ public class FrgNewUser extends LFragment {
 				Util.showKeyboard(txtLogin);
 			}
 		});
-		view.startAnimation(cameIn);
+		return cameIn;
+	}
 
-		return view;
+	@Override
+	public Animation getOutAnimation() {
+		return AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_out);
 	}
 
 	@Override
 	public boolean canBack() {
-		((ActMain) getActivity()).setFragment(null);
+		((ActMain) getActivity()).setFragment(null, ActMain.LEVEL_TOP);
 		return false;
 	}
 

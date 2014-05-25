@@ -19,7 +19,7 @@ namespace Legion
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/Login", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        ResultId Login(string login, string password);
+        ResultUser Login(string login, string password);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/UpdateUser", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
@@ -90,18 +90,34 @@ namespace Legion
         Result ReadNotifications(long user);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/GetPlace", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ResultPlace GetPlace(long id);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/GetNearPlaces", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         ResultPlaces GetNearPlaces(double latitude, double longitude);
 
         // TODO: routes
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/GetSubject", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ResultSubject GetSubject(long id);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/GetSubjects", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         ResultSubjects GetSubjects(long place);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/GetComment", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ResultComment GetComment(long id);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/GetComments", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         ResultComments GetComments(long subject);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/GetAnswer", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ResultAnswer GetAnswer(long id);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/GetAnswers", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
@@ -334,28 +350,13 @@ namespace Legion
     [DataContract]
     public class Notification
     {
-        private long id;
-        private long userId;
         private long customId;
         private byte customTypeId;
         private long what;
-        private DateTime date;
+        private string date;
         private bool seen;
+        private long quantity;
         
-        [DataMember]
-        public long Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        [DataMember]
-        public long UserId
-        {
-            get { return userId; }
-            set { userId = value; }
-        }
-
         [DataMember]
         public long CustomId
         {
@@ -378,7 +379,7 @@ namespace Legion
         }
 
         [DataMember]
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set { date = value; }
@@ -389,6 +390,13 @@ namespace Legion
         {
             get { return seen; }
             set { seen = value; }
+        }
+
+        [DataMember]
+        public long Quantity
+        {
+            get { return quantity; }
+            set { quantity = value; }
         }
     }
     #endregion
@@ -405,7 +413,7 @@ namespace Legion
         private long type;
         private string name;
         private string description;
-        private DateTime date;
+        private string date;
         private long points;
         private long subjects;
         private long likes;
@@ -468,7 +476,7 @@ namespace Legion
         }
 
         [DataMember]
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set { date = value; }
@@ -512,7 +520,7 @@ namespace Legion
         private long placeId;
         private long userId;
         private string userName;
-        private DateTime date;
+        private string date;
         private string content;
         private long points;
         private long comments;
@@ -548,7 +556,7 @@ namespace Legion
         }
 
         [DataMember]
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set { date = value; }
@@ -599,7 +607,7 @@ namespace Legion
         private long subjectId;
         private long userId;
         private string userName;
-        private DateTime date;
+        private string date;
         private string content;
         private long points;
         private long answers;
@@ -635,7 +643,7 @@ namespace Legion
         }
 
         [DataMember]
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set { date = value; }
@@ -686,7 +694,7 @@ namespace Legion
         private long commentId;
         private long userId;
         private string userName;
-        private DateTime date;
+        private string date;
         private string content;
         private long likes;
         private long dislikes;
@@ -720,7 +728,7 @@ namespace Legion
         }
 
         [DataMember]
-        public DateTime Date
+        public string Date
         {
             get { return date; }
             set { date = value; }

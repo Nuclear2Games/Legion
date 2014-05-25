@@ -1,22 +1,14 @@
 package com.xpto.legion.models;
 
 import java.util.Date;
+import java.util.Random;
 
 import org.json.JSONObject;
 
 import com.xpto.legion.utils.Util;
 
 public class Notification extends Default {
-	private long userId;
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long _userId) {
-		if (_userId >= 0)
-			userId = _userId;
-	}
+	private static Random random = new Random();
 
 	private long customId;
 
@@ -72,17 +64,22 @@ public class Notification extends Default {
 		seen = _seen;
 	}
 
+	private long quantity;
+
+	public long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(long _quantity) {
+		if (_quantity >= 0)
+			quantity = _quantity;
+	}
+
 	@Override
 	public boolean loadFromJSon(JSONObject _json) {
 		try {
 			if (_json == null)
 				return false;
-
-			if (hasValue(_json, "Id"))
-				setId(_json.getLong("Id"));
-
-			if (hasValue(_json, "UserId"))
-				setUserId(_json.getLong("UserId"));
 
 			if (hasValue(_json, "CustomId"))
 				setCustomId(_json.getLong("CustomId"));
@@ -93,11 +90,16 @@ public class Notification extends Default {
 			if (hasValue(_json, "What"))
 				setWhat(_json.getLong("What"));
 
-			if (hasValue(_json, "Date"))
+			if (hasValue(_json, "Date")) {
 				setWhen(Util.parseJSONDate(_json.getString("Date")));
+				setId(random.nextLong());
+			}
 
 			if (hasValue(_json, "Seen"))
 				setSeen(_json.getBoolean("Seen"));
+
+			if (hasValue(_json, "Quantity"))
+				setQuantity(_json.getLong("Quantity"));
 
 			return true;
 		} catch (Exception e) {

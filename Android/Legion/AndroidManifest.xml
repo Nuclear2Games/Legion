@@ -52,10 +52,16 @@
             </intent-filter>
         </activity>
 
-        <!-- Debug -->
+        <!-- Debug 1 -->
+        <!--
+            meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCig0M9rZkFam2s6AZmJOdxLZn9uxWEQ4o" /
+        -->
+        <!-- Debug 2 -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCig0M9rZkFam2s6AZmJOdxLZn9uxWEQ4o" />
+            android:value="AIzaSyB_-iO2vaPFzRQWF9KEN7pGfDK6AeFvQ9Y" />
         <!-- Production -->
         <!--
             meta-data

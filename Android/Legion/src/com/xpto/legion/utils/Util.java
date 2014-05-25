@@ -125,9 +125,9 @@ public class Util {
 				return new Date(millis + timeZoneOffSet);
 			} else {
 				if (jsonDate.indexOf(' ') - jsonDate.lastIndexOf('/') == 3)
-					return new SimpleDateFormat("dd/MM/yy hh:mm").parse(jsonDate);
+					return new SimpleDateFormat("dd/MM/yy HH:mm").parse(jsonDate);
 				else
-					return new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(jsonDate);
+					return new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(jsonDate);
 			}
 		} catch (Exception e) {
 			return new Date();

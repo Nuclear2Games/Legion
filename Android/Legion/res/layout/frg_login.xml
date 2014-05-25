@@ -42,6 +42,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:hint="@string/f_login_pass"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLength="32"
             android:password="true"

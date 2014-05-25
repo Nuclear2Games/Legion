@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/lay_dialog"
+        android:orientation="vertical"
+        android:padding="30dip" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/f_profile_title"
+            android:textSize="@dimen/lbl_font_size_big" />
+
+        <EditText
+            android:id="@+id/txtLogin"
+            android:layout_width="200dip"
+            android:layout_height="@dimen/txt_height"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt"
+            android:ellipsize="end"
+            android:enabled="false"
+            android:gravity="center"
+            android:hint="@string/f_login_user"
+            android:inputType="textNoSuggestions"
+            android:maxLength="32"
+            android:singleLine="true"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <EditText
+            android:id="@+id/txtName"
+            android:layout_width="200dip"
+            android:layout_height="@dimen/txt_height"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:hint="@string/f_login_user"
+            android:inputType="textNoSuggestions"
+            android:maxLength="32"
+            android:singleLine="true"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <EditText
+            android:id="@+id/txtDescription"
+            android:layout_width="200dip"
+            android:layout_height="100dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt"
+            android:ellipsize="end"
+            android:gravity="left|top"
+            android:hint="@string/f_newevent_description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="3dip"
+            android:singleLine="false"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <Button
+            android:id="@+id/btnRegiter"
+            android:layout_width="180dip"
+            android:layout_height="40dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn"
+            android:gravity="center"
+            android:text="@string/f_profile_save"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/txt_font_size_default" />
+    </LinearLayout>
+
+</FrameLayout>

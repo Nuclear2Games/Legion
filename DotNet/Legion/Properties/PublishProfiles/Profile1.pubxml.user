@@ -5,12 +5,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TimeStampOfAssociatedLegacyPublishXmlFile>2014-05-22T21:36:56.6385268-03:00</TimeStampOfAssociatedLegacyPublishXmlFile>
+    <TimeStampOfAssociatedLegacyPublishXmlFile>2014-05-24T10:45:05.1372722-03:00</TimeStampOfAssociatedLegacyPublishXmlFile>
     <_PublishTargetUrl>C:\iis\Legion</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Legion.dll">
-      <publishTime>05/23/2014 00:58:42</publishTime>
+      <publishTime>05/25/2014 15:40:37</publishTime>
     </File>
     <File Include="bin/Legion.pdb">
       <publishTime>05/23/2014 00:58:42</publishTime>
@@ -19,7 +19,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/22/2014 21:36:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/23/2014 00:17:04</publishTime>
+      <publishTime>05/24/2014 15:25:31</publishTime>
     </File>
   </ItemGroup>
 </Project>

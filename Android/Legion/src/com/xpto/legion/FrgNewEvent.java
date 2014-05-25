@@ -6,10 +6,8 @@ import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -46,7 +44,7 @@ public class FrgNewEvent extends LFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_new_event, null);
 
 		rdbType = (RadioButton) view.findViewById(R.id.rdbType);
@@ -58,15 +56,22 @@ public class FrgNewEvent extends LFragment {
 		btnRegister = (Button) view.findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(onClickRegister);
 
-		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
-		view.startAnimation(cameIn);
-
 		return view;
 	}
 
 	@Override
+	public Animation getInAnimation() {
+		return AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+	}
+
+	@Override
+	public Animation getOutAnimation() {
+		return AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_out);
+	}
+	
+	@Override
 	public boolean canBack() {
-		((ActMain) getActivity()).setFragment(null);
+		((ActMain) getActivity()).setFragment(null, ActMain.LEVEL_TOP);
 		return false;
 	}
 
@@ -144,7 +149,7 @@ public class FrgNewEvent extends LFragment {
 
 			newPlaceRetry.finished(null);
 			Caller.newPlace(getActivity(), newPlaceSuccess, newPlaceRetry, newPlaceFail, getGlobal().getLogged().getId(), latitude, longitude, type, name,
-					description);
+					description, when);
 		}
 	};
 

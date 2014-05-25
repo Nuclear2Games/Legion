@@ -2,10 +2,9 @@ package com.xpto.legion;
 
 import java.util.ArrayList;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +15,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.xpto.legion.models.Place;
 import com.xpto.legion.utils.LFragment;
+import com.xpto.legion.utils.Util;
 
 public class FrgMap extends LFragment {
 	// Map
@@ -24,10 +24,26 @@ public class FrgMap extends LFragment {
 	private ArrayList<Long> ids;
 	private ArrayList<Marker> markers;
 
+	private View btnCenter;
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_map, null);
+
+		btnCenter = view.findViewById(R.id.btnCenter);
+		btnCenter.setOnClickListener(onClickCenter);
+
 		return view;
+	}
+
+	@Override
+	public Animation getInAnimation() {
+		return null;
+	}
+
+	@Override
+	public Animation getOutAnimation() {
+		return null;
 	}
 
 	@Override
@@ -67,11 +83,11 @@ public class FrgMap extends LFragment {
 		public void onMapLongClick(LatLng _point) {
 			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
 				FrgNoUser frgNoUser = new FrgNoUser();
-				((ActMain) getActivity()).setFragment(frgNoUser);
+				((ActMain) getActivity()).setFragment(frgNoUser, ActMain.LEVEL_TOP);
 			} else {
 				FrgNewEvent frgNewEvent = new FrgNewEvent();
 				frgNewEvent.setLocation(_point.latitude, _point.longitude);
-				((ActMain) getActivity()).setFragment(frgNewEvent);
+				((ActMain) getActivity()).setFragment(frgNewEvent, ActMain.LEVEL_TOP);
 			}
 		}
 	};
@@ -99,9 +115,18 @@ public class FrgMap extends LFragment {
 		mo.position(new LatLng(_place.getLatitude(), _place.getLongitude()));
 
 		mo.title(_place.getName());
-		mo.snippet(_place.getDescription());
+		if (_place.getWhen() != null)
+			mo.snippet(Util.formatToLongDateTime(_place.getWhen()));
 
 		ids.add(_place.getId());
 		markers.add(map.addMarker(mo));
 	}
+
+	private View.OnClickListener onClickCenter = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (getActivity() != null)
+				((ActMain) getActivity()).startTracking();
+		}
+	};
 }

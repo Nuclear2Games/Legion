@@ -1,13 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#fff" >
 
     <ListView
         android:id="@+id/lst"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top|left"
+        android:layout_marginBottom="40dip"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:choiceMode="singleChoice"
@@ -16,4 +18,64 @@
         android:listSelector="@android:color/transparent"
         android:scrollbars="vertical" />
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="#eee"
+        android:padding="2.5dip" >
+
+        <com.xpto.legion.utils.LEditText
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="77.5dip"
+            android:background="@drawable/txt"
+            android:ellipsize="end"
+            android:gravity="left|top"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="5dip"
+            android:singleLine="false"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="75dip"
+            android:layout_height="35dip"
+            android:layout_gravity="right|top"
+            android:background="@drawable/btn"
+            android:gravity="center"
+            android:text="@string/f_to_send"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/txt_font_size_default" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="#ccc"
+        android:padding="5dip"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_gravity="left|center_vertical"
+            android:contentDescription="@string/f_to_update"
+            android:src="@drawable/ic_action_refresh" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="45dip"
+            android:text="@string/f_click_to_update"
+            android:textColor="@color/red_dark"
+            android:textSize="@dimen/lbl_font_size_small" />
+    </FrameLayout>
+
+</FrameLayout>

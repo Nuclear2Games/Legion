@@ -71,7 +71,7 @@
             android:ellipsize="end"
             android:gravity="left|top"
             android:hint="@string/f_newevent_description"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences|textMultiLine"
             android:padding="3dip"
             android:singleLine="false"
             android:textSize="@dimen/txt_font_size_default" />

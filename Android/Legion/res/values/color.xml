@@ -9,6 +9,8 @@
     <color name="gray_half_light">#939393</color>
     <color name="gray_half">#808080</color>
     <color name="gray_dark">#434343</color>
+    <color name="gray_red">#cc4343</color>
+    <color name="gray_green">#43cc43</color>
     <color name="black">#000000</color>
     <color name="black_shadow">#70000000</color>
     <color name="blue_light">#4cabfb</color>

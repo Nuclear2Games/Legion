@@ -66,7 +66,11 @@ ALTER PROC login_user (
 ) AS
 BEGIN
 	SELECT
-		id
+		id,
+		login,
+		name,
+		description,
+		points
 	FROM
 		users
 	WHERE

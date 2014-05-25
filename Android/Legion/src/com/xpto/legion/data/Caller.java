@@ -1,5 +1,7 @@
 package com.xpto.legion.data;
 
+import java.util.Calendar;
+
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -9,7 +11,7 @@ import com.xpto.legion.utils.WSCaller;
 
 public class Caller {
 	private static final String URL_WS = "http://www.xptogames.com.br/Legion/Legion.svc/";
-	// private static final String URL_WS = "http://192.168.0.31/legion.svc/";
+	// private static final String URL_WS = "http://192.168.1.3/legion.svc/";
 	// private static final String URL_WS = "http://10.20.0.59/legion.svc/";
 	private static final int RETRY_NO = 0;
 	private static final int RETRY_YES = 5;
@@ -72,10 +74,17 @@ public class Caller {
 		}
 	}
 
-	public static void newPlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, double latitude, double longitude,
-			long type, String name, String description) {
+	public static void newPlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, double latitude, double longitude, long type,
+			String name, String description, Calendar when) {
 		try {
 			JSONObject params = new JSONObject();
+
+			String date = "";
+			date += when.get(Calendar.YEAR) + "-";
+			date += when.get(Calendar.MONTH) + "-";
+			date += when.get(Calendar.DAY_OF_MONTH) + " ";
+			date += when.get(Calendar.HOUR_OF_DAY) + ":";
+			date += when.get(Calendar.MINUTE) + ":00";
 
 			params.put("user", user);
 			params.put("latitude", latitude);
@@ -83,6 +92,7 @@ public class Caller {
 			params.put("type", type);
 			params.put("name", name);
 			params.put("description", description);
+			params.put("date", date);
 
 			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "NewPlace", params, WSCaller.WS_CACHE_NO, RETRY_NO, true);
 		} catch (Exception e) {
@@ -211,6 +221,19 @@ public class Caller {
 		}
 	}
 
+	public static void getPlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long id) {
+		try {
+			JSONObject params = new JSONObject();
+
+			params.put("id", id);
+
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetPlace", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
+		} catch (Exception e) {
+			success.finished(null);
+			fail.finished(e);
+		}
+	}
+
 	public static void getNearPlaces(Activity activity, LCallback success, LCallback retry, LCallback fail, double latitude, double longitude) {
 		try {
 			JSONObject params = new JSONObject();
@@ -219,6 +242,19 @@ public class Caller {
 			params.put("longitude", longitude);
 
 			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetNearPlaces", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
+		} catch (Exception e) {
+			success.finished(null);
+			fail.finished(e);
+		}
+	}
+
+	public static void getSubject(Activity activity, LCallback success, LCallback retry, LCallback fail, long id) {
+		try {
+			JSONObject params = new JSONObject();
+
+			params.put("id", id);
+
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetSubject", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);
@@ -238,6 +274,19 @@ public class Caller {
 		}
 	}
 
+	public static void getComment(Activity activity, LCallback success, LCallback retry, LCallback fail, long id) {
+		try {
+			JSONObject params = new JSONObject();
+
+			params.put("id", id);
+
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetComment", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
+		} catch (Exception e) {
+			success.finished(null);
+			fail.finished(e);
+		}
+	}
+
 	public static void getComments(Activity activity, LCallback success, LCallback retry, LCallback fail, long subject) {
 		try {
 			JSONObject params = new JSONObject();
@@ -245,6 +294,19 @@ public class Caller {
 			params.put("subject", subject);
 
 			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetComments", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
+		} catch (Exception e) {
+			success.finished(null);
+			fail.finished(e);
+		}
+	}
+
+	public static void getAnswer(Activity activity, LCallback success, LCallback retry, LCallback fail, long id) {
+		try {
+			JSONObject params = new JSONObject();
+
+			params.put("id", id);
+
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "GetAnswer", params, WSCaller.WS_CACHE_FAST, RETRY_YES, false);
 		} catch (Exception e) {
 			success.finished(null);
 			fail.finished(e);

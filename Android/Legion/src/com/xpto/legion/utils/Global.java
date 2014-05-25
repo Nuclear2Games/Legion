@@ -183,9 +183,10 @@ public class Global extends Application {
 			Place place = nearPlaces.get(i);
 
 			if (place.getId() == _place.getId()) {
+				nearPlaces.set(index, _place);
 				index = -1;
 				break;
-			} else if (place.getWhen().getTime() > _place.getWhen().getTime())
+			} else if (place.getWhen() == null || _place.getWhen() == null || place.getWhen().getTime() > _place.getWhen().getTime())
 				index = i;
 		}
 
@@ -213,9 +214,10 @@ public class Global extends Application {
 					throw new Exception();
 			}
 
-			for (int i = 0; i < notifications.length; i++) {
+			if (this.notifications != null)
+				this.notifications.clear();
+			for (int i = 0; i < notifications.length; i++)
 				addNotification(notifications[i]);
-			}
 
 			return true;
 		} catch (Exception e) {
