@@ -8,3 +8,6 @@ Envolvidos:
  - Anderson da Silva Peres
  - Fernando Minorelli
  - Jussara Ribeiro de Oliveira
+
+Versão 1.0.0:
+ https://play.google.com/store/apps/details?id=com.xpto.legion

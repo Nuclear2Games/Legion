@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xpto.legion"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -59,14 +59,15 @@
             android:value="AIzaSyCig0M9rZkFam2s6AZmJOdxLZn9uxWEQ4o" /
         -->
         <!-- Debug 2 -->
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyB_-iO2vaPFzRQWF9KEN7pGfDK6AeFvQ9Y" />
-        <!-- Production -->
         <!--
             meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCIrv-d7RCYHN2QgvwTFiffP61R265hhpg" /        -->
+            android:value="AIzaSyB_-iO2vaPFzRQWF9KEN7pGfDK6AeFvQ9Y" /
+        -->
+        <!-- Production -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCOoymz5whKT5FLOZUdPbQXADuaItVHlSE" />
     </application>
 
 </manifest>
