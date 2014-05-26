@@ -9,9 +9,12 @@
     <string name="f_ok">Ok</string>
     <string name="f_sending">Enviando...</string>
     <string name="f_loading">Carregando...</string>
+    <string name="f_saving">Salvando...</string>
     
     <string name="f_no_connection">Sem conexão</string>
     <string name="f_to_try_again">Tentar novamente</string>
+    <string name="f_to_close">Fechar</string>
+    <string name="f_to_center">Centralizar</string>
     
     <string name="f_no_location">Localização desabilitada</string>
     <string name="f_may_enable_location">Habilitar localização</string>
@@ -22,8 +25,12 @@
 
     <string name="f_to_send">Enviar</string>
     
+    <string name="f_to_edit">Editar</string>
+    <string name="f_checkin">Checkin</string>
     <string name="f_like">Gostei</string>
     <string name="f_unlike">Não gostei</string>
+    
+    <string name="l_by">... por</string>
     
     <string name="l_event">evento</string>
     <string name="l_events">eventos</string>
@@ -47,6 +54,8 @@
     <string name="f_main_events">Eventos</string>
     
     <string name="f_main_events_fail">Não foi possível atualizar lista de eventos</string>
+    
+    <string name="f_events_empty">Não há eventos</string>
 
     <!-- NoUser -->
     <string name="f_nouser_title">Para prosseguir</string>
@@ -60,7 +69,7 @@
     <string name="f_newuser_user">Usuário</string>
     <string name="f_newuser_pass1">Senha</string>
     <string name="f_newuser_pass2">Confirmação</string>
-    <string name="f_newuser_register">Registrar</string>
+    <string name="f_newuser_register">Criar usuário</string>
     
     <string name="f_newuser_fill_login_title">Nome do usuário</string>
     <string name="f_newuser_fill_login_subtitle">O nome de usuário precisa ter entre 4 e 32 caracteres e ser composto apenas por letras, números, "." ou "-".</string>
@@ -85,40 +94,93 @@
     <string name="f_login_fail">Não foi possível entrar.</string>
     
     <!-- NewEvent -->
-    <string name="f_newevent_title">Novo local</string>
+    <string name="f_newevent_title">Novo evento</string>
     <string name="f_newevent_type">Tipo</string>
     <string name="f_newevent_event">Evento</string>
     <string name="f_newevent_link">Link</string>
     <string name="f_newevent_name">Nome</string>
     <string name="f_newevent_description">Descrição</string>
     <string name="f_newevent_when">Data</string>
-    <string name="f_newevent_register">Registrar</string>
+    <string name="f_newevent_register">Criar evento</string>
 
-    <string name="f_newevent_fill_name_title">Nome do local</string>
-    <string name="f_newevent_fill_name_subtitle">O nome do local precisa ter entre 2 e 32 caracteres.</string>
-    <string name="f_newevent_fill_description_title">Descrição do local</string>
-    <string name="f_newevent_fill_description_subtitle">A descrição do local precisa ter ao menos 4 caracteres.</string>
+    <string name="f_newevent_fill_name_title">Nome do evento</string>
+    <string name="f_newevent_fill_name_subtitle">O nome do evento precisa ter entre 2 e 32 caracteres.</string>
+    <string name="f_newevent_fill_description_title">Descrição do evento</string>
+    <string name="f_newevent_fill_description_subtitle">A descrição do evento precisa ter ao menos 4 caracteres.</string>
+    
+    <string name="f_newevent_fill_when_title">Data de acontecimento</string>
+    <string name="f_newevent_fill_when_subtitle">A data de acontecimento precisa ser escolhida.</string>
+    
+    <string name="f_newevent_rating_title">Baixa reputação</string>
+    <string name="f_newevent_rating_subtitle">Seu usuário está com uma reputação muito baixa e, por este motivo, não pode criar novos eventos.</string>
+    
+    <!-- UpdateEvent -->
+    <string name="f_updateevent_title">Editar evento</string>
+    <string name="f_updateevent_event">Evento</string>
+    <string name="f_updateevent_link">Link</string>
+    <string name="f_updateevent_name">Nome</string>
+    <string name="f_updateevent_description">Descrição</string>
+    <string name="f_updateevent_when">Data</string>
+    <string name="f_updateevent_register">Atualizar evento</string>
+
+    <string name="f_updateevent_fill_name_title">Nome do evento</string>
+    <string name="f_updateevent_fill_name_subtitle">O nome do evento precisa ter entre 2 e 32 caracteres.</string>
+    <string name="f_updateevent_fill_description_title">Descrição do evento</string>
+    <string name="f_updateevent_fill_description_subtitle">A descrição do evento precisa ter ao menos 4 caracteres.</string>
+    
+    <string name="f_updateevent_fill_when_title">Data de acontecimento</string>
+    <string name="f_updateevent_fill_when_subtitle">A data de acontecimento precisa ser escolhida.</string>
+    
+    <string name="f_updateevent_rating_title">Baixa reputação</string>
+    <string name="f_updateevent_rating_subtitle">Seu usuário está com uma reputação muito baixa e, por este motivo, não pode criar novos eventos.</string>
     
 	<!-- Event -->
+	<string name="f_event_hint">Crie um assunto</string>
+	
     <string name="f_event_fill_name_title">Assunto</string>
     <string name="f_event_fill_name_subtitle">O assunto precisa ter ao menos 4 caracteres.</string>
     
     <string name="f_event_fill_cant_send">O assunto não pôde ser enviado.</string>
     
+    <string name="f_event_cant_edit_title">Não pode editar</string>
+    <string name="f_event_cant_edit_subtitle">Apenas o dono desde evento pode editá-lo.</string>
+    
+    <string name="f_event_rating_title">Baixa reputação</string>
+    <string name="f_event_rating_subtitle">Seu usuário está com uma reputação muito baixa e, por este motivo, não pode criar novos assuntos.</string>
+    
+    <string name="f_event_empty">Não há assuntos</string>
+    
     <!-- Subject -->
+    <string name="f_subject_hint">Escreva um comentário</string>
+    
     <string name="f_subject_fill_name_title">Comenário</string>
     <string name="f_subject_fill_name_subtitle">O comentário precisa ter ao menos 4 caracteres.</string>
     
     <string name="f_subject_fill_cant_send">O comentário não pôde ser enviado.</string>
 
+    <string name="f_subject_rating_title">Baixa reputação</string>
+    <string name="f_subject_rating_subtitle">Seu usuário está com uma reputação muito baixa e, por este motivo, não pode criar novos comentários.</string>
+    
+    <string name="f_subject_empty">Não há comentários</string>
+    
     <!-- Comment -->
+    <string name="f_comment_hint">Escreva uma resposta</string>
+    
     <string name="f_comment_fill_name_title">Resposta</string>
     <string name="f_comment_fill_name_subtitle">A resposta precisa ter ao menos 4 caracteres.</string>
     
     <string name="f_comment_fill_cant_send">A resposta não pôde ser enviada.</string>
+    
+    <string name="f_comment_rating_title">Baixa reputação</string>
+    <string name="f_comment_rating_subtitle">Seu usuário está com uma reputação muito baixa e, por este motivo, não pode criar novas respostas.</string>
 
-    <!-- Comment -->
+    <string name="f_comment_empty">Não há respostas</string>
+    
+    <!-- Profile -->
     <string name="f_profile_title">Perfil</string>
+    <string name="f_profile_login">Login</string>
+    <string name="f_profile_name">Nome</string>
+    <string name="f_profile_description">Descrição</string>
     <string name="f_profile_save">Salvar</string>
     
 	<string name="f_profile_fill_name_title">Nome do usuário</string>
@@ -136,5 +198,47 @@
     <string name="l_notification_of_your_subject">do seu assunto</string>
     <string name="l_notification_of_your_comment">do seu comentário</string>
     <string name="l_notification_of_your_answer">da sua resposta</string>
+    
+    <string name="f_notification_empty">Você não têm notificações</string>
+
+    <!-- Help -->
+    <string name="f_help_map_title">Crie um novo evento</string>
+    <string name="f_help_map_body">Clique e segure o mapa no local que deseja criar um novo evento.</string>
+    
+    <string name="f_help_events_title">Eventos</string>
+    <string name="f_help_events_body">Clique e sobre um evento para ver seus detalhes.</string>
+    
+    <string name="f_help_answer_title">Resposta</string>
+    <string name="f_help_answer_body">Veja as respostas aos comenários.</string>
+    
+    <string name="f_help_comment_title">Comentário</string>
+    <string name="f_help_comment_body">Veja as respostas ao comenário.</string>
+    
+    <string name="f_help_event_title">Evento</string>
+    <string name="f_help_event_body">Veja os assuntos do evento.</string>
+    
+    <string name="f_help_login_title">Login</string>
+    <string name="f_help_login_body">Entre com seus dados de login.</string>
+    
+    <string name="f_help_newevent_title">Novo evento</string>
+    <string name="f_help_newevent_body">Todos os campos são obrigatórios, detalhe o máximo possível para ajudar outras pessoas.</string>
+    
+    <string name="f_help_updateevent_title">Editar evento</string>
+    <string name="f_help_updateevent_body">Todos os campos são obrigatórios, detalhe o máximo possível para ajudar outras pessoa, procure não mudar o foco do evento.</string>
+
+    <string name="f_help_newuser_title">Novo usuário</string>
+    <string name="f_help_newuser_body">Participe da rede!</string>
+    
+    <string name="f_help_notifications_title">Notificações</string>
+    <string name="f_help_notifications_body">Sua interações aparecem aqui.</string>
+    
+    <string name="f_help_nouser_title">Sem login</string>
+    <string name="f_help_nouser_body">É necessário um login para participar dos foruns ou criar eventos.</string>
+    
+    <string name="f_help_profile_title">Seu perfil</string>
+    <string name="f_help_profile_body">Edite seus dados.</string>
+    
+    <string name="f_help_subject_title">Assunto</string>
+    <string name="f_help_subject_body">Veja os comenários do assunto.</string>
     
 </resources>

@@ -75,6 +75,14 @@ namespace Legion
 
         #endregion
 
+        #region Likes
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/NewCheckin", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        Result NewCheckin(long user, long place);
+
+        #endregion
+
         #region Gets...
 
         [OperationContract]
@@ -415,6 +423,7 @@ namespace Legion
         private string description;
         private string date;
         private long points;
+        private long checkins;
         private long subjects;
         private long likes;
         private long dislikes;
@@ -487,6 +496,13 @@ namespace Legion
         {
             get { return points; }
             set { points = value; }
+        }
+
+        [DataMember]
+        public long Checkins
+        {
+            get { return checkins; }
+            set { checkins = value; }
         }
 
         [DataMember]

@@ -24,15 +24,21 @@ public class FrgNewUser extends LFragment {
 	private EditText txtPass2;
 	private Button btnRegister;
 
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_new_user, null);
+
+		Util.loadFonts(view);
 
 		txtLogin = (EditText) view.findViewById(R.id.txtLogin);
 		txtPass1 = (EditText) view.findViewById(R.id.txtPass1);
 		txtPass2 = (EditText) view.findViewById(R.id.txtPass2);
 		btnRegister = (Button) view.findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(onClickRegister);
+
+		Help.fillHelpNewUser(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -67,6 +73,13 @@ public class FrgNewUser extends LFragment {
 	public boolean canBack() {
 		((ActMain) getActivity()).setFragment(null, ActMain.LEVEL_TOP);
 		return false;
+	}
+
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
 	}
 
 	private View.OnClickListener onClickRegister = new View.OnClickListener() {
@@ -107,6 +120,9 @@ public class FrgNewUser extends LFragment {
 	private LCallback newUserSuccess = new LCallback() {
 		@Override
 		public void finished(Object _value) {
+			if (getActivity() != null)
+				((LActivity) getActivity()).endLoading();
+
 			txtLogin.setEnabled(true);
 			txtPass1.setEnabled(true);
 			txtPass2.setEnabled(true);
@@ -139,6 +155,9 @@ public class FrgNewUser extends LFragment {
 	private LCallback newUserRetry = new LCallback() {
 		@Override
 		public void finished(Object _value) {
+			if (getActivity() != null)
+				((LActivity) getActivity()).startLoading(R.string.f_saving);
+
 			txtLogin.setEnabled(false);
 			txtPass1.setEnabled(false);
 			txtPass2.setEnabled(false);

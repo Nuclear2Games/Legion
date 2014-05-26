@@ -7,7 +7,7 @@ import com.xpto.legion.utils.LActivity;
 
 public class AdpNotifications extends AdpAllTypes {
 	public AdpNotifications(LActivity _lActivity, boolean _useHead) {
-		super(_lActivity, null, null, null, null, _useHead);
+		super(_lActivity, null, null, null, null, null, null, _useHead);
 	}
 
 	@Override

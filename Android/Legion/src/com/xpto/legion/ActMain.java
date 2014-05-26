@@ -19,6 +19,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 import com.xpto.legion.data.Caller;
+import com.xpto.legion.models.Place;
 import com.xpto.legion.utils.LActivity;
 import com.xpto.legion.utils.LAsyncTask;
 import com.xpto.legion.utils.LCallback;
@@ -135,7 +136,20 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
-			// TODO
+			if (fragmentTop != null)
+				fragmentTop.showHelp();
+			else if (fragmentAnswer != null)
+				fragmentAnswer.showHelp();
+			else if (fragmentComment != null)
+				fragmentComment.showHelp();
+			else if (fragmentSubject != null)
+				fragmentSubject.showHelp();
+			else if (fragmentEvent != null)
+				fragmentEvent.showHelp();
+			else if (pgrMain.getCurrentItem() == 0)
+				frgMap.showHelp();
+			else if (pgrMain.getCurrentItem() == 1)
+				frgEvents.showHelp();
 			break;
 
 		case R.id.action_notifications:
@@ -426,6 +440,17 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		else
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+	}
+
+	public void propagateNewPlace(Place _place) {
+		getGlobal().addPlace(_place);
+
+		frgMap.updatePlaces();
+		frgEvents.updatePlaces();
+
+		FrgEvent frgEvent = new FrgEvent();
+		frgEvent.setEvent(_place);
+		setFragment(frgEvent, LEVEL_EVENT);
 	}
 
 	public class PagerAdapter extends FragmentStatePagerAdapter {

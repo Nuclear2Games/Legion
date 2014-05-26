@@ -101,17 +101,39 @@ public class Caller {
 		}
 	}
 
-	public static void updatePlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long place, double latitude,
-			double longitude, String name, String description) {
+	public static void newCheckin(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long place) {
 		try {
 			JSONObject params = new JSONObject();
 
+			params.put("user", user);
+			params.put("place", place);
+
+			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "NewCheckin", params, WSCaller.WS_CACHE_NO, RETRY_NO, true);
+		} catch (Exception e) {
+			success.finished(null);
+			fail.finished(e);
+		}
+	}
+
+	public static void updatePlace(Activity activity, LCallback success, LCallback retry, LCallback fail, long user, long place, double latitude,
+			double longitude, String name, String description, Calendar when) {
+		try {
+			JSONObject params = new JSONObject();
+
+			String date = "";
+			date += when.get(Calendar.YEAR) + "-";
+			date += when.get(Calendar.MONTH) + "-";
+			date += when.get(Calendar.DAY_OF_MONTH) + " ";
+			date += when.get(Calendar.HOUR_OF_DAY) + ":";
+			date += when.get(Calendar.MINUTE) + ":00";
+			
 			params.put("user", user);
 			params.put("place", place);
 			params.put("latitude", latitude);
 			params.put("longitude", longitude);
 			params.put("name", name);
 			params.put("description", description);
+			params.put("date", date);
 
 			WSCaller.asyncCall(activity, success, retry, fail, URL_WS, "UpdatePlace", params, WSCaller.WS_CACHE_NO, RETRY_NO, true);
 		} catch (Exception e) {

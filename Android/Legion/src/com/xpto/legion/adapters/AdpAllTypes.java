@@ -18,6 +18,9 @@ import com.xpto.legion.utils.Util;
 public class AdpAllTypes extends AdpDefault<Default> {
 	private LActivity activity;
 
+	private OnClickListener onClickHeadEdit;
+	private OnClickListener onClickHeadCheckin;
+
 	private OnClickListener onClickHeadLike;
 	private OnClickListener onClickHeadDislike;
 
@@ -30,10 +33,12 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		return activity;
 	}
 
-	public AdpAllTypes(LActivity _lActivity, OnClickListener _onClickHeadLike, OnClickListener _onClickHeadDislike, OnClickListener _onClickRowLike,
-			OnClickListener _onClickRowDislike, boolean _useHead) {
+	public AdpAllTypes(LActivity _lActivity, OnClickListener _onClickHeadEdit, OnClickListener _onClickHeadCheckin, OnClickListener _onClickHeadLike,
+			OnClickListener _onClickHeadDislike, OnClickListener _onClickRowLike, OnClickListener _onClickRowDislike, boolean _useHead) {
 		super(_lActivity);
 		activity = _lActivity;
+		onClickHeadEdit = _onClickHeadEdit;
+		onClickHeadCheckin = _onClickHeadCheckin;
 		onClickHeadLike = _onClickHeadLike;
 		onClickHeadDislike = _onClickHeadDislike;
 		onClickRowLike = _onClickRowLike;
@@ -75,6 +80,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 					view = getInflater().inflate(R.layout.event_head, null);
 				else
 					view = getInflater().inflate(R.layout.event_row, null);
+				Util.loadFonts(view);
 			} else
 				view = _convertView;
 
@@ -90,6 +96,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 					view = getInflater().inflate(R.layout.subject_head, null);
 				else
 					view = getInflater().inflate(R.layout.subject_row, null);
+				Util.loadFonts(view);
 			} else
 				view = _convertView;
 
@@ -105,6 +112,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 					view = getInflater().inflate(R.layout.comment_head, null);
 				else
 					view = getInflater().inflate(R.layout.comment_row, null);
+				Util.loadFonts(view);
 			} else
 				view = _convertView;
 
@@ -115,9 +123,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 			break;
 
 		case 3:
-			if (_convertView == null)
+			if (_convertView == null) {
 				view = getInflater().inflate(R.layout.answer_row, null);
-			else
+				Util.loadFonts(view);
+			} else
 				view = _convertView;
 
 			Answer answer = (Answer) getItem(_position);
@@ -127,9 +136,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 			break;
 
 		case 4:
-			if (_convertView == null)
+			if (_convertView == null) {
 				view = getInflater().inflate(R.layout.notification_row, null);
-			else
+				Util.loadFonts(view);
+			} else
 				view = _convertView;
 
 			Notification notification = (Notification) getItem(_position);
@@ -157,6 +167,28 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		// Description
 		TextView txtPlaceDescription = (TextView) view.findViewById(R.id.txtDescription);
 		txtPlaceDescription.setText(place.getDescription());
+
+		// Owner
+		TextView txtPlaceOwner = (TextView) view.findViewById(R.id.txtOwner);
+		txtPlaceOwner.setText(view.getContext().getString(R.string.l_by) + " " + place.getUserName());
+
+		// Edit
+		View btnPlaceEdit = view.findViewById(R.id.btnEdit);
+		if (useHead && _position == 0 && btnPlaceEdit != null) {
+			btnPlaceEdit.setOnClickListener(onClickHeadEdit);
+			btnPlaceEdit.setTag(place.getId());
+		}
+
+		// Checkin
+		View btnPlaceCheckin = view.findViewById(R.id.btnCheckin);
+		if (useHead && _position == 0 && btnPlaceCheckin != null) {
+			btnPlaceCheckin.setOnClickListener(onClickHeadCheckin);
+			btnPlaceCheckin.setTag(place.getId());
+		}
+
+		TextView txtPlaceCheckins = (TextView) view.findViewById(R.id.txtCheckins);
+		if (txtPlaceCheckins != null)
+			txtPlaceCheckins.setText("" + place.getCheckins());
 
 		// Like
 		View btnPlaceLike = view.findViewById(R.id.btnLike);
@@ -202,6 +234,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		else
 			txtSubjectDate.setVisibility(View.GONE);
 
+		// Owner
+		TextView txtSubjectOwner = (TextView) view.findViewById(R.id.txtOwner);
+		txtSubjectOwner.setText(view.getContext().getString(R.string.l_by) + " " + subject.getUserName());
+
 		// Like
 		View btnSubjectLike = view.findViewById(R.id.btnLike);
 		if (useHead && _position == 0)
@@ -245,6 +281,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 			txtCommentDate.setText(Util.formatToLongDateTime(comment.getWhen()));
 		else
 			txtCommentDate.setVisibility(View.GONE);
+
+		// Owner
+		TextView txtCommentOwner = (TextView) view.findViewById(R.id.txtOwner);
+		txtCommentOwner.setText(view.getContext().getString(R.string.l_by) + " " + comment.getUserName());
 
 		// Like
 		View btnCommentLike = view.findViewById(R.id.btnLike);
@@ -290,6 +330,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		else
 			txtAnswerDate.setVisibility(View.GONE);
 
+		// Owner
+		TextView txtAnswerOwner = (TextView) view.findViewById(R.id.txtOwner);
+		txtAnswerOwner.setText(view.getContext().getString(R.string.l_by) + " " + answer.getUserName());
+
 		// Like
 		View btnAnswerLike = view.findViewById(R.id.btnLike);
 		if (useHead && _position == 0)
@@ -319,14 +363,14 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		description += notification.getQuantity();
 		if (notification.getQuantity() == 1) {
 			description += " " + view.getContext().getString(R.string.l_notification_person);
-			
+
 			if (notification.getWhat() == 1)
 				description += " " + view.getContext().getString(R.string.l_notification_liked);
 			else if (notification.getWhat() == 2)
 				description += " " + view.getContext().getString(R.string.l_notification_disliked);
 		} else {
 			description += " " + view.getContext().getString(R.string.l_notification_people);
-			
+
 			if (notification.getWhat() == 1)
 				description += " " + view.getContext().getString(R.string.l_notification_likeds);
 			else if (notification.getWhat() == 2)

@@ -13,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TimePicker;
 
 import com.xpto.legion.data.Caller;
@@ -24,40 +23,26 @@ import com.xpto.legion.utils.LDialog;
 import com.xpto.legion.utils.LFragment;
 import com.xpto.legion.utils.Util;
 
-public class FrgNewEvent extends LFragment {
-	private RadioButton rdbType;
-	private RadioButton rdbType2;
+public class FrgUpdateEvent extends LFragment {
+	private Place place;
+
 	private EditText txtName;
 	private EditText txtDescription;
 	private EditText txtDate;
 	private Button btnRegister;
 
-	private double latitude;
-	private double longitude;
-
-	private boolean setDate = false;
 	private Calendar when;
 	private DatePickerDialog datePickerDialog;
 	private TimePickerDialog timePickerDialog;
 
-	private Place savingPlace;
-
 	private View viwHelp;
-
-	public void setLocation(double _latitude, double _longitude) {
-		latitude = _latitude;
-		longitude = _longitude;
-		when = Calendar.getInstance();
-	}
 
 	@Override
 	public View createView(LayoutInflater inflater) {
-		View view = inflater.inflate(R.layout.frg_new_event, null);
+		View view = inflater.inflate(R.layout.frg_update_event, null);
 
 		Util.loadFonts(view);
 
-		rdbType = (RadioButton) view.findViewById(R.id.rdbType);
-		rdbType2 = (RadioButton) view.findViewById(R.id.rdbType2);
 		txtName = (EditText) view.findViewById(R.id.txtName);
 		txtDescription = (EditText) view.findViewById(R.id.txtDescription);
 		txtDate = (EditText) view.findViewById(R.id.txtDate);
@@ -65,7 +50,9 @@ public class FrgNewEvent extends LFragment {
 		btnRegister = (Button) view.findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(onClickRegister);
 
-		Help.fillHelpNewEvent(viwHelp = view.findViewById(R.id.layHelp));
+		fill();
+
+		Help.fillHelpUpdateEvent(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -91,6 +78,24 @@ public class FrgNewEvent extends LFragment {
 		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
 		viwHelp.setVisibility(View.VISIBLE);
 		viwHelp.startAnimation(cameIn);
+	}
+
+	public void setPlace(Place _place) {
+		place = _place;
+		if (when == null)
+			when = Calendar.getInstance();
+
+		fill();
+	}
+
+	private void fill() {
+		if (place != null && txtName != null) {
+			txtName.setText(place.getName());
+			txtDescription.setText(place.getDescription());
+			when = Calendar.getInstance();
+			when.setTime(place.getWhen());
+			setDateText();
+		}
 	}
 
 	private View.OnFocusChangeListener onFocusDate = new View.OnFocusChangeListener() {
@@ -134,8 +139,6 @@ public class FrgNewEvent extends LFragment {
 			timePickerDialog = null;
 
 			txtDescription.requestFocus();
-
-			setDate = true;
 		}
 	};
 
@@ -152,38 +155,29 @@ public class FrgNewEvent extends LFragment {
 	private View.OnClickListener onClickRegister = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			int type = rdbType.isChecked() ? 1 : 2;
-
 			String name = txtName.getText().toString();
 			if (name.length() < 2 || name.length() > 32) {
-				LDialog.openDialog((LActivity) getActivity(), R.string.f_newevent_fill_name_title, R.string.f_newevent_fill_name_subtitle, R.string.f_ok, false);
+				LDialog.openDialog((LActivity) getActivity(), R.string.f_updateevent_fill_name_title, R.string.f_updateevent_fill_name_subtitle, R.string.f_ok, false);
 				return;
 			}
 
 			String description = txtDescription.getText().toString();
 			if (description.length() < 4) {
-				LDialog.openDialog((LActivity) getActivity(), R.string.f_newevent_fill_description_title, R.string.f_newevent_fill_description_subtitle,
+				LDialog.openDialog((LActivity) getActivity(), R.string.f_updateevent_fill_description_title, R.string.f_updateevent_fill_description_subtitle,
 						R.string.f_ok, false);
 				return;
 			}
 
-			if (!setDate) {
-				LDialog.openDialog((LActivity) getActivity(), R.string.f_newevent_fill_when_title, R.string.f_newevent_fill_when_subtitle, R.string.f_ok, false);
-				return;
-			}
-
-			savingPlace = new Place();
-
-			savingPlace.setLatitude(latitude);
-			savingPlace.setLatitude(longitude);
-			savingPlace.setType(type);
-			savingPlace.setName(name);
-			savingPlace.setDescription(description);
-			savingPlace.setWhen(when.getTime());
+			place.setName(name);
+			place.setDescription(description);
+			place.setWhen(when.getTime());
 
 			newPlaceRetry.finished(null);
-			Caller.newPlace(getActivity(), newPlaceSuccess, newPlaceRetry, newPlaceFail, getGlobal().getLogged().getId(), latitude, longitude, type, name,
-					description, when);
+			Caller.updatePlace(getActivity(), newPlaceSuccess, newPlaceRetry, newPlaceFail, getGlobal().getLogged().getId(), place.getId(),
+					place.getLatitude(), place.getLongitude(), name, description, when);
+
+			// long user, long place, double latitude,
+			// double longitude, String name, String description, Calendar when
 		}
 	};
 
@@ -193,8 +187,6 @@ public class FrgNewEvent extends LFragment {
 			if (getActivity() != null)
 				((LActivity) getActivity()).endLoading();
 
-			rdbType.setEnabled(true);
-			rdbType2.setEnabled(true);
 			txtName.setEnabled(true);
 			txtDescription.setEnabled(true);
 			txtDate.setEnabled(true);
@@ -206,13 +198,10 @@ public class FrgNewEvent extends LFragment {
 
 				JSONObject json = (JSONObject) _value;
 				if (json.getLong("Code") == 1) {
-					savingPlace.setId(json.getLong("Content"));
-					if (getActivity() != null)
-						((ActMain) getActivity()).propagateNewPlace(savingPlace);
 					canBack();
 				} else if (json.getLong("Code") == 6) {
 					if (getActivity() != null)
-						LDialog.openDialog((LActivity) getActivity(), R.string.f_newevent_rating_title, R.string.f_newevent_rating_subtitle, R.string.f_ok,
+						LDialog.openDialog((LActivity) getActivity(), R.string.f_updateevent_rating_title, R.string.f_updateevent_rating_subtitle, R.string.f_ok,
 								false);
 				} else
 					throw new Exception();
@@ -228,8 +217,6 @@ public class FrgNewEvent extends LFragment {
 			if (getActivity() != null)
 				((LActivity) getActivity()).startLoading(R.string.f_saving);
 
-			rdbType.setEnabled(false);
-			rdbType2.setEnabled(false);
 			txtName.setEnabled(false);
 			txtDescription.setEnabled(false);
 			txtDate.setEnabled(false);

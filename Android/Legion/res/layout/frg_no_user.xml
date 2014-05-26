@@ -50,4 +50,6 @@
             android:textSize="@dimen/txt_font_size_default" />
     </LinearLayout>
 
+    <include layout="@layout/help" />
+
 </FrameLayout>

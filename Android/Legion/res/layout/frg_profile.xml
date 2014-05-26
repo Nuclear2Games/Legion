@@ -27,7 +27,7 @@
             android:ellipsize="end"
             android:enabled="false"
             android:gravity="center"
-            android:hint="@string/f_login_user"
+            android:hint="@string/f_profile_login"
             android:inputType="textNoSuggestions"
             android:maxLength="32"
             android:singleLine="true"
@@ -42,7 +42,7 @@
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="@string/f_login_user"
+            android:hint="@string/f_profile_name"
             android:inputType="textNoSuggestions"
             android:maxLength="32"
             android:singleLine="true"
@@ -57,7 +57,7 @@
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="left|top"
-            android:hint="@string/f_newevent_description"
+            android:hint="@string/f_profile_description"
             android:inputType="textCapSentences|textMultiLine"
             android:padding="3dip"
             android:singleLine="false"
@@ -75,5 +75,7 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/txt_font_size_default" />
     </LinearLayout>
+
+    <include layout="@layout/help" />
 
 </FrameLayout>

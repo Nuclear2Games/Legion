@@ -47,4 +47,6 @@ public abstract class LFragment extends Fragment {
 	public abstract Animation getOutAnimation();
 
 	public abstract boolean canBack();
+	
+	public abstract void showHelp();
 }

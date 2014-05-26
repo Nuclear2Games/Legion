@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xpto.legion.adapters.AdpAllTypes;
 import com.xpto.legion.data.Caller;
@@ -27,6 +28,7 @@ import com.xpto.legion.utils.LDialog;
 import com.xpto.legion.utils.LEditText;
 import com.xpto.legion.utils.LFragment;
 import com.xpto.legion.utils.Like;
+import com.xpto.legion.utils.Util;
 
 public class FrgSubject extends LFragment {
 	private Subject subject;
@@ -43,12 +45,19 @@ public class FrgSubject extends LFragment {
 
 	private Comment sendingComment;
 
+	private TextView txtEmpty;
+
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_list, null);
 
+		Util.loadFonts(view);
+
 		lst = (ListView) view.findViewById(R.id.lst);
-		adpComments = new AdpAllTypes((LActivity) getActivity(), onClickSubjectLike, onClickSubjectDislike, onClickCommentLike, onClickCommentDislike, true);
+		adpComments = new AdpAllTypes((LActivity) getActivity(), null, null, onClickSubjectLike, onClickSubjectDislike, onClickCommentLike,
+				onClickCommentDislike, true);
 		adpComments.addItem(subject);
 		lst.setAdapter(adpComments);
 		lst.setOnItemClickListener(onItemClick);
@@ -57,6 +66,7 @@ public class FrgSubject extends LFragment {
 
 		txt = (LEditText) view.findViewById(R.id.txt);
 		txt.setOnFocusChange(onFocusChange);
+		txt.setHint(R.string.f_subject_hint);
 
 		int maxLength = 255;
 		InputFilter[] fArray = new InputFilter[1];
@@ -68,6 +78,11 @@ public class FrgSubject extends LFragment {
 
 		layRefresh = view.findViewById(R.id.layRefresh);
 		layRefresh.setOnClickListener(onClickRefresh);
+
+		txtEmpty = (TextView) view.findViewById(R.id.txtEmpty);
+		txtEmpty.setText(R.string.f_subject_empty);
+
+		Help.fillHelpSubject(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -93,6 +108,13 @@ public class FrgSubject extends LFragment {
 		super.onResume();
 
 		updateList();
+	}
+
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
 	}
 
 	private void updateList() {
@@ -129,6 +151,11 @@ public class FrgSubject extends LFragment {
 					for (int i = 0; i < comments.size(); i++)
 						adpComments.addItem(comments.get(i));
 					adpComments.notifyDataSetChanged();
+
+					if (adpComments.getCount() <= 1)
+						txtEmpty.setVisibility(View.VISIBLE);
+					else
+						txtEmpty.setVisibility(View.GONE);
 
 					// Update list after 15 sec.s
 					Handler handler = new Handler();
@@ -307,6 +334,9 @@ public class FrgSubject extends LFragment {
 					sendingComment = null;
 
 					updateList();
+				} else if (json.getLong("Code") == 6) {
+					if (getActivity() != null)
+						LDialog.openDialog((LActivity) getActivity(), R.string.f_subject_rating_title, R.string.f_subject_rating_subtitle, R.string.f_ok, false);
 				} else
 					throw new Exception();
 			} catch (Exception e) {

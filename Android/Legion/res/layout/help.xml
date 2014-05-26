@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layHelp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:gravity="center"
+    android:visibility="gone" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dip"
+        android:background="@drawable/lay_help"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="30dip"
+        android:paddingLeft="30dip"
+        android:paddingRight="5dip"
+        android:paddingTop="5dip" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_gravity="right|center_vertical"
+                android:contentDescription="@string/f_to_close"
+                android:src="@drawable/ic_action_cancel" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingRight="25dip" >
+
+            <TextView
+                android:id="@+id/txtHelpTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/lbl_font_size_big" />
+
+            <TextView
+                android:id="@+id/txtHelpBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="false"
+                android:textSize="@dimen/lbl_font_size_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

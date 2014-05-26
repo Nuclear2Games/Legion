@@ -32,8 +32,19 @@ CREATE TABLE likes (
 
 	PRIMARY KEY (id)
 );
+CREATE INDEX likes_user ON likes(userId);
+CREATE INDEX likes_custom ON likes(customId);
+
+CREATE TABLE checkins (
+	id BIGINT IDENTITY,
+	userId BIGINT REFERENCES users(id),
+	placeId BIGINT REFERENCES places(id),
+	date datetime,
+
+	PRIMARY KEY (id)
+);
 CREATE INDEX checkins_user ON likes(userId);
-CREATE INDEX checkins_custom ON likes(customId);
+CREATE INDEX checkins_place ON likes(placeId);
 
 CREATE TABLE places (
 	id BIGINT IDENTITY,

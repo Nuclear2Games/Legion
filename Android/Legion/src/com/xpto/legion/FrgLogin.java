@@ -23,14 +23,20 @@ public class FrgLogin extends LFragment {
 	private EditText txtPass;
 	private Button btnLogin;
 
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_login, null);
+
+		Util.loadFonts(view);
 
 		txtLogin = (EditText) view.findViewById(R.id.txtLogin);
 		txtPass = (EditText) view.findViewById(R.id.txtPass);
 		btnLogin = (Button) view.findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(onClickLogin);
+
+		Help.fillHelpLogin(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -67,6 +73,13 @@ public class FrgLogin extends LFragment {
 		return false;
 	}
 
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
+	}
+
 	private View.OnClickListener onClickLogin = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -99,12 +112,12 @@ public class FrgLogin extends LFragment {
 	private LCallback loginSuccess = new LCallback() {
 		@Override
 		public void finished(Object _value) {
+			if (getActivity() != null)
+				((LActivity) getActivity()).endLoading();
+
 			txtLogin.setEnabled(true);
 			txtPass.setEnabled(true);
 			btnLogin.setEnabled(true);
-
-			if (getActivity() != null)
-				((LActivity) getActivity()).endLoading();
 
 			try {
 				if (_value == null || !(_value instanceof JSONObject))
@@ -130,12 +143,12 @@ public class FrgLogin extends LFragment {
 	private LCallback loginRetry = new LCallback() {
 		@Override
 		public void finished(Object _value) {
+			if (getActivity() != null)
+				((LActivity) getActivity()).startLoading(R.string.f_loading);
+
 			txtLogin.setEnabled(false);
 			txtPass.setEnabled(false);
 			btnLogin.setEnabled(false);
-
-			if (getActivity() != null)
-				((LActivity) getActivity()).startLoading(R.string.f_loading);
 		}
 	};
 

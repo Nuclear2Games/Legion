@@ -26,6 +26,9 @@ namespace Legion
         private const int ID_EXISTING_USER = 5;
         private const string DESCRIPTION_EXISTING_USER = "Existing user";
 
+        private const int ID_LOW_RATING = 6;
+        private const string DESCRIPTION_LOW_RATING = "User hasn't enougth rating to create";
+
         #region Users
         public ResultId NewUser(string login, string password)
         {
@@ -232,8 +235,8 @@ namespace Legion
                     }
                     else
                     {
-                        r.Code = ID_UNKNOWN_ERROR;
-                        r.Message = DESCRIPTION_UNKNOWN_ERROR;
+                        r.Code = ID_LOW_RATING;
+                        r.Message = DESCRIPTION_LOW_RATING;
                     }
                 }
 
@@ -256,13 +259,12 @@ namespace Legion
             }
 
             SqlConnection con;
-            using (SqlCommand command = new SqlCommand("update_user", con = getConnection()))
+            using (SqlCommand command = new SqlCommand("update_place", con = getConnection()))
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlCommandBuilder.DeriveParameters(command);
 
                 command.Parameters["@id"].Value = place;
-                command.Parameters["@userId"].Value = user;
                 command.Parameters["@latitude"].Value = latitude;
                 command.Parameters["@longitude"].Value = longitude;
                 command.Parameters["@name"].Value = name;
@@ -314,8 +316,8 @@ namespace Legion
                     }
                     else
                     {
-                        r.Code = ID_UNKNOWN_ERROR;
-                        r.Message = DESCRIPTION_UNKNOWN_ERROR;
+                        r.Code = ID_LOW_RATING;
+                        r.Message = DESCRIPTION_LOW_RATING;
                     }
                 }
             }
@@ -358,8 +360,8 @@ namespace Legion
                     }
                     else
                     {
-                        r.Code = ID_UNKNOWN_ERROR;
-                        r.Message = DESCRIPTION_UNKNOWN_ERROR;
+                        r.Code = ID_LOW_RATING;
+                        r.Message = DESCRIPTION_LOW_RATING;
                     }
                 }
             }
@@ -402,8 +404,8 @@ namespace Legion
                     }
                     else
                     {
-                        r.Code = ID_UNKNOWN_ERROR;
-                        r.Message = DESCRIPTION_UNKNOWN_ERROR;
+                        r.Code = ID_LOW_RATING;
+                        r.Message = DESCRIPTION_LOW_RATING;
                     }
                 }
             }
@@ -436,6 +438,36 @@ namespace Legion
                 command.Parameters["@customId"].Value = customId;
                 command.Parameters["@customTypeId"].Value = customTypeId;
                 command.Parameters["@isLike"].Value = isLike;
+
+                command.ExecuteNonQuery();
+            }
+            con.Close();
+
+            return r;
+        }
+        #endregion
+
+        #region Checkins
+        public Result NewCheckin(long user, long place)
+        {
+            Result r = new Result();
+
+            // Validate if login is valid
+            if (user <= 0 || place <= 0)
+            {
+                r.Code = ID_INVALID_CONTENT;
+                r.Message = DESCRIPTION_INVALID_CONTENT;
+                return r;
+            }
+
+            SqlConnection con;
+            using (SqlCommand command = new SqlCommand("new_checkin", con = getConnection()))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlCommandBuilder.DeriveParameters(command);
+
+                command.Parameters["@userId"].Value = user;
+                command.Parameters["@placeId"].Value = place;
 
                 command.ExecuteNonQuery();
             }
@@ -642,15 +674,17 @@ namespace Legion
                             if (!reader.IsDBNull(7))
                                 p.Points = reader.GetInt64(7);
                             if (!reader.IsDBNull(8))
-                                p.Subjects = reader.GetInt64(8);
+                                p.Checkins = reader.GetInt64(8);
                             if (!reader.IsDBNull(9))
-                                p.Likes = reader.GetInt64(9);
+                                p.Subjects = reader.GetInt64(9);
                             if (!reader.IsDBNull(10))
-                                p.Dislikes = reader.GetInt64(10);
+                                p.Likes = reader.GetInt64(10);
                             if (!reader.IsDBNull(11))
-                                p.UserId = reader.GetInt64(11);
+                                p.Dislikes = reader.GetInt64(11);
                             if (!reader.IsDBNull(12))
-                                p.UserName = reader.GetString(12);
+                                p.UserId = reader.GetInt64(12);
+                            if (!reader.IsDBNull(13))
+                                p.UserName = reader.GetString(13);
 
                             r.Content = p;
                         }
@@ -715,15 +749,17 @@ namespace Legion
                             if (!reader.IsDBNull(7))
                                 p.Points = reader.GetInt64(7);
                             if (!reader.IsDBNull(8))
-                                p.Subjects = reader.GetInt64(8);
+                                p.Checkins = reader.GetInt64(8);
                             if (!reader.IsDBNull(9))
-                                p.Likes = reader.GetInt64(9);
+                                p.Subjects = reader.GetInt64(9);
                             if (!reader.IsDBNull(10))
-                                p.Dislikes = reader.GetInt64(10);
+                                p.Likes = reader.GetInt64(10);
                             if (!reader.IsDBNull(11))
-                                p.UserId = reader.GetInt64(11);
+                                p.Dislikes = reader.GetInt64(11);
                             if (!reader.IsDBNull(12))
-                                p.UserName = reader.GetString(12);
+                                p.UserId = reader.GetInt64(12);
+                            if (!reader.IsDBNull(13))
+                                p.UserName = reader.GetString(13);
 
                             places.Add(p);
                         }

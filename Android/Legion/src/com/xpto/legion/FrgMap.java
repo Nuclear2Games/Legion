@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,12 +27,18 @@ public class FrgMap extends LFragment {
 
 	private View btnCenter;
 
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_map, null);
 
+		Util.loadFonts(view);
+
 		btnCenter = view.findViewById(R.id.btnCenter);
 		btnCenter.setOnClickListener(onClickCenter);
+
+		Help.fillHelpMap(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -60,6 +67,7 @@ public class FrgMap extends LFragment {
 				if (map != null) {
 					map.getUiSettings().setZoomControlsEnabled(false);
 					map.setOnMapLongClickListener(onMapLongClick);
+					map.setOnInfoWindowClickListener(onMapInfoClick);
 				}
 			}
 		}
@@ -68,6 +76,13 @@ public class FrgMap extends LFragment {
 	@Override
 	public boolean canBack() {
 		return true;
+	}
+
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
 	}
 
 	public void centerMap(double _latitude, double _logitude) {
@@ -89,6 +104,20 @@ public class FrgMap extends LFragment {
 				frgNewEvent.setLocation(_point.latitude, _point.longitude);
 				((ActMain) getActivity()).setFragment(frgNewEvent, ActMain.LEVEL_TOP);
 			}
+		}
+	};
+
+	private GoogleMap.OnInfoWindowClickListener onMapInfoClick = new GoogleMap.OnInfoWindowClickListener() {
+		@Override
+		public void onInfoWindowClick(Marker marker) {
+			int index = markers.indexOf(marker);
+
+			Place place = new Place();
+			place.setId(ids.get(index));
+
+			FrgEvent frgEvent = new FrgEvent();
+			frgEvent.setEvent(place);
+			((ActMain) getActivity()).setFragment(frgEvent, ActMain.LEVEL_EVENT);
 		}
 	};
 

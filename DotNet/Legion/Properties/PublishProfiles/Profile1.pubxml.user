@@ -10,7 +10,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Legion.dll">
-      <publishTime>05/25/2014 15:40:37</publishTime>
+      <publishTime>05/25/2014 20:12:38</publishTime>
     </File>
     <File Include="bin/Legion.pdb">
       <publishTime>05/23/2014 00:58:42</publishTime>

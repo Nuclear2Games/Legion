@@ -24,13 +24,15 @@
             android:gravity="center"
             android:singleLine="false"
             android:text="@string/f_newevent_type"
-            android:textSize="@dimen/lbl_font_size_small" />
+            android:textSize="@dimen/lbl_font_size_small"
+            android:visibility="gone" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
             <RadioButton
                 android:id="@+id/rdbType"
@@ -102,5 +104,7 @@
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/txt_font_size_default" />
     </LinearLayout>
+
+    <include layout="@layout/help" />
 
 </FrameLayout>

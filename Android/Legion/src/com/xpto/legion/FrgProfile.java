@@ -24,9 +24,13 @@ public class FrgProfile extends LFragment {
 	private EditText txtDescription;
 	private Button btnSave;
 
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_profile, null);
+
+		Util.loadFonts(view);
 
 		txtLogin = (EditText) view.findViewById(R.id.txtLogin);
 		txtName = (EditText) view.findViewById(R.id.txtName);
@@ -35,6 +39,8 @@ public class FrgProfile extends LFragment {
 		btnSave.setOnClickListener(onClickRegister);
 
 		fill();
+
+		Help.fillHelpProfile(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -79,6 +85,13 @@ public class FrgProfile extends LFragment {
 	public boolean canBack() {
 		((ActMain) getActivity()).setFragment(null, ActMain.LEVEL_TOP);
 		return false;
+	}
+
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
 	}
 
 	private View.OnClickListener onClickRegister = new View.OnClickListener() {

@@ -103,6 +103,17 @@ public class Place extends Default {
 		points = _points;
 	}
 
+	private long checkins;
+
+	public long getCheckins() {
+		return checkins;
+	}
+
+	public void setCheckins(long _checkins) {
+		if (_checkins >= 0)
+			checkins = _checkins;
+	}
+	
 	private long subjects;
 
 	public long getSubjects() {
@@ -172,6 +183,9 @@ public class Place extends Default {
 			if (hasValue(_json, "Points"))
 				setPoints(_json.getLong("Points"));
 
+			if (hasValue(_json, "Checkins"))
+				setCheckins(_json.getLong("Checkins"));
+			
 			if (hasValue(_json, "Subjects"))
 				setSubjects(_json.getLong("Subjects"));
 

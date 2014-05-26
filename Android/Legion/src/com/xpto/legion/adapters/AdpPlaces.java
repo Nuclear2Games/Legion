@@ -9,7 +9,7 @@ import com.xpto.legion.utils.LActivity;
 
 public class AdpPlaces extends AdpAllTypes {
 	public AdpPlaces(LActivity _lActivity, OnClickListener _onClickRowLike, OnClickListener _onClickRowDislike, boolean _useHead) {
-		super(_lActivity, null, null, _onClickRowLike, _onClickRowDislike, _useHead);
+		super(_lActivity, null, null, null, null, _onClickRowLike, _onClickRowDislike, _useHead);
 	}
 
 	@Override

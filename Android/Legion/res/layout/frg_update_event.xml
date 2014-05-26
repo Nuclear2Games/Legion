@@ -5,67 +5,75 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="50dip"
-        android:orientation="vertical" >
+        android:layout_gravity="center"
+        android:background="@drawable/lay_dialog"
+        android:orientation="vertical"
+        android:padding="30dip" >
 
-        <EditText
-            android:id="@+id/txtLogin"
-            android:layout_width="200dip"
-            android:layout_height="@dimen/txt_height"
-            android:layout_gravity="top|center_horizontal"
-            android:background="@drawable/txt"
-            android:ellipsize="end"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="@string/f_newuser_user"
-            android:inputType="textNoSuggestions"
-            android:maxLength="32"
-            android:singleLine="true"
-            android:textSize="@dimen/txt_font_size_default" />
+            android:text="@string/f_updateevent_title"
+            android:textSize="@dimen/lbl_font_size_big" />
 
         <EditText
-            android:id="@+id/txtPass1"
-            android:layout_width="200dip"
+            android:id="@+id/txtName"
+            android:layout_width="250dip"
             android:layout_height="@dimen/txt_height"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="@string/f_newuser_pass1"
-            android:inputType="textPassword"
+            android:hint="@string/f_updateevent_name"
+            android:inputType="textCapSentences"
             android:maxLength="32"
-            android:password="true"
             android:singleLine="true"
             android:textSize="@dimen/txt_font_size_default" />
 
         <EditText
-            android:id="@+id/txtPass2"
-            android:layout_width="200dip"
+            android:id="@+id/txtDescription"
+            android:layout_width="250dip"
+            android:layout_height="70dip"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/txt"
+            android:ellipsize="end"
+            android:gravity="left|top"
+            android:hint="@string/f_updateevent_description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="3dip"
+            android:singleLine="false"
+            android:textSize="@dimen/txt_font_size_default" />
+
+        <EditText
+            android:id="@+id/txtDate"
+            android:layout_width="250dip"
             android:layout_height="@dimen/txt_height"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/txt"
             android:ellipsize="end"
             android:gravity="center"
-            android:hint="@string/f_newuser_pass2"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:password="true"
+            android:hint="@string/f_updateevent_when"
+            android:inputType="none"
             android:singleLine="true"
             android:textSize="@dimen/txt_font_size_default" />
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="200dip"
+            android:layout_width="180dip"
             android:layout_height="40dip"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="20dip"
             android:background="@drawable/btn"
             android:gravity="center"
-            android:text="@string/f_newuser_register"
+            android:text="@string/f_updateevent_register"
             android:textColor="@color/gray_dark"
             android:textSize="@dimen/txt_font_size_default" />
     </LinearLayout>
+
+    <include layout="@layout/help" />
 
 </FrameLayout>

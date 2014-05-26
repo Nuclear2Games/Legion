@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xpto.legion.adapters.AdpAllTypes;
 import com.xpto.legion.data.Caller;
@@ -26,6 +27,7 @@ import com.xpto.legion.utils.LDialog;
 import com.xpto.legion.utils.LEditText;
 import com.xpto.legion.utils.LFragment;
 import com.xpto.legion.utils.Like;
+import com.xpto.legion.utils.Util;
 
 public class FrgComment extends LFragment {
 	private Comment comment;
@@ -42,12 +44,19 @@ public class FrgComment extends LFragment {
 
 	private Answer sendingAnswer;
 
+	private TextView txtEmpty;
+
+	private View viwHelp;
+
 	@Override
 	public View createView(LayoutInflater inflater) {
 		View view = inflater.inflate(R.layout.frg_list, null);
 
+		Util.loadFonts(view);
+
 		lst = (ListView) view.findViewById(R.id.lst);
-		adpAnswers = new AdpAllTypes((LActivity) getActivity(), onClickCommentLike, onClickCommentDislike, onClickAnswerLike, onClickAnswerDislike, true);
+		adpAnswers = new AdpAllTypes((LActivity) getActivity(), null, null, onClickCommentLike, onClickCommentDislike, onClickAnswerLike, onClickAnswerDislike,
+				true);
 		adpAnswers.addItem(comment);
 		lst.setAdapter(adpAnswers);
 
@@ -55,6 +64,7 @@ public class FrgComment extends LFragment {
 
 		txt = (LEditText) view.findViewById(R.id.txt);
 		txt.setOnFocusChange(onFocusChange);
+		txt.setHint(R.string.f_comment_hint);
 
 		int maxLength = 255;
 		InputFilter[] fArray = new InputFilter[1];
@@ -66,6 +76,11 @@ public class FrgComment extends LFragment {
 
 		layRefresh = view.findViewById(R.id.layRefresh);
 		layRefresh.setOnClickListener(onClickRefresh);
+
+		txtEmpty = (TextView) view.findViewById(R.id.txtEmpty);
+		txtEmpty.setText(R.string.f_comment_empty);
+
+		Help.fillHelpComment(viwHelp = view.findViewById(R.id.layHelp));
 
 		return view;
 	}
@@ -91,6 +106,13 @@ public class FrgComment extends LFragment {
 		super.onResume();
 
 		updateList();
+	}
+
+	@Override
+	public void showHelp() {
+		Animation cameIn = AnimationUtils.loadAnimation(getActivity(), R.anim.transition_dialog_in);
+		viwHelp.setVisibility(View.VISIBLE);
+		viwHelp.startAnimation(cameIn);
 	}
 
 	private void updateList() {
@@ -127,6 +149,11 @@ public class FrgComment extends LFragment {
 					for (int i = 0; i < answers.size(); i++)
 						adpAnswers.addItem(answers.get(i));
 					adpAnswers.notifyDataSetChanged();
+
+					if (adpAnswers.getCount() <= 1)
+						txtEmpty.setVisibility(View.VISIBLE);
+					else
+						txtEmpty.setVisibility(View.GONE);
 
 					// Update list after 15 sec.s
 					Handler handler = new Handler();
@@ -305,6 +332,9 @@ public class FrgComment extends LFragment {
 					sendingAnswer = null;
 
 					updateList();
+				} else if (json.getLong("Code") == 6) {
+					if (getActivity() != null)
+						LDialog.openDialog((LActivity) getActivity(), R.string.f_comment_rating_title, R.string.f_comment_rating_subtitle, R.string.f_ok, false);
 				} else
 					throw new Exception();
 			} catch (Exception e) {

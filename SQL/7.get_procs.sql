@@ -63,11 +63,12 @@ BEGIN
 		p.description,
 		p.date,
 		p.points,
+		p.checkins,
 		p.subjects,
 		p.likes,
 		p.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		places p INNER JOIN users u ON (
 				p.userId = u.id
@@ -91,11 +92,12 @@ BEGIN
 		p.description,
 		p.date,
 		p.points,
+		p.checkins,
 		p.subjects,
 		p.likes,
 		p.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		places p INNER JOIN users u ON (
 				p.userId = u.id
@@ -142,7 +144,7 @@ BEGIN
 		s.likes,
 		s.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		subjects s INNER JOIN users u ON (
 				s.userId = u.id
@@ -166,7 +168,7 @@ BEGIN
 		s.likes,
 		s.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		subjects s INNER JOIN users u ON (
 				s.userId = u.id
@@ -192,7 +194,7 @@ BEGIN
 		c.likes,
 		c.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		comments c INNER JOIN users u ON (
 				c.userId = u.id
@@ -216,7 +218,7 @@ BEGIN
 		c.likes,
 		c.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		comments c INNER JOIN users u ON (
 				c.userId = u.id
@@ -240,7 +242,7 @@ BEGIN
 		ca.likes,
 		ca.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		comment_answers ca INNER JOIN users u ON (
 				ca.userId = u.id
@@ -262,7 +264,7 @@ BEGIN
 		ca.likes,
 		ca.dislikes,
 		u.id AS 'userId',
-		ISNULL(u.name, u.login) AS 'userName'
+		ISNULL(CASE WHEN LEN(ISNULL(u.name, '')) = 0 THEN null ELSE u.name END, u.login) AS 'userName'
 	FROM
 		comment_answers ca INNER JOIN users u ON (
 				ca.userId = u.id
