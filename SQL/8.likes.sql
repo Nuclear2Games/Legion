@@ -141,7 +141,7 @@ BEGIN
 			UPDATE users SET
 				points = ISNULL(points, 0) + @lk - @dl * 3
 			WHERE
-					id = @userId
+					id = @targetUserId
 		END
 	END
 END

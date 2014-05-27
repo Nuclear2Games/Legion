@@ -19,7 +19,7 @@ import com.xpto.legion.utils.LFragment;
 import com.xpto.legion.utils.Util;
 
 public class FrgNotifications extends LFragment {
-	private AdpNotifications adpAnswers;
+	private AdpNotifications adpNotifications;
 	private ListView lst;
 
 	private TextView txtEmpty;
@@ -33,8 +33,8 @@ public class FrgNotifications extends LFragment {
 		Util.loadFonts(view);
 
 		lst = (ListView) view.findViewById(R.id.lst);
-		adpAnswers = new AdpNotifications((LActivity) getActivity(), false);
-		lst.setAdapter(adpAnswers);
+		adpNotifications = new AdpNotifications((LActivity) getActivity(), false);
+		lst.setAdapter(adpNotifications);
 		lst.setOnItemClickListener(onItemClick);
 
 		txtEmpty = (TextView) view.findViewById(R.id.txtEmpty);
@@ -49,9 +49,9 @@ public class FrgNotifications extends LFragment {
 	public void onResume() {
 		super.onResume();
 
-		adpAnswers.clear();
-		adpAnswers.notifyDataSetChanged();
-		if (adpAnswers.getCount() == 1)
+		adpNotifications.clear();
+		adpNotifications.notifyDataSetChanged();
+		if (adpNotifications.getCount() == 0)
 			txtEmpty.setVisibility(View.VISIBLE);
 		else
 			txtEmpty.setVisibility(View.GONE);
@@ -83,7 +83,7 @@ public class FrgNotifications extends LFragment {
 	private AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> _parent, View _view, int _position, long _id) {
-			Notification notification = (Notification) adpAnswers.getItem(_position);
+			Notification notification = (Notification) adpNotifications.getItem(_position);
 
 			switch (notification.getCustomTypeId()) {
 			case ActMain.CUSTOM_TYPE_EVENT:

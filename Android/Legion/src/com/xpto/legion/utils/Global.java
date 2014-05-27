@@ -150,6 +150,14 @@ public class Global extends Application {
 	public ArrayList<Place> getNearPlaces() {
 		if (nearPlaces == null)
 			nearPlaces = new ArrayList<Place>();
+		else {
+			for (int i = 0; i < nearPlaces.size(); i++)
+				for (int j = i + 1; j < nearPlaces.size(); j++)
+					if (nearPlaces.get(i).getId() == nearPlaces.get(j).getId()) {
+						nearPlaces.remove(j);
+						j--;
+					}
+		}
 		return nearPlaces;
 	}
 
@@ -202,6 +210,14 @@ public class Global extends Application {
 	public ArrayList<Notification> getNotifications() {
 		if (notifications == null)
 			notifications = new ArrayList<Notification>();
+		else {
+			for (int i = 0; i < notifications.size(); i++)
+				for (int j = i + 1; j < notifications.size(); j++)
+					if (notifications.get(i).getId() == notifications.get(j).getId()) {
+						notifications.remove(j);
+						j--;
+					}
+		}
 		return notifications;
 	}
 

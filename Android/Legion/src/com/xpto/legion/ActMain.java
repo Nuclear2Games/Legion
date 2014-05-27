@@ -162,7 +162,8 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 				if (fragmentTop == null || !(fragmentTop instanceof FrgNotifications)) {
 					FrgNotifications frgNotifications = new FrgNotifications();
 					setFragment(frgNotifications, ActMain.LEVEL_TOP);
-				}
+				} else if (fragmentTop != null && fragmentTop instanceof FrgNotifications)
+					setFragment(null, ActMain.LEVEL_TOP);
 			}
 			break;
 
@@ -176,7 +177,8 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 				if (fragmentTop == null || !(fragmentTop instanceof FrgProfile)) {
 					FrgProfile frgProfile = new FrgProfile();
 					setFragment(frgProfile, ActMain.LEVEL_TOP);
-				}
+				} else if (fragmentTop != null && fragmentTop instanceof FrgProfile)
+					setFragment(null, ActMain.LEVEL_TOP);
 			}
 			break;
 		}

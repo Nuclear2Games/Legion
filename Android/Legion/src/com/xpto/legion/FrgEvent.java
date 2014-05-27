@@ -153,7 +153,7 @@ public class FrgEvent extends LFragment {
 						adpSubjects.addItem(subjects.get(i));
 					adpSubjects.notifyDataSetChanged();
 
-					if (adpSubjects.getCount() <= 1)
+					if (adpSubjects.getCount() == 0)
 						txtEmpty.setVisibility(View.VISIBLE);
 					else
 						txtEmpty.setVisibility(View.GONE);

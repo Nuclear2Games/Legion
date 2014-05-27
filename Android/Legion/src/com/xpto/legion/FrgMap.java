@@ -20,7 +20,7 @@ import com.xpto.legion.utils.Util;
 
 public class FrgMap extends LFragment {
 	// Map
-	private final float mapZoom = 16;
+	private final float mapZoom = 14;
 	private GoogleMap map;
 	private ArrayList<Long> ids;
 	private ArrayList<Marker> markers;
@@ -140,7 +140,7 @@ public class FrgMap extends LFragment {
 			return;
 
 		MarkerOptions mo = new MarkerOptions();
-		mo.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_place));
+		mo.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_red));
 		mo.position(new LatLng(_place.getLatitude(), _place.getLongitude()));
 
 		mo.title(_place.getName());

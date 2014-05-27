@@ -79,12 +79,17 @@ public class Caller {
 		try {
 			JSONObject params = new JSONObject();
 
+			int month = when.get(Calendar.MONTH) + 1;
+			int day = when.get(Calendar.DAY_OF_MONTH);
+			int hour = when.get(Calendar.HOUR_OF_DAY);
+			int minute = when.get(Calendar.MINUTE);
+
 			String date = "";
 			date += when.get(Calendar.YEAR) + "-";
-			date += when.get(Calendar.MONTH) + "-";
-			date += when.get(Calendar.DAY_OF_MONTH) + " ";
-			date += when.get(Calendar.HOUR_OF_DAY) + ":";
-			date += when.get(Calendar.MINUTE) + ":00";
+			date += (month < 10 ? "0" + month : month) + "-";
+			date += (day < 10 ? "0" + day : day) + " ";
+			date += (hour < 10 ? "0" + hour : hour) + ":";
+			date += (minute < 10 ? "0" + minute : minute) + ":00";
 
 			params.put("user", user);
 			params.put("latitude", latitude);
@@ -126,7 +131,7 @@ public class Caller {
 			date += when.get(Calendar.DAY_OF_MONTH) + " ";
 			date += when.get(Calendar.HOUR_OF_DAY) + ":";
 			date += when.get(Calendar.MINUTE) + ":00";
-			
+
 			params.put("user", user);
 			params.put("place", place);
 			params.put("latitude", latitude);

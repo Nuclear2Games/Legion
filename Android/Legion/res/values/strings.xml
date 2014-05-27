@@ -206,7 +206,7 @@
     <string name="f_help_map_body">Clique e segure o mapa no local que deseja criar um novo evento.</string>
     
     <string name="f_help_events_title">Eventos</string>
-    <string name="f_help_events_body">Clique e sobre um evento para ver seus detalhes.</string>
+    <string name="f_help_events_body">Clique sobre um evento para ver seus detalhes.</string>
     
     <string name="f_help_answer_title">Resposta</string>
     <string name="f_help_answer_body">Veja as respostas aos comenários.</string>
