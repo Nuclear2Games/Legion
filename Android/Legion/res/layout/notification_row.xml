@@ -7,34 +7,36 @@
     android:paddingRight="@dimen/fields_spacing_labels"
     android:paddingTop="@dimen/fields_spacing_labels" >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginBottom="2.5dip"
-        android:background="@color/gray_half" />
-
-    <TextView
-        android:id="@+id/txtDescription"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="l"
-        android:text="7 pessoas curtiram seu comentário"
-        android:textColor="@color/gray_dark"
-        android:textSize="@dimen/lbl_font_size_default" />
+        android:background="@drawable/txt_default"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/fields_spacing_labels"
+        android:paddingLeft="@dimen/fields_spacing_labels"
+        android:paddingRight="@dimen/fields_spacing_labels"
+        android:paddingTop="@dimen/fields_spacing_labels" >
 
-    <TextView
-        android:id="@+id/txtDate"
-        android:layout_width="match_parent"
-        android:layout_height="14dip"
-        android:gravity="right|center_vertical"
-        android:tag="t"
-        android:textColor="@color/gray_half_light"
-        android:textSize="@dimen/lbl_font_size_tiny" />
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="l"
+            android:text="7 pessoas curtiram seu comentário"
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/lbl_font_size_default" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginTop="2.5dip"
-        android:background="@color/gray_half" />
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="match_parent"
+            android:layout_height="14dip"
+            android:layout_marginBottom="2.5dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="5dip"
+            android:gravity="left|center_vertical"
+            android:tag="t"
+            android:textColor="@color/gray_half"
+            android:textSize="@dimen/lbl_font_size_tiny" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -15,7 +15,7 @@ BEGIN
 
 	DECLARE @id AS BIGINT
 	SELECT
-		@id = id
+		@id = userId
 	FROM
 		places
 	WHERE
@@ -42,7 +42,23 @@ BEGIN
 			0,
 			0
 		)
-		
+
+		INSERT INTO notifications (
+			userId,
+			customId,
+			customTypeId,
+			what,
+			date,
+			seen
+		) VALUES (
+			@id,
+			@placeId,
+			1,
+			3,
+			GETDATE(),
+			0
+		)
+
 		UPDATE places SET
 			subjects = subjects + 1
 		WHERE

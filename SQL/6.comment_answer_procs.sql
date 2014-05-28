@@ -1,6 +1,6 @@
-ALTER PROC new_comment_answer (
+ALTER PROC new_comment (
 	@userId BIGINT,
-	@commentId BIGINT,
+	@subjectId BIGINT,
 	@content VARCHAR(MAX)
 ) AS
 BEGIN
@@ -14,34 +14,54 @@ BEGIN
 
 	DECLARE @id AS BIGINT
 	SELECT
-		@id = id
+		@id = userId
 	FROM
-		comments
+		subjects
 	WHERE
-			id = @commentId
-	
+			id = @subjectId
+
 	IF @points IS NOT NULL AND @id IS NOT NULL
 	BEGIN
-		INSERT INTO comment_answers (
-			commentId,
+		INSERT INTO comments (
+			subjectId,
 			userId,
 			date,
 			content,
+			points,
+			answers,
 			likes,
 			dislikes
 		) VALUES (
-			@commentId,
+			@subjectId,
 			@userId,
 			GETDATE(),
 			@content,
+			CAST(SQRT(@points) AS BIGINT),
+			0,
 			0,
 			0
 		)
 		
-		UPDATE comments SET
-			answers = answers + 1
+		INSERT INTO notifications (
+			userId,
+			customId,
+			customTypeId,
+			what,
+			date,
+			seen
+		) VALUES (
+			@id,
+			@subjectId,
+			3,
+			3,
+			GETDATE(),
+			0
+		)
+		
+		UPDATE subjects SET
+			comments = comments + 1
 		WHERE
-				id = @commentId
+				id = @subjectId
 		
 		SELECT @@IDENTITY AS 'id'
 	END

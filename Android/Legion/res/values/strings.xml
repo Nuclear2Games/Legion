@@ -190,14 +190,26 @@
     <!-- Notification -->
     <string name="l_notification_person">pessoa</string>
     <string name="l_notification_people">pessoas</string>
+    
     <string name="l_notification_liked">gostou</string>
     <string name="l_notification_disliked">não gostou</string>
+    <string name="l_notification_comment">comentou</string>
+    <string name="l_notification_cehckin">de checkin</string>
+    
     <string name="l_notification_likeds">gostaram</string>
     <string name="l_notification_dislikeds">não gostaram</string>
+    <string name="l_notification_comments">comentaram</string>
+    <string name="l_notification_cehckins">deram checkin</string>
+    
     <string name="l_notification_of_your_event">do seu evento</string>
     <string name="l_notification_of_your_subject">do seu assunto</string>
     <string name="l_notification_of_your_comment">do seu comentário</string>
     <string name="l_notification_of_your_answer">da sua resposta</string>
+    
+    <string name="l_notification_in_your_event">em seu evento</string>
+    <string name="l_notification_in_your_subject">em seu assunto</string>
+    <string name="l_notification_in_your_comment">em seu comentário</string>
+    <string name="l_notification_in_your_answer">em sua resposta</string>
     
     <string name="f_notification_empty">Você não têm notificações</string>
 

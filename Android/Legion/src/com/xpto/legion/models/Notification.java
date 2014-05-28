@@ -1,15 +1,12 @@
 package com.xpto.legion.models;
 
 import java.util.Date;
-import java.util.Random;
 
 import org.json.JSONObject;
 
 import com.xpto.legion.utils.Util;
 
 public class Notification extends Default {
-	private static Random random = new Random();
-
 	private long customId;
 
 	public long getCustomId() {
@@ -90,16 +87,16 @@ public class Notification extends Default {
 			if (hasValue(_json, "What"))
 				setWhat(_json.getLong("What"));
 
-			if (hasValue(_json, "Date")) {
+			if (hasValue(_json, "Date"))
 				setWhen(Util.parseJSONDate(_json.getString("Date")));
-				setId(random.nextLong());
-			}
 
 			if (hasValue(_json, "Seen"))
 				setSeen(_json.getBoolean("Seen"));
 
 			if (hasValue(_json, "Quantity"))
 				setQuantity(_json.getLong("Quantity"));
+
+			setId(getCustomId() * 100 + getCustomTypeId() * 10 + getWhat());
 
 			return true;
 		} catch (Exception e) {

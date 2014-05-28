@@ -41,7 +41,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	// List
 	private boolean searchPlaces;
 
-	// Fragments
+	// Fragment layers
 	private View viwCoverEvent;
 	private LFragment fragmentEvent;
 	private View viwCoverSubject;
@@ -52,7 +52,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	private LFragment fragmentAnswer;
 	private View viwCoverTop;
 	private LFragment fragmentTop;
-	// Fixed children
+	// Fixed children fragments
 	private FrgMap frgMap;
 	private FrgEvents frgEvents;
 
@@ -65,6 +65,9 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		public void run() {
 			if (getGlobal().getLogged() != null && getGlobal().getLogged().getId() > 0)
 				Caller.getNotifications(ActMain.this, notificationsSuccess, null, null, getGlobal().getLogged().getId());
+
+			if (System.currentTimeMillis() - lastGetNearPlaces >= executeAfter * 2)
+				getNearPlaces();
 
 			if (handler != null && System.currentTimeMillis() - lastExecution >= executeAfter) {
 				handler.postDelayed(timedExecution, executeAfter);
@@ -85,11 +88,13 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_main);
 
+		// Configure ViewPager
 		pgrMain = (ViewPager) findViewById(R.id.pgrMain);
 		adpMain = new PagerAdapter(getSupportFragmentManager());
 		pgrMain.setAdapter(adpMain);
 		adpMain.notifyDataSetChanged();
 
+		// Get dark cover of each layer
 		viwCoverEvent = findViewById(R.id.viwCoverEvent);
 		viwCoverSubject = findViewById(R.id.viwCoverSubject);
 		viwCoverComment = findViewById(R.id.viwCoverComment);
@@ -103,6 +108,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 		searchPlaces = false;
 
+		// Start notification service
 		if (handler == null) {
 			handler = new Handler();
 			handler.postDelayed(timedExecution, 1000);
@@ -118,6 +124,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 	@Override
 	public void onBackPressed() {
+		// Call back of layers
 		if (fragmentTop == null || fragmentTop.canBack())
 			if (fragmentAnswer == null || fragmentAnswer.canBack())
 				if (fragmentComment == null || fragmentComment.canBack())
@@ -136,6 +143,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_help:
+			// Show specific helps
 			if (fragmentTop != null)
 				fragmentTop.showHelp();
 			else if (fragmentAnswer != null)
@@ -153,7 +161,9 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			break;
 
 		case R.id.action_notifications:
+			// Show/Hide notifications
 			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
+				// Ask user, if not logged
 				if (fragmentTop == null || !(fragmentTop instanceof FrgNoUser) && !(fragmentTop instanceof FrgLogin) && !(fragmentTop instanceof FrgNewUser)) {
 					FrgNoUser frgNoUser = new FrgNoUser();
 					setFragment(frgNoUser, ActMain.LEVEL_TOP);
@@ -168,7 +178,9 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			break;
 
 		case R.id.action_profile:
+			// Shoe/hide profile
 			if (getGlobal().getLogged() == null || getGlobal().getLogged().getId() == 0) {
+				// Ask user, if not logged
 				if (fragmentTop == null || !(fragmentTop instanceof FrgNoUser) && !(fragmentTop instanceof FrgLogin) && !(fragmentTop instanceof FrgNewUser)) {
 					FrgNoUser frgNoUser = new FrgNoUser();
 					setFragment(frgNoUser, ActMain.LEVEL_TOP);
@@ -256,9 +268,9 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 	private long lastGetNearPlaces;
 
+	// Get near places
 	private void getNearPlaces() {
 		lastGetNearPlaces = System.currentTimeMillis();
-
 		Caller.getNearPlaces(ActMain.this, placesSuccess, null, placesFail, getGlobal().getLatitude(), getGlobal().getLongitude());
 	}
 
@@ -266,17 +278,21 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		@Override
 		public void finished(Object _value) {
 			try {
+				// If return in error
 				if (_value == null || !(_value instanceof JSONObject))
 					return;
 
 				JSONObject json = (JSONObject) _value;
 
+				// If there is problem in server
 				if (json.getInt("Code") != 1)
 					throw new Exception();
 
+				// Add place to place list 
 				if (!getGlobal().addPlaces(json.getJSONArray("Content")))
 					throw new Exception();
 
+				// Propagate update
 				frgMap.updatePlaces();
 				frgEvents.updatePlaces();
 			} catch (Exception e) {
@@ -299,6 +315,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 				@Override
 				protected void doInBackground() {
 					try {
+						// Wait 20s for the next try
 						long wait = 20000 - (System.currentTimeMillis() - lastGetNearPlaces);
 						if (wait < 2000)
 							wait = 2000;
@@ -309,6 +326,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 
 				@Override
 				protected void onPostExecute() {
+					// Try again
 					getNearPlaces();
 				}
 			}.start();
@@ -319,14 +337,17 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		@Override
 		public void finished(Object _value) {
 			try {
+				// If return in error
 				if (_value == null || !(_value instanceof JSONObject))
 					return;
 
 				JSONObject json = (JSONObject) _value;
 
+				// If there is problem in server
 				if (json.getInt("Code") != 1)
 					throw new Exception();
 
+				// Add notificatin to notificatin list
 				if (!getGlobal().addNotifications(json.getJSONArray("Content")))
 					throw new Exception();
 			} catch (Exception e) {
@@ -334,6 +355,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	};
 
+	// Set fragment in informed layer
 	public void setFragment(final LFragment _fragment, final int _level) {
 		switch (_level) {
 		case LEVEL_TOP:
@@ -358,8 +380,10 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	}
 
+	// Replace fragment in chosen layer 
 	private void replaceFragment(View _cover, final LFragment _current, final LFragment _new, final int _idLayContent) {
 		if (_current != null) {
+			// If there is a fragment in that layer, animate it out
 			Animation cameOut = _current.getOutAnimation();
 			if (cameOut == null) {
 				FragmentManager fragmentManager = getSupportFragmentManager();
@@ -408,6 +432,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 		}
 	}
 
+	// Add the new fragment with their animation
 	private void addFragment(LFragment _new, int _idLayContent) {
 		if (_new != null) {
 			FragmentManager fragmentManager = getSupportFragmentManager();
@@ -444,6 +469,7 @@ public class ActMain extends LActivity implements ActionBar.TabListener {
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 	}
 
+	// Propagate when new place is crated 
 	public void propagateNewPlace(Place _place) {
 		getGlobal().addPlace(_place);
 

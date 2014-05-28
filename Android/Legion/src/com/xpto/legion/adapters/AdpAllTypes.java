@@ -368,6 +368,10 @@ public class AdpAllTypes extends AdpDefault<Default> {
 				description += " " + view.getContext().getString(R.string.l_notification_liked);
 			else if (notification.getWhat() == 2)
 				description += " " + view.getContext().getString(R.string.l_notification_disliked);
+			else if (notification.getWhat() == 3)
+				description += " " + view.getContext().getString(R.string.l_notification_comment);
+			else if (notification.getWhat() == 4)
+				description += " " + view.getContext().getString(R.string.l_notification_cehckin);
 		} else {
 			description += " " + view.getContext().getString(R.string.l_notification_people);
 
@@ -375,23 +379,39 @@ public class AdpAllTypes extends AdpDefault<Default> {
 				description += " " + view.getContext().getString(R.string.l_notification_likeds);
 			else if (notification.getWhat() == 2)
 				description += " " + view.getContext().getString(R.string.l_notification_dislikeds);
+			else if (notification.getWhat() == 3)
+				description += " " + view.getContext().getString(R.string.l_notification_comments);
+			else if (notification.getWhat() == 4)
+				description += " " + view.getContext().getString(R.string.l_notification_cehckins);
 		}
 
 		switch (notification.getCustomTypeId()) {
 		case ActMain.CUSTOM_TYPE_EVENT:
-			description += " " + view.getContext().getString(R.string.l_notification_of_your_event);
+			if (notification.getWhat() <= 2)
+				description += " " + view.getContext().getString(R.string.l_notification_of_your_event);
+			else
+				description += " " + view.getContext().getString(R.string.l_notification_in_your_event);
 			break;
 
 		case ActMain.CUSTOM_TYPE_SUBJECT:
-			description += " " + view.getContext().getString(R.string.l_notification_of_your_subject);
+			if (notification.getWhat() <= 2)
+				description += " " + view.getContext().getString(R.string.l_notification_of_your_subject);
+			else
+				description += " " + view.getContext().getString(R.string.l_notification_in_your_subject);
 			break;
 
 		case ActMain.CUSTOM_TYPE_COMMENT:
-			description += " " + view.getContext().getString(R.string.l_notification_of_your_comment);
+			if (notification.getWhat() <= 2)
+				description += " " + view.getContext().getString(R.string.l_notification_of_your_comment);
+			else
+				description += " " + view.getContext().getString(R.string.l_notification_in_your_comment);
 			break;
 
 		case ActMain.CUSTOM_TYPE_ANSWER:
-			description += " " + view.getContext().getString(R.string.l_notification_of_your_answer);
+			if (notification.getWhat() <= 2)
+				description += " " + view.getContext().getString(R.string.l_notification_of_your_answer);
+			else
+				description += " " + view.getContext().getString(R.string.l_notification_in_your_answer);
 			break;
 		}
 

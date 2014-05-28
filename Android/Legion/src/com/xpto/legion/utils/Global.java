@@ -186,15 +186,16 @@ public class Global extends Application {
 			return true;
 		}
 
-		int index = 0;
-		for (int i = nearPlaces.size() - 1; i >= 0; i--) {
+		int index = nearPlaces.size();
+		for (int i = 0; i < nearPlaces.size(); i++) {
 			Place place = nearPlaces.get(i);
 
 			if (place.getId() == _place.getId()) {
-				nearPlaces.set(index, _place);
+				nearPlaces.set(i, _place);
 				index = -1;
 				break;
-			} else if (place.getWhen() == null || _place.getWhen() == null || place.getWhen().getTime() > _place.getWhen().getTime())
+			} else if (index == nearPlaces.size()
+					&& (place.getWhen() == null || _place.getWhen() == null || place.getWhen().getTime() > _place.getWhen().getTime()))
 				index = i;
 		}
 
@@ -226,12 +227,10 @@ public class Global extends Application {
 			Notification[] notifications = new Notification[_notifications.length()];
 			for (int i = 0; i < notifications.length; i++) {
 				notifications[i] = new Notification();
-				if (!notifications[i].loadFromJSon(_notifications.getJSONObject(i)))
+				if (!notifications[i].loadFromJSon(_notifications.getJSONObject(i)) || notifications[i].getId() == 0)
 					throw new Exception();
 			}
 
-			if (this.notifications != null)
-				this.notifications.clear();
 			for (int i = 0; i < notifications.length; i++)
 				addNotification(notifications[i]);
 
@@ -248,14 +247,15 @@ public class Global extends Application {
 			return true;
 		}
 
-		int index = 0;
-		for (int i = notifications.size() - 1; i >= 0; i--) {
+		int index = notifications.size();
+		for (int i = 0; i < notifications.size(); i++) {
 			Notification notification = notifications.get(i);
 
 			if (notification.getId() == _notification.getId()) {
+				notifications.set(i, _notification);
 				index = -1;
 				break;
-			} else if (notification.getWhen().getTime() > _notification.getWhen().getTime())
+			} else if (index == notifications.size() && notification.getWhen().getTime() < _notification.getWhen().getTime())
 				index = i;
 		}
 

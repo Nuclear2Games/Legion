@@ -98,7 +98,7 @@ public class FrgNewEvent extends LFragment {
 		public void onFocusChange(View v, boolean hasFocus) {
 			if (hasFocus) {
 				if (datePickerDialog == null) {
-					datePickerDialog = new DatePickerDialog(getActivity(), dpListener, when.get(Calendar.YEAR), when.get(Calendar.MONTH) + 1,
+					datePickerDialog = new DatePickerDialog(getActivity(), dpListener, when.get(Calendar.YEAR), when.get(Calendar.MONTH),
 							when.get(Calendar.DAY_OF_MONTH));
 					datePickerDialog.show();
 				}
@@ -174,6 +174,11 @@ public class FrgNewEvent extends LFragment {
 
 			savingPlace = new Place();
 
+			savingPlace.setUserId(getGlobal().getLogged().getId());
+			if (getGlobal().getLogged().getName() == null || getGlobal().getLogged().getName().trim().length() == 0)
+				savingPlace.setUserName(getGlobal().getLogged().getLogin());
+			else
+				savingPlace.setUserName(getGlobal().getLogged().getName());
 			savingPlace.setLatitude(latitude);
 			savingPlace.setLatitude(longitude);
 			savingPlace.setType(type);

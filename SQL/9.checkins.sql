@@ -24,6 +24,22 @@ BEGIN
 			@placeId,
  			GETDATE()
 		)
+		
+		INSERT INTO notifications (
+			userId,
+			customId,
+			customTypeId,
+			what,
+			date,
+			seen
+		) VALUES (
+			@already,
+			@placeId,
+			1,
+			4,
+			GETDATE(),
+			0
+		)
 
 		UPDATE places SET
 			checkins = ISNULL(checkins, 0) + 1

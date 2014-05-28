@@ -14,7 +14,7 @@ BEGIN
 
 	DECLARE @id AS BIGINT
 	SELECT
-		@id = id
+		@id = userId
 	FROM
 		subjects
 	WHERE
@@ -39,6 +39,22 @@ BEGIN
 			CAST(SQRT(@points) AS BIGINT),
 			0,
 			0,
+			0
+		)
+		
+		INSERT INTO notifications (
+			userId,
+			customId,
+			customTypeId,
+			what,
+			date,
+			seen
+		) VALUES (
+			@id,
+			@subjectId,
+			2,
+			3,
+			GETDATE(),
 			0
 		)
 		
