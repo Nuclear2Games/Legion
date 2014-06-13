@@ -26,6 +26,6 @@
             android:src="@drawable/ic_action_location_found" />
     </FrameLayout>
 
-    <include layout="@layout/help" />
+    <include layout="@layout/view_help" />
 
 </FrameLayout>

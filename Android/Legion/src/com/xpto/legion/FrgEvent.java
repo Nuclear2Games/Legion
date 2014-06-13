@@ -1,6 +1,7 @@
 package com.xpto.legion;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -331,7 +332,14 @@ public class FrgEvent extends LFragment {
 				}
 
 				sendingSubject = new Subject();
+				sendingSubject.setUserId(getGlobal().getLogged().getId());
+				if (getGlobal().getLogged().getName() == null || getGlobal().getLogged().getName().trim().length() == 0)
+					sendingSubject.setUserName(getGlobal().getLogged().getLogin());
+				else
+					sendingSubject.setUserName(getGlobal().getLogged().getName());
+				sendingSubject.setPlaceId(place.getId());
 				sendingSubject.setContent(content);
+				sendingSubject.setWhen(new Date());
 				adpSubjects.addItem(sendingSubject, 1);
 
 				subjectRetry.finished(null);

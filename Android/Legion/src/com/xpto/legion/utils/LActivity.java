@@ -193,7 +193,7 @@ public class LActivity extends ActionBarActivity implements GooglePlayServicesCl
 		boolean animate = false;
 
 		if (viwLoading == null) {
-			viwLoading = LayoutInflater.from(getApplicationContext()).inflate(R.layout.loading, null);
+			viwLoading = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_loading, null);
 			Util.loadFonts(viwLoading);
 
 			ViewGroup window = (ViewGroup) findViewById(android.R.id.content).getRootView();

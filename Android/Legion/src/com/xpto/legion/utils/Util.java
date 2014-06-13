@@ -135,7 +135,7 @@ public class Util {
 	}
 
 	public static String formatToLongDateTime(Date value) {
-		return new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault()).format(value);
+		return new SimpleDateFormat("dd/MM-HH:mm", Locale.getDefault()).format(value);
 	}
 
 	public static float convertDpToPx(Context context, int dp) {

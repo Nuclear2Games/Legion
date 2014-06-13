@@ -1,6 +1,7 @@
 package com.xpto.legion;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -302,7 +303,14 @@ public class FrgComment extends LFragment {
 				}
 
 				sendingAnswer = new Answer();
+				sendingAnswer.setUserId(getGlobal().getLogged().getId());
+				if (getGlobal().getLogged().getName() == null || getGlobal().getLogged().getName().trim().length() == 0)
+					sendingAnswer.setUserName(getGlobal().getLogged().getLogin());
+				else
+					sendingAnswer.setUserName(getGlobal().getLogged().getName());
+				sendingAnswer.setCommentId(comment.getId());
 				sendingAnswer.setContent(content);
+				sendingAnswer.setWhen(new Date());
 				adpAnswers.addItem(sendingAnswer, 1);
 
 				answerRetry.finished(null);

@@ -257,7 +257,7 @@ public class LDialog extends FrameLayout {
 		if (wa == null)
 			return;
 
-		final LDialog thisDialog = (LDialog) LayoutInflater.from(wa).inflate(R.layout.dialog, null);
+		final LDialog thisDialog = (LDialog) LayoutInflater.from(wa).inflate(R.layout.view_dialog, null);
 
 		Util.loadFonts(thisDialog);
 		Util.hideKeyboard(thisDialog);

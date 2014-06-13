@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#f5f5f5"
     android:clickable="true" >
 
     <ListView
@@ -30,6 +30,6 @@
         android:textSize="@dimen/lbl_font_size_small"
         android:visibility="gone" />
 
-    <include layout="@layout/help" />
+    <include layout="@layout/view_help" />
 
 </FrameLayout>

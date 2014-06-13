@@ -12,6 +12,7 @@ import com.xpto.legion.models.Default;
 import com.xpto.legion.models.Notification;
 import com.xpto.legion.models.Place;
 import com.xpto.legion.models.Subject;
+import com.xpto.legion.models.User;
 import com.xpto.legion.utils.LActivity;
 import com.xpto.legion.utils.Util;
 
@@ -31,6 +32,15 @@ public class AdpAllTypes extends AdpDefault<Default> {
 
 	protected LActivity getLActivity() {
 		return activity;
+	}
+
+	protected User getLogged() {
+		if (getLActivity() == null)
+			return null;
+		else if (getLActivity().getGlobal() == null)
+			return null;
+		else
+			return getLActivity().getGlobal().getLogged();
 	}
 
 	public AdpAllTypes(LActivity _lActivity, OnClickListener _onClickHeadEdit, OnClickListener _onClickHeadCheckin, OnClickListener _onClickHeadLike,
@@ -77,25 +87,25 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		case 0:
 			if (_convertView == null) {
 				if (useHead && _position == 0)
-					view = getInflater().inflate(R.layout.event_head, null);
+					view = getInflater().inflate(R.layout.head_event, null);
 				else
-					view = getInflater().inflate(R.layout.event_row, null);
+					view = getInflater().inflate(R.layout.row_event, null);
 				Util.loadFonts(view);
 			} else
 				view = _convertView;
 
 			Place place = (Place) getItem(_position);
 
-			fillEvent(_position, view, place);
+			fillEvent(_position, view, place, getLogged());
 
 			break;
 
 		case 1:
 			if (_convertView == null) {
 				if (useHead && _position == 0)
-					view = getInflater().inflate(R.layout.subject_head, null);
+					view = getInflater().inflate(R.layout.head_subject, null);
 				else
-					view = getInflater().inflate(R.layout.subject_row, null);
+					view = getInflater().inflate(R.layout.row_subject, null);
 				Util.loadFonts(view);
 			} else
 				view = _convertView;
@@ -109,9 +119,9 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		case 2:
 			if (_convertView == null) {
 				if (useHead && _position == 0)
-					view = getInflater().inflate(R.layout.comment_head, null);
+					view = getInflater().inflate(R.layout.head_comment, null);
 				else
-					view = getInflater().inflate(R.layout.comment_row, null);
+					view = getInflater().inflate(R.layout.row_comment, null);
 				Util.loadFonts(view);
 			} else
 				view = _convertView;
@@ -124,7 +134,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 
 		case 3:
 			if (_convertView == null) {
-				view = getInflater().inflate(R.layout.answer_row, null);
+				view = getInflater().inflate(R.layout.row_answer, null);
 				Util.loadFonts(view);
 			} else
 				view = _convertView;
@@ -137,7 +147,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 
 		case 4:
 			if (_convertView == null) {
-				view = getInflater().inflate(R.layout.notification_row, null);
+				view = getInflater().inflate(R.layout.row_notification, null);
 				Util.loadFonts(view);
 			} else
 				view = _convertView;
@@ -152,7 +162,7 @@ public class AdpAllTypes extends AdpDefault<Default> {
 		return view;
 	}
 
-	private void fillEvent(int _position, View view, Place place) {
+	private void fillEvent(int _position, View view, Place place, User logged) {
 		// Name
 		TextView txtPlaceName = (TextView) view.findViewById(R.id.txtName);
 		txtPlaceName.setText(place.getName());
@@ -174,16 +184,24 @@ public class AdpAllTypes extends AdpDefault<Default> {
 
 		// Edit
 		View btnPlaceEdit = view.findViewById(R.id.btnEdit);
-		if (useHead && _position == 0 && btnPlaceEdit != null) {
-			btnPlaceEdit.setOnClickListener(onClickHeadEdit);
-			btnPlaceEdit.setTag(place.getId());
+		if (btnPlaceEdit != null) {
+			if (useHead && _position == 0 && logged != null && place.getUserId() == logged.getId()) {
+				btnPlaceEdit.setOnClickListener(onClickHeadEdit);
+				btnPlaceEdit.setTag(place.getId());
+				btnPlaceEdit.setVisibility(View.VISIBLE);
+			} else
+				btnPlaceEdit.setVisibility(View.GONE);
 		}
 
 		// Checkin
 		View btnPlaceCheckin = view.findViewById(R.id.btnCheckin);
-		if (useHead && _position == 0 && btnPlaceCheckin != null) {
-			btnPlaceCheckin.setOnClickListener(onClickHeadCheckin);
-			btnPlaceCheckin.setTag(place.getId());
+		if (btnPlaceCheckin != null) {
+			if (useHead && _position == 0) {
+				btnPlaceCheckin.setOnClickListener(onClickHeadCheckin);
+				btnPlaceCheckin.setTag(place.getId());
+				btnPlaceCheckin.setVisibility(View.VISIBLE);
+			} else
+				btnPlaceCheckin.setVisibility(View.GONE);
 		}
 
 		TextView txtPlaceCheckins = (TextView) view.findViewById(R.id.txtCheckins);

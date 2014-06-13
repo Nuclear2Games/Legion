@@ -132,7 +132,10 @@ public class WSCaller {
 							if (json.names() != null)
 								for (int i = 0; i < json.names().length(); i++) {
 									String name = json.names().getString(i);
-									urlCache += "&" + name + "=" + json.get(name).toString();
+									if ((name.equalsIgnoreCase("latitude") || name.equalsIgnoreCase("longitude")) && json.get(name).toString().length() > 6)
+										urlCache += "&" + name + "=" + json.get(name).toString().substring(0, 6);
+									else
+										urlCache += "&" + name + "=" + json.get(name).toString();
 								}
 						}
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/fields_spacing_labels" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/txt_default"
+        android:orientation="vertical"
+        android:padding="@dimen/fields_spacing_labels" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:tag="t"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/lbl_font_size_default" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="100dip"
+            android:layout_height="1px"
+            android:layout_gravity="center"
+            android:background="@color/gray_half" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip"
+            android:textSize="@dimen/lbl_font_size_small" />
+
+        <View
+            android:layout_width="100dip"
+            android:layout_height="1px"
+            android:layout_gravity="center"
+            android:background="@color/gray_half" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="14dip"
+                android:gravity="left|center_vertical"
+                android:tag="t"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/lbl_font_size_tiny" />
+
+            <TextView
+                android:id="@+id/txtSubjects"
+                android:layout_width="match_parent"
+                android:layout_height="14dip"
+                android:gravity="right|center_vertical"
+                android:tag="t"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/lbl_font_size_tiny" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/layExtras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dip"
+        android:gravity="right"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/btnDislike"
+            android:layout_width="75dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.5dip"
+            android:layout_marginTop="-1dip"
+            android:background="@drawable/btn_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2.5dip" >
+
+            <TextView
+                android:id="@+id/txtDislikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="left|center_vertical"
+                android:tag="t"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/lbl_font_size_tiny" />
+
+            <ImageView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginLeft="2.5dip"
+                android:contentDescription="@string/f_unlike"
+                android:src="@drawable/ic_action_bad" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnLike"
+            android:layout_width="75dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.5dip"
+            android:layout_marginTop="-1dip"
+            android:background="@drawable/btn_green"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2.5dip" >
+
+            <TextView
+                android:id="@+id/txtLikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="left|center_vertical"
+                android:tag="t"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/lbl_font_size_tiny" />
+
+            <ImageView
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginLeft="2.5dip"
+                android:contentDescription="@string/f_like"
+                android:src="@drawable/ic_action_good" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="75dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.5dip"
+            android:layout_marginTop="-1dip"
+            android:background="@drawable/btn_gray"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="left|center_vertical"
+                android:tag="t"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/lbl_font_size_tiny" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

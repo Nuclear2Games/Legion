@@ -17,6 +17,9 @@ BEGIN
 	WHERE
 			id = @userId
 
+	IF @date IS NOT NULL
+		SET @date = DATEADD(MONTH, 1, @date)
+			
 	IF @points IS NOT NULL AND @points >= 0
 	BEGIN
 		INSERT INTO places (
